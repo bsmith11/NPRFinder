@@ -20,4 +20,4 @@ Pods/
 *.mobileprovision
 NPRFinder/PrivateConstants.h
 NPRFinder/PrivateConstants.m
-Crashlytics.framework
+Crashlytics.framework/
