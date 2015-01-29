@@ -21,3 +21,5 @@ Pods/
 NPRFinder/PrivateConstants.h
 NPRFinder/PrivateConstants.m
 Crashlytics.framework/
+*.xcodeproj
+*.xcworkspace
