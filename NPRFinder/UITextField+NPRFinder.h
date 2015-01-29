@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger, NPRTextFieldStyle) {
+    NPRTextFieldStyleSearch
+};
+
 @interface UITextField (NPRFinder)
+
+- (void)npr_setupWithStyle:(NPRTextFieldStyle)style placeholderText:(NSString *)placeholderText;
 
 @end

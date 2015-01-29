@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 Bradley Smith. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <CocoaLumberjack/DDLog.h>
 
-@interface CrashlyticsLogger : NSObject
+@interface CrashlyticsLogger : DDAbstractLogger
 
 @end

@@ -7,7 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-@interface FadeAnimationController : NSObject
+typedef NS_ENUM(NSInteger, FadeDirection) {
+    FadeDirectionIn,
+    FadeDirectionOut
+};
+
+@interface FadeAnimationController : NSObject <UIViewControllerAnimatedTransitioning>
+
+@property (assign, nonatomic) FadeDirection fadeDirection;
 
 @end

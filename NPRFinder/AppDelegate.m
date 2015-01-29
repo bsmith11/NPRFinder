@@ -7,17 +7,79 @@
 //
 
 #import "AppDelegate.h"
+#import "SplashViewController.h"
+#import "UIColor+NPRFinder.h"
+#import "BaseNavigationController.h"
+#import "PrivateConstants.h"
+#import "CrashlyticsLogger.h"
+#import "TransitionController.h"
+
+#import <Flannel/FLAVerboseLogFormatter.h>
+#import <CocoaLumberjack/DDASLLogger.h>
+#import <Crashlytics/Crashlytics.h>
 
 @interface AppDelegate ()
+
+@property (strong, nonatomic) BaseNavigationController *navigationController;
 
 @end
 
 @implementation AppDelegate
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    [Crashlytics startWithAPIKey:kCrashlyticsApiKey];
+    
+    [self setupLoggers];
+        
+    SplashViewController *splashViewController = [SplashViewController new];
+    
+    self.navigationController = [[BaseNavigationController alloc] initWithRootViewController:splashViewController];
+    
+    self.transitionController = [TransitionController new];
+    [self.navigationController setDelegate:self.transitionController];
+    
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.backgroundColor = [UIColor npr_backgroundColor];
+    [self.window setRootViewController:self.navigationController];
+    [self.window makeKeyAndVisible];
+    
     return YES;
+}
+
+- (void)setupLoggers {
+    FLAVerboseLogFormatter *formatter = [[FLAVerboseLogFormatter alloc] init];
+    
+    DDASLLogger *aslLogger = [DDASLLogger sharedInstance];
+    [aslLogger setLogFormatter:formatter];
+    
+    DDTTYLogger *ttyLogger = [DDTTYLogger sharedInstance];
+    [ttyLogger setLogFormatter:formatter];
+    
+    CrashlyticsLogger *crashLogger = [CrashlyticsLogger new];
+    [crashLogger setLogFormatter:formatter];
+
+    [DDLog addLogger:ttyLogger];
+    [DDLog addLogger:aslLogger];
+    [DDLog addLogger:crashLogger];
+}
+
+- (void)requestUserNotificationPermissions {
+    UIApplication *application = [UIApplication sharedApplication];
+    
+    if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+        UIUserNotificationType types = UIUserNotificationTypeAlert |
+                                       UIUserNotificationTypeSound |
+                                       UIUserNotificationTypeBadge;
+        
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:types
+                                                                                 categories:nil];
+        
+        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+    }
+}
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+    
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

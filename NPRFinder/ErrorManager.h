@@ -8,6 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+@class TTTAttributedLabel;
+
 @interface ErrorManager : NSObject
+
++ (void)showAlertForNetworkError:(NSError *)error;
++ (void)showAlertForLocationErrorCode:(NSInteger)code;
+
++ (void)setupLabel:(TTTAttributedLabel *)label locationError:(NSError *)error;
++ (void)setupLabel:(TTTAttributedLabel *)label networkError:(NSError *)error;
 
 @end

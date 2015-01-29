@@ -10,4 +10,9 @@
 
 @interface UIScreen (NPRFinder)
 
++ (CGFloat)npr_screenHeight;
++ (CGFloat)npr_screenWidth;
++ (CGFloat)npr_navigationBarHeight;
++ (CGFloat)npr_statusBarHeight;
+
 @end

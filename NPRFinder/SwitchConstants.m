@@ -7,3 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+
+const BOOL kShowNetworkErrorAlerts = NO;
+const BOOL kShowLocationErrorAlerts = NO;
+const BOOL kUseLocationServices = YES;
+const BOOL kUseMockStationObjects = YES;
+const BOOL kUseMockProgramObjects = NO;
+
+const BOOL kSendLocationUpdatesStartLocalNotification = YES;
+const BOOL kSendLocationUpdatesStopLocalNotification = YES;
+const BOOL kSendSignificantChangesStartLocalNotification = YES;
+const BOOL kSendSignificantChangesStopLocalNotification = YES;
+
+const BOOL kRequestLocationServicesRequestAlwaysAuthorization = YES;
+const BOOL kMonitorSignificantLocationChanges = YES;

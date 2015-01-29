@@ -8,6 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@class Station;
+
 @interface StationTableViewCell : UITableViewCell
+
+- (void)setupWithStation:(Station *)station;
+- (void)hideWithStation:(Station *)station delay:(CGFloat)delay;
+- (void)stopAnimation;
+
++ (CGFloat)heightWithStation:(Station *)station;
++ (CGFloat)estimatedHeight;
 
 @end

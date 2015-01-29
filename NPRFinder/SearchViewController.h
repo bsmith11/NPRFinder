@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseViewController.h"
 
-@interface SearchViewController : UIViewController
+@interface SearchViewController : BaseViewController <UITableViewDelegate, UITableViewDataSource>
+
+- (instancetype)initWithBackgroundImage:(UIImage *)backgroundImage;
 
 @end

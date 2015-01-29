@@ -10,4 +10,18 @@
 
 @interface UIImage (NPRFinder)
 
++ (UIImage *)npr_searchIcon;
++ (UIImage *)npr_closeIcon;
++ (UIImage *)npr_signalWeakIcon;
++ (UIImage *)npr_signalMediumIcon;
++ (UIImage *)npr_signalStrongIcon;
++ (UIImage *)npr_imageForSignal:(NSNumber *)signal;
++ (UIImage *)npr_logoLine;
++ (UIImage *)npr_backgroundImage;
++ (UIImage *)npr_facebookIcon;
++ (UIImage *)npr_twitterIcon;
++ (UIImage *)npr_homeIcon;
++ (UIImage *)npr_backIcon;
++ (UIImage *)npr_forwardIcon;
+
 @end

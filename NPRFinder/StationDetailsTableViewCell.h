@@ -10,4 +10,8 @@
 
 @interface StationDetailsTableViewCell : UITableViewCell
 
+- (void)setupWithText:(NSString *)text count:(NSInteger)count indexPath:(NSIndexPath *)indexPath;
+
++ (CGFloat)height;
+
 @end

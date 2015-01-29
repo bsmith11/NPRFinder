@@ -8,6 +8,21 @@
 
 #import <UIKit/UIKit.h>
 
+@class BaseNavigationController;
+@class TransitionController;
+
 @interface BaseViewController : UIViewController
+
+@property (assign, nonatomic) CGFloat keyboardHeight;
+
+- (UIImage *)screenshot;
+- (void)keyboardWillShow:(NSNotification *)notification;
+- (void)keyboardWillHide:(NSNotification *)notification;
+- (BaseNavigationController *)baseNavigationController;
+- (TransitionController *)transitionController;
+
+@property (strong, nonatomic) UIView *navigationBarContainer;
+@property (strong, nonatomic) NSLayoutConstraint *navigationBarContainerHeight;
+@property (strong, nonatomic) NSLayoutConstraint *navigationBarContainerTop;
 
 @end

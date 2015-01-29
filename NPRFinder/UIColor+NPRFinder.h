@@ -10,4 +10,14 @@
 
 @interface UIColor (NPRFinder)
 
++ (UIColor *)npr_colorWithHexValue:(NSString *)hexValue;
++ (UIColor *)npr_foregroundColor;
++ (UIColor *)npr_backgroundColor;
++ (UIColor *)npr_highlightColor;
++ (UIColor *)npr_redColor;
++ (UIColor *)npr_blackColor;
++ (UIColor *)npr_blueColor;
++ (UIColor *)npr_greyColor;
++ (UIColor *)npr_tealColor;
+
 @end

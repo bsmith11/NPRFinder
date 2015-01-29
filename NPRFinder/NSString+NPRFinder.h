@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+@class CLLocation;
+
 @interface NSString (NPRFinder)
+
++ (NSString *)npr_coordinatesFromLocation:(CLLocation *)location;
 
 @end

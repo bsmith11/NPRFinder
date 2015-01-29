@@ -8,6 +8,19 @@
 
 #import <Foundation/Foundation.h>
 
+@class Station;
+
 @interface NotificationManager : NSObject
+
++ (void)scheduleStationLocalNotificationWithStation:(Station *)station;
+
++ (void)scheduleLocalNotificationWithText:(NSString *)text;
++ (void)scheduleLocationUpdatesStartLocalNotification;
++ (void)scheduleLocationUpdatesStopLocalNotification;
++ (void)scheduleSignificantLocationChangesStartLocalNotification;
++ (void)scheduleSignificantLocationChangesStopLocalNotification;
++ (void)scheduleLocalNotificationWithAlertBody:(NSString *)alertBody
+                                      fireDate:(NSDate *)fireDate;
++ (BOOL)areUserNotificationSettingsEnabled;
 
 @end

@@ -100,14 +100,10 @@
 - (UIImage *)applyLightEffect;
 - (UIImage *)applyExtraLightEffect;
 - (UIImage *)applyDarkEffect;
+
 - (UIImage *)applyMediumEffect;
+- (UIImage *)applyBackgroundBlurEffect;
 - (UIImage *)applyDarkTint;
 - (UIImage *)applyTintEffectWithColor:(UIColor *)tintColor;
-
-- (UIImage *)applyBlurWithRadius:(CGFloat)blurRadius tintColor:(UIColor *)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor maskImage:(UIImage *)maskImage;
-
-+ (UIImage *)imageWithColor:(UIColor *)color;
-+ (UIImage *)imageWithColor:(UIColor *)color width:(CGFloat)width height:(CGFloat)height;
-+ (UIImage *)blurImageForView:(UIView *)view;
 
 @end

@@ -7,7 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <Mantle/Mantle.h>
 
-@interface Program : NSObject
+@interface Program : MTLModel <MTLJSONSerializing>
+
+@property (copy, nonatomic) NSNumber *programId;
+@property (copy, nonatomic) NSString *title;
+@property (copy, nonatomic) NSString *programDescription;
+
++ (NSDictionary *)mockProgramJsonWithTitle:(NSString *)title;
++ (instancetype)mockProgram;
 
 @end

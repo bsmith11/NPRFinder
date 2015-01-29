@@ -7,7 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-@interface TransitionController : NSObject
+@class DetailAnimationController;
+@class FadeAnimationController;
+@class SlideAnimationController;
+
+@interface TransitionController : NSObject <UINavigationControllerDelegate, UIViewControllerTransitioningDelegate>
+
+@property (strong, nonatomic) DetailAnimationController *detailAnimationController;
+@property (strong, nonatomic) FadeAnimationController *fadeAnimationController;
+@property (strong, nonatomic) SlideAnimationController *slideAnimationController;
 
 @end

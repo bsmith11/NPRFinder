@@ -7,7 +7,23 @@
 //
 
 #import "CrashlyticsLogger.h"
+#import <Crashlytics/Crashlytics.h>
 
 @implementation CrashlyticsLogger
+
+- (void)logMessage:(DDLogMessage *)logMessage {
+    NSString *logMsg;
+    
+    if (self->formatter) {
+        logMsg = [self->formatter formatLogMessage:logMessage];
+    }
+    else {
+        logMsg = logMessage->logMsg;
+    }
+    
+    if (logMsg) {
+        CLSLog(@"%@", logMsg);
+    }
+}
 
 @end

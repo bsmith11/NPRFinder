@@ -8,6 +8,22 @@
 
 #import <UIKit/UIKit.h>
 
+@class Station;
+
+@protocol StationUrlTableViewCellDelegate <NSObject>
+
+- (void)facebookButtonPressed;
+- (void)twitterButtonPressed;
+- (void)homePageButtonPressed;
+
+@end
+
 @interface StationUrlTableViewCell : UITableViewCell
+
+- (void)setupWithStation:(Station *)station;
+
++ (CGFloat)height;
+
+@property (weak, nonatomic) id <StationUrlTableViewCellDelegate> delegate;
 
 @end

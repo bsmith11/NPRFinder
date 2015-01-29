@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ProgramsViewController : UIViewController
+#import "BaseViewController.h"
+
+@interface ProgramsViewController : BaseViewController <UITableViewDelegate, UITableViewDataSource>
+
+- (instancetype)initWithPrograms:(NSArray *)programs;
 
 @end

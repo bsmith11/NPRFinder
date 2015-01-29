@@ -6,8 +6,16 @@
 //  Copyright (c) 2015 Bradley Smith. All rights reserved.
 //
 
-#ifndef NPRFinder_SwitchConstants_h
-#define NPRFinder_SwitchConstants_h
+FOUNDATION_EXPORT const BOOL kShowNetworkErrorAlerts;
+FOUNDATION_EXPORT const BOOL kShowLocationErrorAlerts;
+FOUNDATION_EXPORT const BOOL kUseLocationServices;
+FOUNDATION_EXPORT const BOOL kUseMockStationObjects;
+FOUNDATION_EXPORT const BOOL kUseMockProgramObjects;
 
+FOUNDATION_EXPORT const BOOL kSendLocationUpdatesStartLocalNotification;
+FOUNDATION_EXPORT const BOOL kSendLocationUpdatesStopLocalNotification;
+FOUNDATION_EXPORT const BOOL kSendSignificantChangesStartLocalNotification;
+FOUNDATION_EXPORT const BOOL kSendSignificantChangesStopLocalNotification;
 
-#endif
+FOUNDATION_EXPORT const BOOL kRequestLocationServicesRequestAlwaysAuthorization;
+FOUNDATION_EXPORT const BOOL kMonitorSignificantLocationChanges;

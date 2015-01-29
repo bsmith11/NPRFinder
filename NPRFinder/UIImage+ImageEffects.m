@@ -120,6 +120,11 @@
     return [self applyBlurWithRadius:5 tintColor:tintColor saturationDeltaFactor:1.8 maskImage:nil];
 }
 
+- (UIImage *)applyBackgroundBlurEffect {
+    UIColor *tintColor = [UIColor colorWithWhite:0.3 alpha:0.5];
+    return [self applyBlurWithRadius:5 tintColor:tintColor saturationDeltaFactor:1.8 maskImage:nil];
+}
+
 - (UIImage *)applyDarkTint {
     UIColor *tintColor = [UIColor colorWithWhite:0.05 alpha:0.73];
     return [self applyBlurWithRadius:0 tintColor:tintColor saturationDeltaFactor:1.0 maskImage:nil];
@@ -143,24 +148,6 @@
     }
     
     return [self applyBlurWithRadius:10 tintColor:effectColor saturationDeltaFactor:-1.0 maskImage:nil];
-}
-
-+ (UIImage *)imageWithColor:(UIColor *)color {
-    return [UIImage imageWithColor:color width:1.0 height:1.0];
-}
-
-+ (UIImage *)imageWithColor:(UIColor *)color width:(CGFloat)width height:(CGFloat)height {
-    CGRect rect = CGRectMake(0.0, 0.0, width, height);
-    UIGraphicsBeginImageContext(rect.size);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    CGContextSetFillColorWithColor(context, [color CGColor]);
-    CGContextFillRect(context, rect);
-    
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    return image;
 }
 
 - (UIImage *)applyBlurWithRadius:(CGFloat)blurRadius tintColor:(UIColor *)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor maskImage:(UIImage *)maskImage {
@@ -291,16 +278,5 @@
 
     return outputImage;
 }
-
-+ (UIImage *)blurImageForView:(UIView *)view {
-    UIGraphicsBeginImageContextWithOptions(view.bounds.size, NO, 0);
-    [view drawViewHierarchyInRect:view.bounds afterScreenUpdates:NO];
-    
-    UIImage *screenshot = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    return [screenshot applyMediumEffect];
-}
-
 
 @end

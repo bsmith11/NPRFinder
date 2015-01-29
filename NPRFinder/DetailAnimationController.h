@@ -7,7 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-@interface DetailAnimationController : NSObject
+typedef NS_ENUM(NSInteger, DetailDirection) {
+    DetailDirectionIn,
+    DetailDirectionOut
+};
+
+@interface DetailAnimationController : NSObject <UIViewControllerAnimatedTransitioning>
+
+@property (assign, nonatomic) DetailDirection detailDirection;
+@property (assign, nonatomic) CGRect contentRect;
+@property (strong, nonatomic) UITableView *tableView;
 
 @end

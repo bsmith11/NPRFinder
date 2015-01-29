@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class Program;
+
 @interface ProgramTableViewCell : UITableViewCell
+
+- (void)setupWithProgram:(Program *)program;
+
++ (CGFloat)height;
 
 @end

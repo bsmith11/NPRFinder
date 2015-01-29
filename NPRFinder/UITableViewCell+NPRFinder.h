@@ -10,4 +10,7 @@
 
 @interface UITableViewCell (NPRFinder)
 
++ (NSString *)npr_reuseIdentifier;
++ (UINib *)npr_nib;
+
 @end

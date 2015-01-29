@@ -10,4 +10,12 @@
 
 @implementation UITableViewCell (NPRFinder)
 
++ (NSString *)npr_reuseIdentifier {
+    return NSStringFromClass(self);
+}
+
++ (UINib *)npr_nib {
+    return [UINib nibWithNibName:NSStringFromClass(self) bundle:nil];
+}
+
 @end

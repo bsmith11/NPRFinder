@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseViewController.h"
+#import "StationUrlTableViewCell.h"
 
-@interface StationViewController : UIViewController
+@class Station;
+
+@interface StationViewController : BaseViewController <UITableViewDelegate, UITableViewDataSource, StationUrlTableViewCellDelegate>
+
+- (instancetype)initWithStation:(Station *)station;
+- (instancetype)initWithStation:(Station *)station backgroundImage:(UIImage *)backgroundImage;
 
 @end

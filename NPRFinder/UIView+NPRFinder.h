@@ -10,4 +10,9 @@
 
 @interface UIView (NPRFinder)
 
+- (void)npr_setAlpha:(CGFloat)alpha
+            duration:(NSTimeInterval)duration
+            animated:(BOOL)animated
+          completion:(void (^)(BOOL finished))completion;
+
 @end

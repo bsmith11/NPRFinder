@@ -6,8 +6,17 @@
 //  Copyright (c) 2015 Bradley Smith. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-@interface SlideAnimationController : NSObject
+typedef NS_ENUM(NSInteger, SlideDirection) {
+    SlideDirectionUp,
+    SlideDirectionRight,
+    SlideDirectionDown,
+    SlideDirectionLeft
+};
+
+@interface SlideAnimationController : NSObject <UIViewControllerAnimatedTransitioning>
+
+@property (assign, nonatomic) SlideDirection slideDirection;
 
 @end

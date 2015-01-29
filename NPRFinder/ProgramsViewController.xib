@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProgramsViewController">
             <connections>
+                <outlet property="backButton" destination="9u9-KC-71q" id="h4s-zB-xN9"/>
+                <outlet property="backButtonHeight" destination="IxK-aY-7fu" id="Yb6-Mb-TR0"/>
+                <outlet property="backButtonTop" destination="tn1-fj-k5q" id="tn2-ha-RyC"/>
+                <outlet property="navigationBarContainer" destination="vPM-0F-rAu" id="CHi-nu-cuh"/>
+                <outlet property="navigationBarContainerHeight" destination="IxK-aY-7fu" id="lz5-Ri-7pe"/>
+                <outlet property="navigationBarContainerTop" destination="Mn1-cN-5DX" id="9Pv-QN-JMy"/>
+                <outlet property="programTableView" destination="xNw-lV-aEy" id="Puu-r3-rxn"/>
+                <outlet property="titleLabel" destination="O3Z-xS-WL3" id="sTL-zf-hhu"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -13,7 +22,51 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vPM-0F-rAu" userLabel="Navigation Bar Container">
+                    <rect key="frame" x="0.0" y="20" width="600" height="44"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9u9-KC-71q" userLabel="Back Button">
+                            <rect key="frame" x="0.0" y="0.0" width="66" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="66" id="djZ-Er-86X"/>
+                            </constraints>
+                            <state key="normal" title="Button">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O3Z-xS-WL3" userLabel="Title Label">
+                            <rect key="frame" x="279" y="12" width="42" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" secondItem="9u9-KC-71q" secondAttribute="height" id="2nm-Ux-qTn"/>
+                        <constraint firstAttribute="centerY" secondItem="O3Z-xS-WL3" secondAttribute="centerY" id="DQz-ZE-EBh"/>
+                        <constraint firstAttribute="height" constant="44" id="IxK-aY-7fu"/>
+                        <constraint firstItem="9u9-KC-71q" firstAttribute="leading" secondItem="vPM-0F-rAu" secondAttribute="leading" id="O9a-ZZ-yyn"/>
+                        <constraint firstAttribute="centerX" secondItem="O3Z-xS-WL3" secondAttribute="centerX" id="WxD-aW-3U6"/>
+                        <constraint firstItem="9u9-KC-71q" firstAttribute="top" secondItem="vPM-0F-rAu" secondAttribute="top" id="tn1-fj-k5q"/>
+                    </constraints>
+                </view>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="xNw-lV-aEy" userLabel="Program Table View">
+                    <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
+            </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="vPM-0F-rAu" secondAttribute="trailing" id="GH3-xg-Yx1"/>
+                <constraint firstItem="vPM-0F-rAu" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="Mn1-cN-5DX"/>
+                <constraint firstItem="xNw-lV-aEy" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="N8h-gl-D3v"/>
+                <constraint firstAttribute="trailing" secondItem="xNw-lV-aEy" secondAttribute="trailing" id="ZaS-q0-Owg"/>
+                <constraint firstItem="xNw-lV-aEy" firstAttribute="top" secondItem="vPM-0F-rAu" secondAttribute="bottom" id="hpa-xn-t3M"/>
+                <constraint firstItem="vPM-0F-rAu" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="nb5-Ch-U13"/>
+                <constraint firstAttribute="bottom" secondItem="xNw-lV-aEy" secondAttribute="bottom" id="xzp-my-sKs"/>
+            </constraints>
         </view>
     </objects>
 </document>
