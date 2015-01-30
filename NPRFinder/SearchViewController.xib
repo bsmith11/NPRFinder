@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SearchViewController">
             <connections>
                 <outlet property="backgroundImageView" destination="x0P-5n-CCo" id="7zJ-cR-knc"/>
-                <outlet property="closeButton" destination="QUO-a4-dL3" id="4mi-HM-A4m"/>
-                <outlet property="closeButtonRight" destination="9l6-VS-DWe" id="YHz-Is-vYn"/>
-                <outlet property="closeButtonWidth" destination="rXL-e2-ikU" id="wkB-7Q-9IA"/>
-                <outlet property="searchTextField" destination="4DU-D6-wrQ" id="2S5-fa-Woo"/>
-                <outlet property="searchTextFieldLeft" destination="MyH-22-1Wn" id="4ed-hP-00F"/>
-                <outlet property="searchTextFieldWidth" destination="2KU-Wq-xrH" id="Ddf-fb-Qfq"/>
                 <outlet property="stationTableView" destination="Cp6-P9-43l" id="5Gv-a6-HQg"/>
                 <outlet property="view" destination="EwV-fl-89z" id="CXW-Kh-SX3"/>
             </connections>
@@ -38,23 +33,11 @@
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QUO-a4-dL3" userLabel="Close Button">
-                    <rect key="frame" x="536" y="20" width="44" height="44"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="44" id="rXL-e2-ikU"/>
-                        <constraint firstAttribute="height" constant="44" id="xq3-0r-Xo7"/>
-                    </constraints>
-                    <state key="normal" title="Button">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="x0P-5n-CCo" firstAttribute="leading" secondItem="EwV-fl-89z" secondAttribute="leading" id="92u-qp-b0S"/>
-                <constraint firstAttribute="trailing" secondItem="QUO-a4-dL3" secondAttribute="trailing" constant="20" id="9l6-VS-DWe"/>
                 <constraint firstAttribute="trailing" secondItem="Cp6-P9-43l" secondAttribute="trailing" id="JAI-QE-PMO"/>
-                <constraint firstItem="QUO-a4-dL3" firstAttribute="top" secondItem="EwV-fl-89z" secondAttribute="top" constant="20" id="LWL-yO-ACX"/>
                 <constraint firstItem="4DU-D6-wrQ" firstAttribute="leading" secondItem="EwV-fl-89z" secondAttribute="leading" constant="20" id="MyH-22-1Wn"/>
                 <constraint firstAttribute="bottom" secondItem="Cp6-P9-43l" secondAttribute="bottom" id="Oax-OH-EGC"/>
                 <constraint firstItem="x0P-5n-CCo" firstAttribute="top" secondItem="EwV-fl-89z" secondAttribute="top" id="Ony-vl-b7J"/>

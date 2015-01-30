@@ -11,8 +11,13 @@
 #import "BaseNavigationController.h"
 #import "TransitionController.h"
 #import "AppDelegate.h"
+#import "UIView+NPRConstraints.h"
+#import "UIScreen+NPRFinder.h"
 
 @interface BaseViewController ()
+
+@property (strong, nonatomic) NSLayoutConstraint *nprNavigationBarHeight;
+@property (strong, nonatomic) NSLayoutConstraint *nprNavigationBarTop;
 
 @end
 
@@ -25,8 +30,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.navigationBarContainer setHidden:YES];
-    [self.navigationItem setHidesBackButton:YES animated:NO];
+    [self setupNprNavigationBar];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -58,6 +62,22 @@
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     
     return appDelegate.transitionController;
+}
+
+#pragma mark - Setup
+
+- (void)setupNprNavigationBar {
+    self.nprNavigationBar = [NPRNavigationBar new];
+    [self.nprNavigationBar setBackgroundColor:[UIColor clearColor]];
+    [self.view addSubview:self.nprNavigationBar];
+    
+    [self.nprNavigationBar addLeadingConstraintToSuperview];
+    [self.nprNavigationBar addTrailingConstraintToSuperview];
+    self.nprNavigationBarHeight = [self.nprNavigationBar addHeightConstraintWithHeight:[UIScreen npr_navigationBarHeight]];
+    self.nprNavigationBarTop = [self.nprNavigationBar addTopConstraintToSuperviewWithConstant:[UIScreen npr_statusBarHeight]];
+    
+    [self.view setNeedsLayout];
+    [self.view layoutIfNeeded];
 }
 
 #pragma mark - Screenshot

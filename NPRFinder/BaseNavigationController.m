@@ -26,7 +26,7 @@ static const CGFloat kNavigationBarItemAnimationDuration = 0.4;
     [super viewDidLoad];
     
     [self.view setBackgroundColor:[UIColor clearColor]];
-//    [self setNavigationBarHidden:YES animated:NO];
+    [self setNavigationBarHidden:YES animated:NO];
     
     [self.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
 //    [self.navigationController.navigationBar setBackgroundColor:[UIColor clearColor]];

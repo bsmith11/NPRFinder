@@ -43,32 +43,31 @@ typedef NS_ENUM(NSInteger, NPRBarButtonItemPosition) {
 //    UIView *snapshot = [customView snapshotViewAfterScreenUpdates:NO];
     NPRBarButtonItemPosition position = NPRBarButtonItemPositionLeft;
     
-    CGRect frame;
-    if (show) {
-        frame = [self shownFrameForPosition:position];
-    }
-    else {
-        frame = [self hiddenFrameForPosition:position
-                                   animation:animation];
-    }
+    CGRect shownFrame = [self shownFrameForPosition:position];
+    CGRect hiddenFrame = [self hiddenFrameForPosition:position
+                                            animation:animation];
+    
+    CGRect frame = show ? hiddenFrame : shownFrame;
     
 //    [snapshot setFrame:frame];
 //    [snapshot.layer removeAllAnimations];
-//    [window addSubview:snapshot];
-//    
-//    [self animateView:snapshot
-//            animation:animation
-//             position:position
-//                 show:show
-//             animated:animated
-//           completion:^(BOOL finished) {
-//               [self setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:customView] animated:NO];
-//               [snapshot removeFromSuperview];
-//               
-//               if (completion) {
-//                   completion(finished);
-//               }
-//           }];
+    [window addSubview:customView];
+    
+    [self animateView:customView
+            animation:animation
+             position:position
+           shownFrame:shownFrame
+          hiddenFrame:hiddenFrame
+                 show:show
+             animated:animated
+           completion:^(BOOL finished) {
+               [customView removeFromSuperview];
+               [self setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:customView] animated:NO];
+               
+               if (completion) {
+                   completion(finished);
+               }
+           }];
 }
 
 - (void)showRightItemWithAnimation:(NPRBarButtonItemAnimation)animation

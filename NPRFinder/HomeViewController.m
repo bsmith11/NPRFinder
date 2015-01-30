@@ -99,12 +99,12 @@ static NSString * const kLocationTitleLabelTextErrorLocation = @"Failed to find 
     [super viewWillAppear:animated];
     
     [self.transitionCoordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        [self.navigationItem showLeftItemWithAnimation:NPRBarButtonItemAnimationFadeIn
-                                              animated:YES
-                                            completion:nil];
-        [self.navigationItem showRightItemWithAnimation:NPRBarButtonItemAnimationSlideHorizontally
-                                               animated:YES
-                                             completion:nil];
+        [self.nprNavigationBar showLeftItemWithAnimation:NPRItemAnimationFadeIn
+                                                animated:YES
+                                              completion:nil];
+        [self.nprNavigationBar showRightItemWithAnimation:NPRItemAnimationSlideHorizontally
+                                                 animated:YES
+                                               completion:nil];
     } completion:nil];
     
     if (self.shouldReloadTable) {
@@ -132,12 +132,12 @@ static NSString * const kLocationTitleLabelTextErrorLocation = @"Failed to find 
     
     [self.transitionCoordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         if (!self.isPushingToSearch) {
-            [self.navigationItem hideLeftItemWithAnimation:NPRBarButtonItemAnimationFadeOut
-                                                  animated:YES
-                                                completion:nil];
-            [self.navigationItem hideRightItemWithAnimation:NPRBarButtonItemAnimationSlideHorizontally
-                                                   animated:YES
-                                                 completion:nil];
+            [self.nprNavigationBar hideLeftItemWithAnimation:NPRItemAnimationFadeOut
+                                                    animated:YES
+                                                  completion:nil];
+            [self.nprNavigationBar hideRightItemWithAnimation:NPRItemAnimationSlideHorizontally
+                                                     animated:YES
+                                                   completion:nil];
         }
     } completion:nil];
 }
@@ -157,17 +157,15 @@ static NSString * const kLocationTitleLabelTextErrorLocation = @"Failed to find 
                                    target:self
                                    action:@selector(searchButtonPressed)];
     
-    UIBarButtonItem *searchItem = [[UIBarButtonItem alloc] initWithCustomView:self.searchButton];
-    [self.navigationItem setRightBarButtonItem:searchItem animated:NO];
+    [self.nprNavigationBar setRightItem:self.searchButton];
 }
 
 - (void)setupLocationTitleLabel {
     self.titleLabel = [UILabel new];
     [self.titleLabel npr_setupWithStyle:NPRLabelStyleTitle];
-    [self.titleLabel setText:nil];
+    [self.titleLabel setText:kLocationTitleLabelTextPending];
     
-    UIBarButtonItem *titleItem = [[UIBarButtonItem alloc] initWithCustomView:self.titleLabel];
-    [self.navigationItem setLeftBarButtonItem:titleItem animated:NO];
+    [self.nprNavigationBar setLeftItem:self.titleLabel];
 }
 
 - (void)setupStationTableView {

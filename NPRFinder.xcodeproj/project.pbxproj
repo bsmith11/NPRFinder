@@ -54,6 +54,7 @@
 		488809141A76B4E7001C537D /* PrivateConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 488809131A76B4E7001C537D /* PrivateConstants.m */; };
 		488809161A76B5BA001C537D /* ErrorConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 488809151A76B5BA001C537D /* ErrorConstants.m */; };
 		488809201A794528001C537D /* UINavigationItem+NPRFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4888091F1A794528001C537D /* UINavigationItem+NPRFinder.m */; };
+		48A744EC1A7B5066001B1401 /* NPRNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 48A744EB1A7B5066001B1401 /* NPRNavigationBar.m */; };
 		48B348921A6C72DB000A5FE0 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48B348911A6C72DB000A5FE0 /* Crashlytics.framework */; };
 		48B348951A6C74DE000A5FE0 /* CrashlyticsLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B348941A6C74DE000A5FE0 /* CrashlyticsLogger.m */; };
 		48E5049B1A5CA06D005856D8 /* UIFont+NPRFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = 48E5049A1A5CA06D005856D8 /* UIFont+NPRFinder.m */; };
@@ -161,6 +162,8 @@
 		488809151A76B5BA001C537D /* ErrorConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ErrorConstants.m; sourceTree = "<group>"; };
 		4888091E1A794528001C537D /* UINavigationItem+NPRFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationItem+NPRFinder.h"; sourceTree = "<group>"; };
 		4888091F1A794528001C537D /* UINavigationItem+NPRFinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationItem+NPRFinder.m"; sourceTree = "<group>"; };
+		48A744EA1A7B5066001B1401 /* NPRNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRNavigationBar.h; sourceTree = "<group>"; };
+		48A744EB1A7B5066001B1401 /* NPRNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRNavigationBar.m; sourceTree = "<group>"; };
 		48B348911A6C72DB000A5FE0 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		48B348931A6C74DE000A5FE0 /* CrashlyticsLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrashlyticsLogger.h; sourceTree = "<group>"; };
 		48B348941A6C74DE000A5FE0 /* CrashlyticsLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrashlyticsLogger.m; sourceTree = "<group>"; };
@@ -368,6 +371,8 @@
 				483C2D521A5C72FA007B9995 /* LaunchScreen.xib */,
 				483C2D501A5C72FA007B9995 /* Images.xcassets */,
 				483C2D431A5C72FA007B9995 /* Supporting Files */,
+				48A744EA1A7B5066001B1401 /* NPRNavigationBar.h */,
+				48A744EB1A7B5066001B1401 /* NPRNavigationBar.m */,
 			);
 			path = NPRFinder;
 			sourceTree = "<group>";
@@ -646,6 +651,7 @@
 			files = (
 				480FA7F21A650D5100FC1C52 /* ProgramTableViewCell.m in Sources */,
 				483C2D7D1A5C7CFA007B9995 /* UIImage+NPRFinder.m in Sources */,
+				48A744EC1A7B5066001B1401 /* NPRNavigationBar.m in Sources */,
 				48E504A91A5CAD3F005856D8 /* BaseViewController.m in Sources */,
 				480FA7FF1A678B5D00FC1C52 /* BaseNavigationController.m in Sources */,
 				48E504B51A5D22F1005856D8 /* ErrorManager.m in Sources */,

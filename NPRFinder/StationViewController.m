@@ -30,12 +30,6 @@
 static NSString * const kFacebookProfileUrl = @"fb://profile/%@";
 static NSString * const kTwitterProfileUrl = @"twitter://user?id=%@";
 
-static const CGFloat kSlideAnimationDuration = 0.7;
-static const CGFloat kSlideAnimationDelay = 0.0;
-static const CGFloat kSlideAnimationSpringDamping = 0.8;
-static const CGFloat kSlideAnimationSpringVelocity = 1.0;
-static const CGFloat kCloseButtonShowValueLeft = 0.0;
-static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOptionBeginFromCurrentState;
 static const CGFloat kDetailsTableViewFadeAnimationDuration = 0.4;
 
 static const NSInteger kLinksIndexPath = 0;
@@ -45,15 +39,11 @@ static const NSInteger kProgramsIndexPath = 1;
 
 @property (strong, nonatomic) NSArray *programs;
 @property (strong, nonatomic) UIImage *backgroundImage;
+@property (strong, nonatomic) UIButton *closeButton;
 
 @property (copy, nonatomic) Station *station;
 
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
-@property (strong, nonatomic) UIButton *closeButton;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *closeButtonWidth;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *closeButtonHeight;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *closeButtonLeft;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *closeButtonTop;
 @property (weak, nonatomic) IBOutlet UIView *infoContainerView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *infoContainerViewWidth;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
@@ -107,7 +97,9 @@ static const NSInteger kProgramsIndexPath = 1;
     self.shouldDisplayStationUrls = NO;
     self.didNavigateToPrograms = NO;
     
-//    [self hideCloseButtonHorizontallyAnimated:NO completion:nil];
+    [self.nprNavigationBar hideLeftItemWithAnimation:NPRItemAnimationSlideHorizontally
+                                            animated:NO
+                                          completion:nil];
     [self hideDetailsTableViewAnimated:NO completion:nil];
     
     [self downloadStationPrograms];
@@ -119,23 +111,21 @@ static const NSInteger kProgramsIndexPath = 1;
     [self.infoContainerView setHidden:NO];
     
     [self.transitionCoordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        [self.navigationItem showLeftItemWithAnimation:NPRBarButtonItemAnimationSlideHorizontally
-                                              animated:YES
-                                            completion:nil];
+        if (!self.didNavigateToPrograms) {
+            [self.nprNavigationBar showLeftItemWithAnimation:NPRItemAnimationSlideHorizontally
+                                                    animated:YES
+                                                  completion:nil];
+        }
     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         if (!self.didNavigateToPrograms) {
-//            [self showCloseButtonHorizontallyAnimated:YES completion:nil];
-//            [self.navigationItem showLeftItemWithAnimation:NPRBarButtonItemAnimationSlideHorizontally
-//                                                  animated:YES
-//                                                completion:nil];
             [self showDetailsTableViewAnimated:YES completion:nil];
         }
         else {
             self.didNavigateToPrograms = NO;
-//            [self showCloseButtonVerticallyAnimated:YES completion:nil];
-            [self.navigationItem showLeftItemWithAnimation:NPRBarButtonItemAnimationSlideVertically
-                                                  animated:YES
-                                                completion:nil];
+            
+            [self.nprNavigationBar showLeftItemWithAnimation:NPRItemAnimationFadeIn
+                                                    animated:YES
+                                                  completion:nil];
         }
     }];
 }
@@ -154,21 +144,19 @@ static const NSInteger kProgramsIndexPath = 1;
     [super viewWillDisappear:animated];
     
     [self.transitionCoordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        NPRItemAnimation animation;
         if (!self.didNavigateToPrograms) {
+            animation = NPRItemAnimationSlideHorizontally;
             [self.infoContainerView setHidden:YES];
-            
-//            [self hideCloseButtonHorizontallyAnimated:YES completion:nil];
-            [self.navigationItem hideLeftItemWithAnimation:NPRBarButtonItemAnimationSlideHorizontally
-                                                  animated:YES
-                                                completion:nil];
             [self hideDetailsTableViewAnimated:YES completion:nil];
         }
         else {
-//            [self hideCloseButtonVerticallyAnimated:YES completion:nil];
-            [self.navigationItem hideLeftItemWithAnimation:NPRBarButtonItemAnimationSlideVertically
-                                                  animated:YES
-                                                completion:nil];
+            animation = NPRItemAnimationFadeOut;
         }
+
+        [self.nprNavigationBar hideLeftItemWithAnimation:animation
+                                                animated:YES
+                                              completion:nil];
     } completion:nil];
 }
 
@@ -187,13 +175,12 @@ static const NSInteger kProgramsIndexPath = 1;
                                   target:self
                                   action:@selector(closeButtonPressed)];
     
-    UIBarButtonItem *closeItem = [[UIBarButtonItem alloc] initWithCustomView:self.closeButton];
-    [self.navigationItem setLeftBarButtonItem:closeItem animated:NO];
+    [self.nprNavigationBar setLeftItem:self.closeButton];
 }
 
 - (void)setupInfoContainerView {
     [self.infoContainerView setBackgroundColor:[UIColor clearColor]];
-    CGFloat leftMargin = kCloseButtonShowValueLeft + self.closeButtonWidth.constant;
+    CGFloat leftMargin = 20.0 + CGRectGetWidth(self.closeButton.frame);
     CGFloat width = [UIScreen npr_screenWidth] - (leftMargin * 2);
     [self.infoContainerViewWidth setConstant:width];    
 }
@@ -398,55 +385,6 @@ static const NSInteger kProgramsIndexPath = 1;
 }
 
 #pragma mark - Animations
-
-//- (void)hideCloseButtonHorizontallyAnimated:(BOOL)animated completion:(void (^)(BOOL finished))completion {
-//    [self animateCloseButtonToPosition:-self.closeButtonWidth.constant vertical:NO animated:animated completion:completion];
-//}
-//
-//- (void)showCloseButtonHorizontallyAnimated:(BOOL)animated completion:(void (^)(BOOL finished))completion {
-//    [self animateCloseButtonToPosition:kCloseButtonShowValueLeft vertical:NO animated:animated completion:completion];
-//}
-//
-//- (void)hideCloseButtonVerticallyAnimated:(BOOL)animated completion:(void (^)(BOOL finished))completion {
-//    [self animateCloseButtonToPosition:-(self.closeButtonHeight.constant + self.navigationBarContainerTop.constant) vertical:YES animated:animated completion:completion];
-//}
-//
-//- (void)showCloseButtonVerticallyAnimated:(BOOL)animated completion:(void (^)(BOOL finished))completion {
-//    [self animateCloseButtonToPosition:0 vertical:YES animated:animated completion:completion];
-//}
-//
-//- (void)animateCloseButtonToPosition:(CGFloat)position vertical:(BOOL)vertical animated:(BOOL)animated completion:(void (^)(BOOL finished))completion {
-//    if (animated) {
-//        [UIView animateWithDuration:kSlideAnimationDuration
-//                              delay:kSlideAnimationDelay
-//             usingSpringWithDamping:kSlideAnimationSpringDamping
-//              initialSpringVelocity:kSlideAnimationSpringVelocity
-//                            options:kDefaultAnimationOptions
-//                         animations:^{
-//                             if (!vertical) {
-//                                 [self.closeButtonLeft setConstant:position];
-//                             }
-//                             else {
-//                                 [self.closeButtonTop setConstant:position];
-//                             }
-//                             
-//                             [self.view layoutIfNeeded];
-//                         }
-//                         completion:completion];
-//    }
-//    else {
-//        if (!vertical) {
-//            [self.closeButtonLeft setConstant:position];
-//        }
-//        else {
-//            [self.closeButtonTop setConstant:position];
-//        }
-//        
-//        if (completion) {
-//            completion(YES);
-//        }
-//    }
-//}
 
 - (void)hideDetailsTableViewAnimated:(BOOL)animated completion:(void (^)(BOOL finished))completion {
     [self.detailsTableView npr_setAlpha:0.0

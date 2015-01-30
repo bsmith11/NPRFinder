@@ -17,21 +17,13 @@
 
 static NSString * const kTitleLabelText = @"Programs";
 
-static const CGFloat kSlideAnimationDuration = 0.7;
-static const CGFloat kSlideAnimationDelay = 0.0;
-static const CGFloat kSlideAnimationSpringDamping = 0.8;
-static const CGFloat kSlideAnimationSpringVelocity = 1.0;
-
-static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOptionBeginFromCurrentState;
-
 @interface ProgramsViewController ()
+
+@property (strong, nonatomic) UIButton *backButton;
+@property (strong, nonatomic) UILabel *titleLabel;
 
 @property (copy, nonatomic) NSArray *programs;
 
-@property (weak, nonatomic) IBOutlet UIButton *backButton;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *backButtonHeight;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *backButtonTop;
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UITableView *programTableView;
 
 @end
@@ -59,36 +51,55 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
     [self setupTitleLabel];
     [self setupProgramTableView];
     
-    [self hideBackButtonAnimated:NO completion:nil];
+    [self.nprNavigationBar showLeftItemWithAnimation:NPRItemAnimationSlideVertically
+                                            animated:NO
+                                          completion:nil];
+    [self.nprNavigationBar showMiddleItemWithAnimation:NPRItemAnimationSlideVertically
+                                              animated:NO
+                                            completion:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [self.transitionCoordinator animateAlongsideTransition:nil completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        [self showBackButtonAnimated:YES completion:nil];
-    }];
+    [self.transitionCoordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+//        [self.nprNavigationBar showLeftItemWithAnimation:NPRItemAnimationSlideVertically
+//                                                animated:YES
+//                                              completion:nil];
+//        [self.nprNavigationBar showRightItemWithAnimation:NPRItemAnimationSlideVertically
+//                                                 animated:YES
+//                                               completion:nil];
+    } completion:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
     [self.transitionCoordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        [self.backButton npr_setAlpha:0.0 duration:kSlideAnimationDuration animated:YES completion:nil];
+//        [self.nprNavigationBar hideLeftItemWithAnimation:NPRItemAnimationSlideVertically
+//                                                animated:YES
+//                                              completion:nil];
+//        [self.nprNavigationBar hideRightItemWithAnimation:NPRItemAnimationSlideVertically
+//                                                 animated:YES
+//                                               completion:nil];
     } completion:nil];
 }
 
 #pragma mark - Setup
 
 - (void)setupBackButton {
+    self.backButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.backButton npr_setupWithStyle:NPRButtonStyleBackButton
                                  target:self
                                  action:@selector(backButtonPressed)];
+    [self.nprNavigationBar setLeftItem:self.backButton];
 }
 
 - (void)setupTitleLabel {
+    self.titleLabel = [UILabel new];
     [self.titleLabel npr_setupWithStyle:NPRLabelStyleTitle];
     [self.titleLabel setText:kTitleLabelText];
+    [self.nprNavigationBar setMiddleItem:self.titleLabel];
 }
 
 - (void)setupProgramTableView {
@@ -123,39 +134,6 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
     [cell setupWithProgram:program];
     
     return cell;
-}
-
-#pragma mark - Animations
-
-- (void)hideBackButtonAnimated:(BOOL)animated completion:(void (^)(BOOL finished))completion {
-    [self animateBackButtonToPosition:-(self.backButtonHeight.constant + self.navigationBarContainerTop.constant) animated:animated completion:completion];
-}
-
-- (void)showBackButtonAnimated:(BOOL)animated completion:(void (^)(BOOL finished))completion {
-    [self animateBackButtonToPosition:0 animated:animated completion:completion];
-}
-
-- (void)animateBackButtonToPosition:(CGFloat)position animated:(BOOL)animated completion:(void (^)(BOOL finished))completion {
-    if (animated) {
-        [UIView animateWithDuration:kSlideAnimationDuration
-                              delay:kSlideAnimationDelay
-             usingSpringWithDamping:kSlideAnimationSpringDamping
-              initialSpringVelocity:kSlideAnimationSpringVelocity
-                            options:kDefaultAnimationOptions
-                         animations:^{
-                             [self.backButtonTop setConstant:position];
-                             
-                             [self.view layoutIfNeeded];
-                         }
-                         completion:completion];
-    }
-    else {
-        [self.backButtonTop setConstant:position];
-        
-        if (completion) {
-            completion(YES);
-        }
-    }
 }
 
 @end

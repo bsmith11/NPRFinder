@@ -23,27 +23,15 @@
 
 static NSString * const kSearchTextFieldPlaceholderText = @"Search for stations";
 
-static const CGFloat kSlideAnimationDuration = 0.7;
-static const CGFloat kSlideAnimationDelay = 0.0;
-static const CGFloat kSlideAnimationSpringDamping = 0.8;
-static const CGFloat kSlideAnimationSpringVelocity = 1.0;
-static const CGFloat kCloseButtonShowValueRight = 20.0;
-static const CGFloat kSearchTextFieldShowValueLeft = 20.0;
-static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOptionBeginFromCurrentState;
-
 @interface SearchViewController ()
 
 @property (strong, nonatomic) NSArray *stations;
+@property (strong, nonatomic) UIButton *closeButton;
+@property (strong, nonatomic)  UITextField *searchTextField;
 
 @property (copy, nonatomic) UIImage *backgroundImage;
 
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
-@property (weak, nonatomic) IBOutlet UIButton *closeButton;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *closeButtonRight;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *closeButtonWidth;
-@property (weak, nonatomic) IBOutlet UITextField *searchTextField;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *searchTextFieldLeft;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *searchTextFieldWidth;
 @property (weak, nonatomic) IBOutlet UITableView *stationTableView;
 
 @end
@@ -74,8 +62,12 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
     [self setupSearchTextField];
     [self setupStationTableView];
     
-    [self hideCloseButtonAnimated:NO completion:nil];
-    [self hideSearchTextFieldAnimated:NO completion:nil];
+    [self.nprNavigationBar hideRightItemWithAnimation:NPRItemAnimationSlideHorizontally
+                                             animated:NO
+                                           completion:nil];
+    [self.nprNavigationBar hideLeftItemWithAnimation:NPRItemAnimationSlideHorizontally
+                                            animated:NO
+                                          completion:nil];
     
     [self.view setNeedsLayout];
     [self.view layoutIfNeeded];
@@ -85,8 +77,12 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
     [super viewWillAppear:animated];
 
     [self.transitionCoordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        [self showCloseButtonAnimated:YES completion:nil];
-        [self showSearchTextFieldAnimated:YES completion:nil];
+        [self.nprNavigationBar showRightItemWithAnimation:NPRItemAnimationSlideHorizontally
+                                                 animated:YES
+                                               completion:nil];
+        [self.nprNavigationBar showLeftItemWithAnimation:NPRItemAnimationSlideHorizontally
+                                                animated:YES
+                                              completion:nil];
         
         [self.backgroundImageView.layer removeAllAnimations];
         
@@ -98,8 +94,12 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
     [super viewWillDisappear:animated];
     
     [self.transitionCoordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        [self hideCloseButtonAnimated:YES completion:nil];
-        [self hideSearchTextFieldAnimated:YES completion:nil];
+        [self.nprNavigationBar hideRightItemWithAnimation:NPRItemAnimationSlideHorizontally
+                                                 animated:YES
+                                               completion:nil];
+        [self.nprNavigationBar hideLeftItemWithAnimation:NPRItemAnimationSlideHorizontally
+                                                animated:YES
+                                              completion:nil];
         
         [self.searchTextField resignFirstResponder];
     } completion:nil];
@@ -114,14 +114,20 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
 }
 
 - (void)setupCloseButton {
+    self.closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.closeButton npr_setupWithStyle:NPRButtonStyleCloseButton
                                   target:self
                                   action:@selector(closeButtonPressed)];
+    [self.nprNavigationBar setRightItem:self.closeButton];
 }
 
 - (void)setupSearchTextField {
+    self.searchTextField = [UITextField new];
     [self.searchTextField npr_setupWithStyle:NPRTextFieldStyleSearch placeholderText:kSearchTextFieldPlaceholderText];
-    [self.searchTextField addTarget:self action:@selector(searchTextFieldValueChanged:) forControlEvents:UIControlEventEditingChanged];
+    [self.searchTextField addTarget:self
+                             action:@selector(searchTextFieldValueChanged:)
+                   forControlEvents:UIControlEventEditingChanged];
+    [self.nprNavigationBar setLeftItem:self.searchTextField];
 }
 
 - (void)setupStationTableView {
@@ -241,68 +247,6 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
 
 - (void)handleFailedStationSearchWithError:(NSError *)error {
         [ErrorManager showAlertForNetworkError:error];
-}
-
-#pragma mark - Animations
-
-- (void)hideCloseButtonAnimated:(BOOL)animated completion:(void (^)(BOOL finished))completion {
-    [self animateCloseButtonToPosition:-self.closeButtonWidth.constant animated:animated completion:completion];
-}
-
-- (void)showCloseButtonAnimated:(BOOL)animated completion:(void (^)(BOOL finished))completion {
-    [self animateCloseButtonToPosition:kCloseButtonShowValueRight animated:animated completion:completion];
-}
-
-- (void)hideSearchTextFieldAnimated:(BOOL)animated completion:(void (^)(BOOL finished))completion {
-    [self animateSearchTextFieldToPosition:-self.searchTextFieldWidth.constant animated:animated completion:completion];
-}
-
-- (void)showSearchTextFieldAnimated:(BOOL)animated completion:(void (^)(BOOL finished))completion {
-    [self animateSearchTextFieldToPosition:kSearchTextFieldShowValueLeft animated:animated completion:completion];
-}
-
-- (void)animateCloseButtonToPosition:(CGFloat)position animated:(BOOL)animated completion:(void (^)(BOOL finished))completion {
-    if (animated) {
-        [UIView animateWithDuration:kSlideAnimationDuration
-                              delay:kSlideAnimationDelay
-             usingSpringWithDamping:kSlideAnimationSpringDamping
-              initialSpringVelocity:kSlideAnimationSpringVelocity
-                            options:kDefaultAnimationOptions
-                         animations:^{
-                             [self.closeButtonRight setConstant:position];
-                             [self.view layoutIfNeeded];
-                         }
-                         completion:completion];
-    }
-    else {
-        [self.closeButtonRight setConstant:position];
-        
-        if (completion) {
-            completion(YES);
-        }
-    }
-}
-
-- (void)animateSearchTextFieldToPosition:(CGFloat)position animated:(BOOL)animated completion:(void (^)(BOOL finished))completion {
-    if (animated) {
-        [UIView animateWithDuration:kSlideAnimationDuration
-                              delay:kSlideAnimationDelay
-             usingSpringWithDamping:kSlideAnimationSpringDamping
-              initialSpringVelocity:kSlideAnimationSpringVelocity
-                            options:kDefaultAnimationOptions
-                         animations:^{
-                             [self.searchTextFieldLeft setConstant:position];
-                             [self.view layoutIfNeeded];
-                         }
-                         completion:completion];
-    }
-    else {
-        [self.searchTextFieldLeft setConstant:position];
-        
-        if (completion) {
-            completion(YES);
-        }
-    }
 }
 
 @end

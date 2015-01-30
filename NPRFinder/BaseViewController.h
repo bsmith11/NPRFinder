@@ -8,10 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+#import "NPRNavigationBar.h"
+
 @class BaseNavigationController;
 @class TransitionController;
 
 @interface BaseViewController : UIViewController
+
+@property (strong, nonatomic) NPRNavigationBar *nprNavigationBar;
 
 @property (assign, nonatomic) CGFloat keyboardHeight;
 
@@ -20,9 +24,5 @@
 - (void)keyboardWillHide:(NSNotification *)notification;
 - (BaseNavigationController *)baseNavigationController;
 - (TransitionController *)transitionController;
-
-@property (strong, nonatomic) UIView *navigationBarContainer;
-@property (strong, nonatomic) NSLayoutConstraint *navigationBarContainerHeight;
-@property (strong, nonatomic) NSLayoutConstraint *navigationBarContainerTop;
 
 @end
