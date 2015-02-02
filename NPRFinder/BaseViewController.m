@@ -9,7 +9,6 @@
 #import "BaseViewController.h"
 #import "UIImage+ImageEffects.h"
 #import "BaseNavigationController.h"
-#import "TransitionController.h"
 #import "AppDelegate.h"
 #import "UIView+NPRConstraints.h"
 #import "UIScreen+NPRFinder.h"

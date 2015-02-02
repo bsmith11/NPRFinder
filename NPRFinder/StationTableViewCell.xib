@@ -31,22 +31,31 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Follow Icon" translatesAutoresizingMaskIntoConstraints="NO" id="uya-gi-vaM" userLabel="Follow Image View">
+                        <rect key="frame" x="107" y="14" width="22" height="22"/>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="centerX" secondItem="DCk-xc-nbT" secondAttribute="centerX" id="1mi-Hb-Q2F"/>
                     <constraint firstItem="DCk-xc-nbT" firstAttribute="top" secondItem="FPx-yS-8sC" secondAttribute="bottom" id="38m-ee-C3U"/>
+                    <constraint firstItem="llS-OM-ze4" firstAttribute="leading" secondItem="uya-gi-vaM" secondAttribute="trailing" constant="10" id="OOF-2w-XKA"/>
                     <constraint firstItem="FPx-yS-8sC" firstAttribute="top" secondItem="llS-OM-ze4" secondAttribute="bottom" id="UvZ-ff-jSA"/>
                     <constraint firstAttribute="centerX" secondItem="FPx-yS-8sC" secondAttribute="centerX" id="XSZ-0L-ddi"/>
                     <constraint firstAttribute="centerY" secondItem="FPx-yS-8sC" secondAttribute="centerY" id="Xls-Nh-kFT"/>
+                    <constraint firstItem="llS-OM-ze4" firstAttribute="centerY" secondItem="uya-gi-vaM" secondAttribute="centerY" id="b33-f4-SpA"/>
                     <constraint firstAttribute="centerX" secondItem="llS-OM-ze4" secondAttribute="centerX" id="puE-gd-kfi"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="followImageView" destination="uya-gi-vaM" id="ulc-7B-d50"/>
                 <outlet property="frequencyLabel" destination="FPx-yS-8sC" id="dm5-ID-GAU"/>
                 <outlet property="locationLabel" destination="DCk-xc-nbT" id="eGv-U2-L4R"/>
                 <outlet property="nameLabel" destination="llS-OM-ze4" id="lf4-zb-kA1"/>
             </connections>
-            <point key="canvasLocation" x="288" y="434.5"/>
+            <point key="canvasLocation" x="288" y="433.5"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="Follow Icon" width="22" height="22"/>
+    </resources>
 </document>

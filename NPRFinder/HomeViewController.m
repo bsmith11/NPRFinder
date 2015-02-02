@@ -29,6 +29,7 @@
 #import "BaseNavigationController.h"
 #import "TransitionController.h"
 #import "UINavigationItem+NPRFinder.h"
+#import "AppDelegate.h"
 
 static NSString * const kLocationTitleLabelTextPending = @"Finding your location...";
 static NSString * const kLocationTitleLabelTextFound = @"Nearest NPR stations";
@@ -98,14 +99,25 @@ static NSString * const kLocationTitleLabelTextErrorLocation = @"Failed to find 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [self.transitionCoordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        [self.nprNavigationBar showLeftItemWithAnimation:NPRItemAnimationFadeIn
-                                                animated:YES
-                                              completion:nil];
+    UIWindow *window = [[UIApplication sharedApplication].delegate window];
+    
+    [self.transitionCoordinator animateAlongsideTransitionInView:window
+                                                       animation:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         [self.nprNavigationBar showRightItemWithAnimation:NPRItemAnimationSlideHorizontally
                                                  animated:YES
                                                completion:nil];
-    } completion:nil];
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        if ([context isCancelled]) {
+            [self.nprNavigationBar hideRightItemWithAnimation:NPRItemAnimationSlideHorizontally
+                                                     animated:NO
+                                                   completion:nil];
+        }
+        else {
+            [self.nprNavigationBar showLeftItemWithAnimation:NPRItemAnimationFadeIn
+                                                    animated:YES
+                                                  completion:nil];
+        }
+    }];
     
     if (self.shouldReloadTable) {
         self.shouldReloadTable = NO;
@@ -130,7 +142,9 @@ static NSString * const kLocationTitleLabelTextErrorLocation = @"Failed to find 
     
     [self stopTableViewCellAnimations];
     
-    [self.transitionCoordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+    UIWindow *window = [[UIApplication sharedApplication].delegate window];
+    
+    [self.transitionCoordinator animateAlongsideTransitionInView:window animation:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         if (!self.isPushingToSearch) {
             [self.nprNavigationBar hideLeftItemWithAnimation:NPRItemAnimationFadeOut
                                                     animated:YES
@@ -404,7 +418,8 @@ static NSString * const kLocationTitleLabelTextErrorLocation = @"Failed to find 
     [self.transitionController.detailAnimationController setTableView:tableView];
     
     StationViewController *stationViewController = [[StationViewController alloc] initWithStation:station];
-    [self.navigationController pushViewController:stationViewController animated:YES];
+    
+    [self.navigationController pushViewController:stationViewController animated:YES];    
 }
 
 #pragma mark - SS Pull To Refresh Delegate

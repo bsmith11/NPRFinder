@@ -51,10 +51,10 @@ static NSString * const kTitleLabelText = @"Programs";
     [self setupTitleLabel];
     [self setupProgramTableView];
     
-    [self.nprNavigationBar showLeftItemWithAnimation:NPRItemAnimationSlideVertically
+    [self.nprNavigationBar hideLeftItemWithAnimation:NPRItemAnimationSlideVertically
                                             animated:NO
                                           completion:nil];
-    [self.nprNavigationBar showMiddleItemWithAnimation:NPRItemAnimationSlideVertically
+    [self.nprNavigationBar hideMiddleItemWithAnimation:NPRItemAnimationSlideVertically
                                               animated:NO
                                             completion:nil];
 }
@@ -62,26 +62,30 @@ static NSString * const kTitleLabelText = @"Programs";
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [self.transitionCoordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-//        [self.nprNavigationBar showLeftItemWithAnimation:NPRItemAnimationSlideVertically
-//                                                animated:YES
-//                                              completion:nil];
-//        [self.nprNavigationBar showRightItemWithAnimation:NPRItemAnimationSlideVertically
-//                                                 animated:YES
-//                                               completion:nil];
+    UIWindow *window = [[UIApplication sharedApplication].delegate window];
+    
+    [self.transitionCoordinator animateAlongsideTransitionInView:window animation:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        [self.nprNavigationBar showLeftItemWithAnimation:NPRItemAnimationSlideVertically
+                                                animated:YES
+                                              completion:nil];
+        [self.nprNavigationBar showRightItemWithAnimation:NPRItemAnimationSlideVertically
+                                                 animated:YES
+                                               completion:nil];
     } completion:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    [self.transitionCoordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-//        [self.nprNavigationBar hideLeftItemWithAnimation:NPRItemAnimationSlideVertically
-//                                                animated:YES
-//                                              completion:nil];
-//        [self.nprNavigationBar hideRightItemWithAnimation:NPRItemAnimationSlideVertically
-//                                                 animated:YES
-//                                               completion:nil];
+    UIWindow *window = [[UIApplication sharedApplication].delegate window];
+    
+    [self.transitionCoordinator animateAlongsideTransitionInView:window animation:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        [self.nprNavigationBar hideLeftItemWithAnimation:NPRItemAnimationSlideVertically
+                                                animated:YES
+                                              completion:nil];
+        [self.nprNavigationBar hideRightItemWithAnimation:NPRItemAnimationSlideVertically
+                                                 animated:YES
+                                               completion:nil];
     } completion:nil];
 }
 
@@ -99,6 +103,7 @@ static NSString * const kTitleLabelText = @"Programs";
     self.titleLabel = [UILabel new];
     [self.titleLabel npr_setupWithStyle:NPRLabelStyleTitle];
     [self.titleLabel setText:kTitleLabelText];
+    [self.titleLabel sizeToFit];
     [self.nprNavigationBar setMiddleItem:self.titleLabel];
 }
 

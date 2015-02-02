@@ -26,6 +26,8 @@
 #import "ProgramsViewController.h"
 #import "SwitchConstants.h"
 #import "UINavigationItem+NPRFinder.h"
+#import "AudioTableViewCell.h"
+#import "AudioManager.h"
 
 static NSString * const kFacebookProfileUrl = @"fb://profile/%@";
 static NSString * const kTwitterProfileUrl = @"twitter://user?id=%@";
@@ -35,11 +37,12 @@ static const CGFloat kDetailsTableViewFadeAnimationDuration = 0.4;
 static const NSInteger kLinksIndexPath = 0;
 static const NSInteger kProgramsIndexPath = 1;
 
-@interface StationViewController ()
+@interface StationViewController () <AudioTableViewCellDelegate>
 
 @property (strong, nonatomic) NSArray *programs;
 @property (strong, nonatomic) UIImage *backgroundImage;
 @property (strong, nonatomic) UIButton *closeButton;
+@property (strong, nonatomic) UIButton *followButton;
 
 @property (copy, nonatomic) Station *station;
 
@@ -56,6 +59,7 @@ static const NSInteger kProgramsIndexPath = 1;
 @property (assign, nonatomic) BOOL shouldSetupGradientView;
 @property (assign, nonatomic) BOOL shouldDisplayStationUrls;
 @property (assign, nonatomic) BOOL didNavigateToPrograms;
+@property (assign, nonatomic) CGPoint startPoint;
 
 @end
 
@@ -83,6 +87,7 @@ static const NSInteger kProgramsIndexPath = 1;
     
     [self setupBackgroundImageView];
     [self setupCloseButton];
+    [self setupFollowButton];
     [self setupInfoContainerView];
     [self setupNameLabel];
     [self setupFrequencyLabel];
@@ -100,6 +105,9 @@ static const NSInteger kProgramsIndexPath = 1;
     [self.nprNavigationBar hideLeftItemWithAnimation:NPRItemAnimationSlideHorizontally
                                             animated:NO
                                           completion:nil];
+    [self.nprNavigationBar hideRightItemWithAnimation:NPRItemAnimationSlideVertically
+                                             animated:NO
+                                           completion:nil];
     [self hideDetailsTableViewAnimated:NO completion:nil];
     
     [self downloadStationPrograms];
@@ -110,12 +118,22 @@ static const NSInteger kProgramsIndexPath = 1;
     
     [self.infoContainerView setHidden:NO];
     
-    [self.transitionCoordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+    UIWindow *window = [[UIApplication sharedApplication].delegate window];
+    
+    [self.transitionCoordinator animateAlongsideTransitionInView:window animation:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         if (!self.didNavigateToPrograms) {
             [self.nprNavigationBar showLeftItemWithAnimation:NPRItemAnimationSlideHorizontally
                                                     animated:YES
                                                   completion:nil];
+            [self.nprNavigationBar showRightItemWithAnimation:NPRItemAnimationSlideVertically
+                                                     animated:YES
+                                                   completion:nil];
         }
+//        else {
+//            [self.nprNavigationBar showLeftItemWithAnimation:NPRItemAnimationFadeIn
+//                                                    animated:YES
+//                                                  completion:nil];
+//        }
     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         if (!self.didNavigateToPrograms) {
             [self showDetailsTableViewAnimated:YES completion:nil];
@@ -143,21 +161,38 @@ static const NSInteger kProgramsIndexPath = 1;
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    [self.transitionCoordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        NPRItemAnimation animation;
+    UIWindow *window = [[UIApplication sharedApplication].delegate window];
+    
+    [self.transitionCoordinator animateAlongsideTransitionInView:window animation:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         if (!self.didNavigateToPrograms) {
-            animation = NPRItemAnimationSlideHorizontally;
+            [self.nprNavigationBar hideLeftItemWithAnimation:NPRItemAnimationSlideHorizontally
+                                                    animated:YES
+                                                  completion:nil];
+            [self.nprNavigationBar hideRightItemWithAnimation:NPRItemAnimationSlideVertically
+                                                     animated:YES
+                                                   completion:nil];
             [self.infoContainerView setHidden:YES];
             [self hideDetailsTableViewAnimated:YES completion:nil];
         }
         else {
-            animation = NPRItemAnimationFadeOut;
+            [self.nprNavigationBar hideLeftItemWithAnimation:NPRItemAnimationFadeOut
+                                                    animated:YES
+                                                  completion:nil];
         }
-
-        [self.nprNavigationBar hideLeftItemWithAnimation:animation
-                                                animated:YES
-                                              completion:nil];
-    } completion:nil];
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        if ([context isCancelled]) {
+            if (!self.didNavigateToPrograms) {
+                [self.nprNavigationBar showLeftItemWithAnimation:NPRItemAnimationSlideHorizontally
+                                                        animated:NO
+                                                      completion:nil];
+                [self.nprNavigationBar showRightItemWithAnimation:NPRItemAnimationSlideVertically
+                                                         animated:YES
+                                                       completion:nil];
+                [self.infoContainerView setHidden:NO];
+                [self hideDetailsTableViewAnimated:NO completion:nil];
+            }
+        }
+    }];
 }
 
 #pragma mark - Setup
@@ -178,11 +213,25 @@ static const NSInteger kProgramsIndexPath = 1;
     [self.nprNavigationBar setLeftItem:self.closeButton];
 }
 
+- (void)setupFollowButton {
+    self.followButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.followButton npr_setupWithStyle:NPRButtonStyleFollowButton
+                                   target:self
+                                   action:@selector(followButtonPressed)];
+    
+    [self.followButton setSelected:[[LocationManager sharedManager] isFollowingStation:self.station]];
+    
+    [self.nprNavigationBar setRightItem:self.followButton];
+}
+
 - (void)setupInfoContainerView {
     [self.infoContainerView setBackgroundColor:[UIColor clearColor]];
     CGFloat leftMargin = 20.0 + CGRectGetWidth(self.closeButton.frame);
     CGFloat width = [UIScreen npr_screenWidth] - (leftMargin * 2);
-    [self.infoContainerViewWidth setConstant:width];    
+    [self.infoContainerViewWidth setConstant:width];
+    
+    UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+    [self.infoContainerView addGestureRecognizer:panGesture];
 }
 
 - (void)setupFrequencyLabel {
@@ -243,6 +292,72 @@ static const NSInteger kProgramsIndexPath = 1;
     }
     
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)followButtonPressed {
+    self.followButton.selected = !self.followButton.selected;
+    
+    if (self.followButton.selected) {
+        [[LocationManager sharedManager] followStation:self.station];
+    }
+    else {
+        [[LocationManager sharedManager] unfollowStation:self.station];
+    }
+}
+
+- (void)handlePan:(UIPanGestureRecognizer *)gesture {
+    CGPoint velocity = [gesture velocityInView:self.view];
+    CGPoint translation = [gesture translationInView:self.view];
+    CGFloat maxTranslationDistance = 200.0;
+    
+    switch (gesture.state) {
+        case UIGestureRecognizerStateBegan: {
+            [self.transitionController setInteractionController:[UIPercentDrivenInteractiveTransition new]];
+            [self.transitionController setIsInteractive:YES];
+            
+            self.startPoint = translation;
+            
+            [self closeButtonPressed];
+            break;
+        }
+            
+        case UIGestureRecognizerStateChanged: {
+            CGFloat percentComplete = (translation.y - self.startPoint.y) / maxTranslationDistance;
+            NSLog(@"Percent Complete: %f", percentComplete);
+            [self.transitionController.interactionController updateInteractiveTransition:percentComplete];
+            break;
+        }
+            
+        case UIGestureRecognizerStateEnded: {
+            [self.transitionController setIsInteractive:NO];
+            
+            CGFloat percentComplete = (translation.y - self.startPoint.y) / maxTranslationDistance;
+            CGFloat velocityAdjustedPercentComplete = percentComplete + (0.1 * velocity.y);
+            
+            if (velocityAdjustedPercentComplete >= 0.5) {
+                [self.transitionController.interactionController finishInteractiveTransition];
+                NSLog(@"Finish Interactive Transition");
+            }
+            else {
+                [self.transitionController.interactionController cancelInteractiveTransition];
+                NSLog(@"Cancel Interactive Transition");
+            }
+            
+            self.transitionController.interactionController = nil;
+            break;
+        }
+            
+        case UIGestureRecognizerStateCancelled: {
+            [self.transitionController setIsInteractive:NO];
+            [self.transitionController.interactionController cancelInteractiveTransition];
+            
+            self.transitionController.interactionController = nil;
+            break;
+        }
+            
+        default:
+            break;
+    }
 }
 
 #pragma mark - Network Requests
@@ -331,14 +446,29 @@ static const NSInteger kProgramsIndexPath = 1;
     [[UIApplication sharedApplication] openURL:stationUrl.url];
 }
 
+#pragma mark - Audio Table View Cell Delegate
+
+- (void)didSelectWithState:(BOOL)state indexPath:(NSIndexPath *)indexPath {
+    AudioManager *audioManager = [AudioManager sharedManager];
+    
+    if (state) {
+        [audioManager startPlayingStation:self.station];
+    }
+    else {
+        [audioManager stop];
+    }
+}
+
 #pragma mark - Table View Delegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger count = 1;
     
-    if ([self.programs count] > 0) {
-        count++;
-    }
+//    if ([self.programs count] > 0) {
+//        count++;
+//    }
+    
+    count++;
     
     return count;
 }
@@ -348,7 +478,8 @@ static const NSInteger kProgramsIndexPath = 1;
         return [StationUrlTableViewCell height];
     }
     else {
-        return [StationDetailsTableViewCell height];
+//        return [StationDetailsTableViewCell height];
+        return [AudioTableViewCell heightWithStation:nil];
     }
 }
 
@@ -362,26 +493,36 @@ static const NSInteger kProgramsIndexPath = 1;
         return cell;
     }
     else {
-        StationDetailsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[StationDetailsTableViewCell npr_reuseIdentifier] forIndexPath:indexPath];
-        if (indexPath.row == kProgramsIndexPath) {
-            [cell setupWithText:@"Programs" count:[self.programs count] indexPath:indexPath];
-        }
-        else {
-            [cell setupWithText:@"Programs" count:[self.programs count] indexPath:indexPath];
-        }
+//        StationDetailsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[StationDetailsTableViewCell npr_reuseIdentifier] forIndexPath:indexPath];
+//        if (indexPath.row == kProgramsIndexPath) {
+//            [cell setupWithText:@"Programs" count:[self.programs count] indexPath:indexPath];
+//        }
+//        else {
+//            [cell setupWithText:@"Programs" count:[self.programs count] indexPath:indexPath];
+//        }
+//        
+//        return cell;
+        AudioTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[AudioTableViewCell npr_reuseIdentifier] forIndexPath:indexPath];
+        
+        BOOL isCurrentlyPlaying = [[[AudioManager sharedManager] currentPlayingStation] isEqual:self.station];
+        
+        [cell setupWithStation:self.station status:isCurrentlyPlaying];
+        
+        [cell setIndexPath:indexPath];
+        [cell setDelegate:self];
         
         return cell;
     }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == kProgramsIndexPath) {
-        self.didNavigateToPrograms = YES;
-    
-        ProgramsViewController *programsViewController = [[ProgramsViewController alloc] initWithPrograms:self.programs];
-    
-        [self.navigationController pushViewController:programsViewController animated:YES];
-    }
+//    if (indexPath.row == kProgramsIndexPath) {
+//        self.didNavigateToPrograms = YES;
+//    
+//        ProgramsViewController *programsViewController = [[ProgramsViewController alloc] initWithPrograms:self.programs];
+//    
+//        [self.navigationController pushViewController:programsViewController animated:YES];
+//    }
 }
 
 #pragma mark - Animations

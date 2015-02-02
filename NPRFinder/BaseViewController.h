@@ -9,9 +9,9 @@
 #import <UIKit/UIKit.h>
 
 #import "NPRNavigationBar.h"
+#import "TransitionController.h"
 
 @class BaseNavigationController;
-@class TransitionController;
 
 @interface BaseViewController : UIViewController
 

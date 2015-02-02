@@ -18,7 +18,9 @@ typedef NS_ENUM(NSInteger, NPRButtonStyle) {
     NPRButtonStyleAcceptButton,
     NPRButtonStyleDenyButton,
     NPRButtonStyleBackButton,
-    NPRButtonStyleForwardButton
+    NPRButtonStyleForwardButton,
+    NPRButtonStyleFollowButton,
+    NPRButtonStylePlayButton
 };
 
 @interface UIButton (NPRFinder)

@@ -8,6 +8,8 @@
 
 #import <CoreLocation/CoreLocation.h>
 
+@class Station;
+
 @protocol LocationManagerDelegate <NSObject>
 
 - (void)didUpdateLocation:(CLLocation *)location;
@@ -40,6 +42,11 @@
 
 - (void)start;
 - (void)stop;
+
+- (NSArray *)followedStations;
+- (void)followStation:(Station *)station;
+- (void)unfollowStation:(Station *)station;
+- (BOOL)isFollowingStation:(Station *)station;
 
 @property (weak, nonatomic) id <LocationManagerDelegate> delegate;
 

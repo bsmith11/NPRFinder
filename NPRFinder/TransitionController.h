@@ -15,8 +15,11 @@
 
 @interface TransitionController : NSObject <UINavigationControllerDelegate, UIViewControllerTransitioningDelegate>
 
+@property (strong, nonatomic) UIPercentDrivenInteractiveTransition *interactionController;
 @property (strong, nonatomic) DetailAnimationController *detailAnimationController;
 @property (strong, nonatomic) FadeAnimationController *fadeAnimationController;
 @property (strong, nonatomic) SlideAnimationController *slideAnimationController;
+
+@property (assign, nonatomic) BOOL isInteractive;
 
 @end

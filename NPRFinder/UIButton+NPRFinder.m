@@ -69,10 +69,22 @@ static NSString * const kDenyButtonTitle = @"No";
             
         case NPRButtonStyleBackButton:
             [self setImage:[UIImage npr_backIcon] forState:UIControlStateNormal];
+            [self setFrame:CGRectMake(0, 0, 44.0, 44.0)];
             break;
             
         case NPRButtonStyleForwardButton:
             [self setImage:[UIImage npr_forwardIcon] forState:UIControlStateNormal];
+            break;
+            
+        case NPRButtonStyleFollowButton:
+            [self setImage:[UIImage npr_followIcon] forState:UIControlStateNormal];
+            [self setImage:[UIImage npr_followedIcon] forState:UIControlStateSelected];
+            [self setFrame:CGRectMake(0, 0, 44.0, 44.0)];
+            break;
+            
+        case NPRButtonStylePlayButton:
+            [self setBackgroundImage:[UIImage npr_playIcon] forState:UIControlStateNormal];
+            [self setBackgroundImage:[UIImage npr_pauseIcon] forState:UIControlStateSelected];
             break;
             
         default:

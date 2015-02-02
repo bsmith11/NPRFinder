@@ -12,6 +12,7 @@
 #import "ErrorManager.h"
 #import "NotificationManager.h"
 #import "SwitchConstants.h"
+#import "Station.h"
 
 static NSString * const kIsUpdatingLocationKey = @"npr_is_updating_location";
 static NSString * const kIsMonitoringSignificantLocationChangesKey = @"npr_is_monitoring_significant_location_changes";
@@ -20,6 +21,7 @@ static NSString * const kLastUpdateDateKey = @"npr_last_update_date";
 @interface LocationManager ()
 
 @property (strong, nonatomic) CLLocationManager *locationManager;
+@property (strong, nonatomic) NSMutableSet *stations;
 
 @property (copy, nonatomic) NSDate *lastUpdateDate;
 
@@ -62,6 +64,8 @@ static NSString * const kLastUpdateDateKey = @"npr_last_update_date";
         _isRequestingAuthorization = NO;
         _accuracyThreshold = 150.0;
         _timePassedThreshold = 5.0;
+        
+        _stations = [NSMutableSet set];
         
         [self setIsUpdatingLocation:NO];
         [self setIsMonitoringSignificantLocationChanges:NO];
@@ -241,6 +245,24 @@ static NSString * const kLastUpdateDateKey = @"npr_last_update_date";
 
 - (void)disallowDeferredLocationUpdates {
     [self.locationManager disallowDeferredLocationUpdates];
+}
+
+#pragma mark - Station Monitoring
+
+- (NSArray *)followedStations {
+    return [self.stations allObjects];
+}
+
+- (void)followStation:(Station *)station {
+    [self.stations addObject:station];
+}
+
+- (void)unfollowStation:(Station *)station {
+    [self.stations removeObject:station];
+}
+
+- (BOOL)isFollowingStation:(Station *)station {
+    return [self.stations containsObject:station];
 }
 
 #pragma mark - CLLocation Manager Delegate

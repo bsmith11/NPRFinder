@@ -21,6 +21,10 @@ static NSString * const kTwitterIconName = @"Twitter Icon";
 static NSString * const kHomeIconName = @"Home Icon";
 static NSString * const kBackIconName = @"Back Icon";
 static NSString * const kForwardIconName = @"Forward Icon";
+static NSString * const kFollowIconName = @"Follow Icon";
+static NSString * const kFollowedIconName = @"Followed Icon";
+static NSString * const kPlayIconName = @"Play Icon";
+static NSString * const kPauseIconName = @"Pause Icon";
 
 @implementation UIImage (NPRFinder)
 
@@ -101,6 +105,22 @@ static NSString * const kForwardIconName = @"Forward Icon";
 
 + (UIImage *)npr_forwardIcon {
     return [[UIImage imageNamed:kForwardIconName] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+}
+
++ (UIImage *)npr_followIcon {
+    return [[UIImage imageNamed:kFollowIconName] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+}
+
++ (UIImage *)npr_followedIcon {
+    return [[UIImage imageNamed:kFollowedIconName] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+}
+
++ (UIImage *)npr_playIcon {
+    return [[UIImage imageNamed:kPlayIconName] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+}
+
++ (UIImage *)npr_pauseIcon {
+    return [[UIImage imageNamed:kPauseIconName] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 }
 
 @end

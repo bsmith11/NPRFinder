@@ -87,6 +87,10 @@
     return nil;
 }
 
+- (id<UIViewControllerInteractiveTransitioning>)navigationController:(UINavigationController *)navigationController interactionControllerForAnimationController:(id<UIViewControllerAnimatedTransitioning>)animationController {
+    return self.isInteractive ? self.interactionController : nil;
+}
+
 #pragma mark - View Controller Transitioning Delegate
 
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented

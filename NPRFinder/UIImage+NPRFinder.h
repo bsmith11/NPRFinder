@@ -23,5 +23,9 @@
 + (UIImage *)npr_homeIcon;
 + (UIImage *)npr_backIcon;
 + (UIImage *)npr_forwardIcon;
++ (UIImage *)npr_followIcon;
++ (UIImage *)npr_followedIcon;
++ (UIImage *)npr_playIcon;
++ (UIImage *)npr_pauseIcon;
 
 @end

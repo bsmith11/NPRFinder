@@ -34,7 +34,9 @@ typedef NS_ENUM(NSInteger, NPRItemPosition) {
     [_leftItem removeFromSuperview];
     _leftItem = leftItem;
     
-    [_leftItem sizeToFit];
+    if ([_leftItem isKindOfClass:[UILabel class]]) {
+        [_leftItem sizeToFit];
+    }
     
     CGRect frame = [self shownFrameForPosition:NPRItemPositionLeft];
     [_leftItem setFrame:frame];
@@ -46,7 +48,9 @@ typedef NS_ENUM(NSInteger, NPRItemPosition) {
     [_rightItem removeFromSuperview];
     _rightItem = rightItem;
     
-    [_rightItem sizeToFit];
+    if ([_rightItem isKindOfClass:[UILabel class]]) {
+        [_rightItem sizeToFit];
+    }
     
     CGRect frame = [self shownFrameForPosition:NPRItemPositionRight];
     [_rightItem setFrame:frame];
@@ -58,7 +62,9 @@ typedef NS_ENUM(NSInteger, NPRItemPosition) {
     [_middleItem removeFromSuperview];
     _middleItem = middleItem;
     
-    [_middleItem sizeToFit];
+    if ([_middleItem isKindOfClass:[UILabel class]]) {
+        [_middleItem sizeToFit];
+    }
     
     CGRect frame = [self shownFrameForPosition:NPRItemPositionMiddle];
     [_middleItem setFrame:frame];
@@ -260,7 +266,7 @@ typedef NS_ENUM(NSInteger, NPRItemPosition) {
             break;
             
         case NPRItemAnimationSlideVertically: {
-            frame.origin.y = -CGRectGetHeight(frame);
+            frame.origin.y = -(CGRectGetHeight(frame) + [UIScreen npr_statusBarHeight]);
         }
             break;
             

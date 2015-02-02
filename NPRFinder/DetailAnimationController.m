@@ -7,6 +7,7 @@
 //
 
 #import "DetailAnimationController.h"
+#import "BaseViewController.h"
 
 static const CGFloat kDetailAnimationDuration = 0.75;
 static const CGFloat kDetailAnimationSpringDampingValue = 1.0;
@@ -86,12 +87,17 @@ static const CGFloat kDetailAnimationInitialSpringVelocityValue = 1.0;
                          }
                      }
                      completion:^(BOOL finished) {
-                         [containerView sendSubviewToBack:fromViewController.view];
+                         if (![transitionContext transitionWasCancelled]) {
+                             [containerView sendSubviewToBack:fromViewController.view];
+                         }
+                
                          [self.topView removeFromSuperview];
                          [self.contentView removeFromSuperview];
                          [self.bottomView removeFromSuperview];
                          [self.tableView setAlpha:1.0];
                          [toViewController.view setAlpha:1.0];
+                         
+                         NSLog(@"Complete Transition: %d", ![transitionContext transitionWasCancelled]);
                          
                          [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
                      }];

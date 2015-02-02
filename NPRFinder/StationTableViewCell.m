@@ -25,6 +25,7 @@ static const CGFloat kEstimatedStationTableViewCellHeight = 162.0;
 @property (weak, nonatomic) IBOutlet UILabel *frequencyLabel;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *followImageView;
 
 @property (assign, nonatomic) CGFloat animationValue;
 @property (assign, nonatomic) CGFloat stopAnimationValue;
@@ -51,6 +52,9 @@ static const CGFloat kEstimatedStationTableViewCellHeight = 162.0;
     [self setupFrequencyLabel];
     [self setupNameLabel];
     [self setupLocationLabel];
+    [self setupFollowImageView];
+    
+    [self hideFollowImageView];
 }
 
 #pragma mark - Setup
@@ -65,6 +69,13 @@ static const CGFloat kEstimatedStationTableViewCellHeight = 162.0;
 
 - (void)setupLocationLabel {
     [self.locationLabel npr_setupWithStyle:NPRLabelStyleDetail];
+}
+
+- (void)setupFollowImageView {
+    [self.followImageView setBackgroundColor:[UIColor clearColor]];
+    [self.followImageView setContentMode:UIViewContentModeCenter];
+    [self.followImageView setImage:[UIImage npr_followedIcon]];
+    [self.followImageView setTintColor:[UIColor npr_foregroundColor]];
 }
 
 - (void)setupWithStation:(Station *)station {
@@ -95,6 +106,16 @@ static const CGFloat kEstimatedStationTableViewCellHeight = 162.0;
     
 }
 
+#pragma mark - Actions
+
+- (void)showFollowImageView {
+    [self.followImageView setHidden:NO];
+}
+
+- (void)hideFollowImageView {
+    [self.followImageView setHidden:YES];
+}
+
 #pragma mark - Animations
 
 - (void)hideWithStation:(Station *)station delay:(CGFloat)delay {
@@ -109,7 +130,9 @@ static const CGFloat kEstimatedStationTableViewCellHeight = 162.0;
         self.alpha = 1.0;
     } completion:nil];
     
-    [self startFrequencyAnimationToStation:station];
+    [self.frequencyLabel setText:station.frequency];
+    
+//    [self startFrequencyAnimationToStation:station];
 }
 
 - (void)startFrequencyAnimationToStation:(Station *)station {

@@ -15,6 +15,8 @@
 - (void)setupWithStation:(Station *)station;
 - (void)hideWithStation:(Station *)station delay:(CGFloat)delay;
 - (void)stopAnimation;
+- (void)showFollowImageView;
+- (void)hideFollowImageView;
 
 + (CGFloat)heightWithStation:(Station *)station;
 + (CGFloat)estimatedHeight;

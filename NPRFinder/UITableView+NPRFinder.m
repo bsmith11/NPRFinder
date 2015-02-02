@@ -13,6 +13,7 @@
 #import "StationUrlTableViewCell.h"
 #import "ProgramTableViewCell.h"
 #import "StationDetailsTableViewCell.h"
+#import "AudioTableViewCell.h"
 
 @implementation UITableView (NPRFinder)
 
@@ -36,6 +37,7 @@
             [self registerNib:[TaglineTableViewCell npr_nib] forCellReuseIdentifier:[TaglineTableViewCell npr_reuseIdentifier]];
             [self registerNib:[StationUrlTableViewCell npr_nib] forCellReuseIdentifier:[StationUrlTableViewCell npr_reuseIdentifier]];
             [self registerNib:[StationDetailsTableViewCell npr_nib] forCellReuseIdentifier:[StationDetailsTableViewCell npr_reuseIdentifier]];
+            [self registerNib:[AudioTableViewCell npr_nib] forCellReuseIdentifier:[AudioTableViewCell npr_reuseIdentifier]];
             break;
             
         case NPRTableViewStyleProgram:
