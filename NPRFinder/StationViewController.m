@@ -301,7 +301,6 @@ static const NSInteger kLinksIndexPath = 0;
                 percentComplete = 0.0;
             }
             
-            NSLog(@"%f", percentComplete);
             [self.transitionController.interactionController updateInteractiveTransition:percentComplete];
             break;
         }
