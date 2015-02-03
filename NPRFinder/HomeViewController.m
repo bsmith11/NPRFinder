@@ -101,21 +101,21 @@ static NSString * const kLocationTitleLabelTextErrorLocation = @"Failed to find 
     
     UIWindow *window = [[UIApplication sharedApplication].delegate window];
     
-    [self.transitionCoordinator animateAlongsideTransitionInView:window
-                                                       animation:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+    [self.transitionCoordinator animateAlongsideTransitionInView:window animation:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         [self.nprNavigationBar showRightItemWithAnimation:NPRItemAnimationSlideHorizontally
-                                                 animated:YES
+                                                 animated:NO
                                                completion:nil];
+        [self.nprNavigationBar showLeftItemWithAnimation:NPRItemAnimationFadeIn
+                                                animated:NO
+                                              completion:nil];
     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         if ([context isCancelled]) {
-            [self.nprNavigationBar hideRightItemWithAnimation:NPRItemAnimationSlideHorizontally
-                                                     animated:NO
-                                                   completion:nil];
+            [self.nprNavigationBar finishHideRightItemWithAnimation:NPRItemAnimationSlideHorizontally];
+            [self.nprNavigationBar finishHideLeftItemWithAnimation:NPRItemAnimationFadeIn];
         }
         else {
-            [self.nprNavigationBar showLeftItemWithAnimation:NPRItemAnimationFadeIn
-                                                    animated:YES
-                                                  completion:nil];
+            [self.nprNavigationBar finishShowRightItemWithAnimation:NPRItemAnimationSlideHorizontally];
+            [self.nprNavigationBar finishShowLeftItemWithAnimation:NPRItemAnimationFadeIn];
         }
     }];
     
@@ -147,13 +147,18 @@ static NSString * const kLocationTitleLabelTextErrorLocation = @"Failed to find 
     [self.transitionCoordinator animateAlongsideTransitionInView:window animation:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         if (!self.isPushingToSearch) {
             [self.nprNavigationBar hideLeftItemWithAnimation:NPRItemAnimationFadeOut
-                                                    animated:YES
+                                                    animated:NO
                                                   completion:nil];
             [self.nprNavigationBar hideRightItemWithAnimation:NPRItemAnimationSlideHorizontally
-                                                     animated:YES
+                                                     animated:NO
                                                    completion:nil];
         }
-    } completion:nil];
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        if (!self.isPushingToSearch) {
+            [self.nprNavigationBar finishHideLeftItemWithAnimation:NPRItemAnimationFadeOut];
+            [self.nprNavigationBar finishHideRightItemWithAnimation:NPRItemAnimationSlideHorizontally];
+        }
+    }];
 }
 
 #pragma mark - Setup
@@ -414,10 +419,14 @@ static NSString * const kLocationTitleLabelTextErrorLocation = @"Failed to find 
         
     CGRect contentRect = [tableView convertRect:cell.frame fromView:cell.superview];
     
+    CGRect rect = [self.navigationController.view convertRect:cell.frame fromView:cell.superview];
+    CGFloat maxPanDistance = (CGRectGetMinY(rect) - 8.0);
+    
     [self.transitionController.detailAnimationController setContentRect:contentRect];
     [self.transitionController.detailAnimationController setTableView:tableView];
     
     StationViewController *stationViewController = [[StationViewController alloc] initWithStation:station];
+    [stationViewController setMaxPanDistance:maxPanDistance];
     
     [self.navigationController pushViewController:stationViewController animated:YES];    
 }

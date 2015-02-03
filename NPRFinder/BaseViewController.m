@@ -35,6 +35,9 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    [self.view setNeedsLayout];
+    [self.view layoutIfNeeded];
+    
     [self addKeyboardNotifications];
 }
 
@@ -74,9 +77,6 @@
     [self.nprNavigationBar addTrailingConstraintToSuperview];
     self.nprNavigationBarHeight = [self.nprNavigationBar addHeightConstraintWithHeight:[UIScreen npr_navigationBarHeight]];
     self.nprNavigationBarTop = [self.nprNavigationBar addTopConstraintToSuperviewWithConstant:[UIScreen npr_statusBarHeight]];
-    
-    [self.view setNeedsLayout];
-    [self.view layoutIfNeeded];
 }
 
 #pragma mark - Screenshot

@@ -17,4 +17,6 @@
 - (instancetype)initWithStation:(Station *)station;
 - (instancetype)initWithStation:(Station *)station backgroundImage:(UIImage *)backgroundImage;
 
+@property (assign, nonatomic) CGFloat maxPanDistance;
+
 @end

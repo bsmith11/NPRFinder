@@ -45,7 +45,6 @@
 		4837D6761A7EEDE5009F2A0F /* AudioTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4837D6741A7EEDE5009F2A0F /* AudioTableViewCell.m */; };
 		4837D6771A7EEDE5009F2A0F /* AudioTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4837D6751A7EEDE5009F2A0F /* AudioTableViewCell.xib */; };
 		4837D67A1A7EF972009F2A0F /* AudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4837D6791A7EF972009F2A0F /* AudioManager.m */; };
-		4837D67D1A7FE55E009F2A0F /* DetailInteractionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4837D67C1A7FE55E009F2A0F /* DetailInteractionController.m */; };
 		483C2D461A5C72FA007B9995 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 483C2D451A5C72FA007B9995 /* main.m */; };
 		483C2D491A5C72FA007B9995 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 483C2D481A5C72FA007B9995 /* AppDelegate.m */; };
 		483C2D511A5C72FA007B9995 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 483C2D501A5C72FA007B9995 /* Images.xcassets */; };
@@ -151,8 +150,6 @@
 		4837D6751A7EEDE5009F2A0F /* AudioTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AudioTableViewCell.xib; sourceTree = "<group>"; };
 		4837D6781A7EF972009F2A0F /* AudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioManager.h; sourceTree = "<group>"; };
 		4837D6791A7EF972009F2A0F /* AudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioManager.m; sourceTree = "<group>"; };
-		4837D67B1A7FE55E009F2A0F /* DetailInteractionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailInteractionController.h; sourceTree = "<group>"; };
-		4837D67C1A7FE55E009F2A0F /* DetailInteractionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailInteractionController.m; sourceTree = "<group>"; };
 		483C2D401A5C72FA007B9995 /* Discover.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Discover.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		483C2D441A5C72FA007B9995 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		483C2D451A5C72FA007B9995 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -310,8 +307,6 @@
 				482D70601A605A420006315B /* DetailAnimationController.m */,
 				480088471A6F2C44004AB56C /* SlideAnimationController.h */,
 				480088481A6F2C44004AB56C /* SlideAnimationController.m */,
-				4837D67B1A7FE55E009F2A0F /* DetailInteractionController.h */,
-				4837D67C1A7FE55E009F2A0F /* DetailInteractionController.m */,
 			);
 			name = "Animation Controllers";
 			sourceTree = "<group>";
@@ -694,7 +689,6 @@
 				482D701F1A5D2EEC0006315B /* UIScreen+NPRFinder.m in Sources */,
 				480088491A6F2C44004AB56C /* SlideAnimationController.m in Sources */,
 				482D70441A5F247F0006315B /* UITableView+NPRFinder.m in Sources */,
-				4837D67D1A7FE55E009F2A0F /* DetailInteractionController.m in Sources */,
 				482D70411A5F0F8A0006315B /* UITextField+NPRFinder.m in Sources */,
 				482D70381A5E43E40006315B /* SearchViewController.m in Sources */,
 				488809201A794528001C537D /* UINavigationItem+NPRFinder.m in Sources */,

@@ -10,8 +10,8 @@
 #import "BaseViewController.h"
 
 static const CGFloat kDetailAnimationDuration = 0.75;
-static const CGFloat kDetailAnimationSpringDampingValue = 1.0;
-static const CGFloat kDetailAnimationInitialSpringVelocityValue = 1.0;
+//static const CGFloat kDetailAnimationSpringDampingValue = 1.0;
+//static const CGFloat kDetailAnimationInitialSpringVelocityValue = 1.0;
 
 @interface DetailAnimationController ()
 
@@ -29,8 +29,8 @@ static const CGFloat kDetailAnimationInitialSpringVelocityValue = 1.0;
 #pragma mark - View Controller Animated Transitioning Delegate
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
-    UIViewController *toViewController = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
-    UIViewController *fromViewController = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+    BaseViewController *toViewController = (BaseViewController *)[transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+    BaseViewController *fromViewController = (BaseViewController *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
     
     UIView *containerView = transitionContext.containerView;
     
@@ -70,10 +70,10 @@ static const CGFloat kDetailAnimationInitialSpringVelocityValue = 1.0;
     }
     
     [UIView animateWithDuration:[self transitionDuration:transitionContext]
-                          delay:0
-         usingSpringWithDamping:kDetailAnimationSpringDampingValue
-          initialSpringVelocity:kDetailAnimationInitialSpringVelocityValue
-                        options:UIViewAnimationOptionCurveEaseInOut
+//                          delay:0
+//         usingSpringWithDamping:kDetailAnimationSpringDampingValue
+//          initialSpringVelocity:kDetailAnimationInitialSpringVelocityValue
+//                        options:UIViewAnimationOptionCurveEaseInOut
                      animations:^{
                          if (self.detailDirection == DetailDirectionIn) {
                              self.topView.transform = CGAffineTransformMakeTranslation(0, self.topTranslationDistance);
@@ -84,6 +84,15 @@ static const CGFloat kDetailAnimationInitialSpringVelocityValue = 1.0;
                              self.topView.transform = CGAffineTransformIdentity;
                              self.bottomView.transform = CGAffineTransformIdentity;
                              self.contentView.transform = CGAffineTransformIdentity;
+                             
+                             [fromViewController.view setAlpha:0.0];
+                             
+//                             [toViewController.nprNavigationBar showRightItemWithAnimation:NPRItemAnimationSlideHorizontally
+//                                                                                  animated:NO
+//                                                                                completion:nil];
+//                             [toViewController.nprNavigationBar showLeftItemWithAnimation:NPRItemAnimationFadeIn
+//                                                                                 animated:NO
+//                                                                               completion:nil];
                          }
                      }
                      completion:^(BOOL finished) {
@@ -96,9 +105,7 @@ static const CGFloat kDetailAnimationInitialSpringVelocityValue = 1.0;
                          [self.bottomView removeFromSuperview];
                          [self.tableView setAlpha:1.0];
                          [toViewController.view setAlpha:1.0];
-                         
-                         NSLog(@"Complete Transition: %d", ![transitionContext transitionWasCancelled]);
-                         
+                                                  
                          [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
                      }];
 }

@@ -9,7 +9,7 @@
 #import "NPRNavigationBar.h"
 #import "UIScreen+NPRFinder.h"
 
-static const CGFloat kNPRItemMargin = 20.0;
+static const CGFloat kNPRItemMargin = 10.0;
 static const CGFloat kNPRItemAnimationDuration = 0.4;
 
 typedef NS_ENUM(NSInteger, NPRItemPosition) {
@@ -70,6 +70,76 @@ typedef NS_ENUM(NSInteger, NPRItemPosition) {
     [_middleItem setFrame:frame];
     
     [self addSubview:_middleItem];
+}
+
+#pragma mark - Non Animated Finish Methods
+
+- (void)finishShowLeftItemWithAnimation:(NPRItemAnimation)animation {
+    [self resetLeftItemSuperviewWithAnimation:animation
+                                         show:YES];
+}
+
+- (void)finishHideLeftItemWithAnimation:(NPRItemAnimation)animation {
+    [self resetLeftItemSuperviewWithAnimation:animation
+                                         show:NO];
+}
+
+- (void)finishShowMiddleItemWithAnimation:(NPRItemAnimation)animation {
+    [self resetMiddleItemSuperviewWithAnimation:animation
+                                           show:YES];
+}
+
+- (void)finishHideMiddleItemWithAnimation:(NPRItemAnimation)animation {
+    [self resetMiddleItemSuperviewWithAnimation:animation
+                                           show:NO];
+}
+
+- (void)finishShowRightItemWithAnimation:(NPRItemAnimation)animation {
+    [self resetRightItemSuperviewWithAnimation:animation
+                                          show:YES];
+}
+
+- (void)finishHideRightItemWithAnimation:(NPRItemAnimation)animation {
+    [self resetRightItemSuperviewWithAnimation:animation
+                                          show:NO];
+}
+
+- (void)resetLeftItemSuperviewWithAnimation:(NPRItemAnimation)animation
+                                       show:(BOOL)show {
+    [self resetSuperviewForItem:self.leftItem
+                      animation:animation
+                       position:NPRItemPositionLeft
+                           show:show];
+}
+
+- (void)resetMiddleItemSuperviewWithAnimation:(NPRItemAnimation)animation
+                                         show:(BOOL)show {
+    [self resetSuperviewForItem:self.middleItem
+                      animation:animation
+                       position:NPRItemPositionMiddle
+                           show:show];
+}
+
+- (void)resetRightItemSuperviewWithAnimation:(NPRItemAnimation)animation
+                                        show:(BOOL)show {
+    [self resetSuperviewForItem:self.rightItem
+                      animation:animation
+                       position:NPRItemPositionRight
+                           show:show];
+}
+
+- (void)resetSuperviewForItem:(UIView *)item
+                    animation:(NPRItemAnimation)animation
+                     position:(NPRItemPosition)position
+                         show:(BOOL)show {
+    if (show) {
+        item.frame = [self shownFrameForPosition:position];
+    }
+    else {
+        item.frame = [self hiddenFrameForPosition:position animation:animation];
+    }
+    
+    [self addSubview:item];
 }
 
 #pragma mark - Animations
@@ -183,13 +253,15 @@ typedef NS_ENUM(NSInteger, NPRItemPosition) {
     }
     
     UIWindow *window = [[UIApplication sharedApplication].delegate window];
-    CGRect initialWindowFrame = [window convertRect:view.frame fromView:self];
+    CGRect initialWindowFrame = view.frame;
+    initialWindowFrame.origin.y += [UIScreen npr_statusBarHeight];
     [view setFrame:initialWindowFrame];
     [view.layer removeAllAnimations];
     
     [window addSubview:view];
     
-    CGRect finalWindowFrame = [window convertRect:frame fromView:self];
+    CGRect finalWindowFrame = frame;
+    finalWindowFrame.origin.y += [UIScreen npr_statusBarHeight];
     
     if (animated) {
         [UIView animateWithDuration:kNPRItemAnimationDuration
@@ -217,9 +289,6 @@ typedef NS_ENUM(NSInteger, NPRItemPosition) {
         else {
             [view setFrame:finalWindowFrame];
         }
-        
-        [view setFrame:frame];
-        [self addSubview:view];
         
         if (completion) {
             completion(YES);

@@ -45,4 +45,13 @@ typedef NS_ENUM(NSInteger, NPRItemAnimation) {
                            animated:(BOOL)animated
                          completion:(void (^)(BOOL finished))completion;
 
+- (void)finishShowLeftItemWithAnimation:(NPRItemAnimation)animation;
+- (void)finishHideLeftItemWithAnimation:(NPRItemAnimation)animation;
+
+- (void)finishShowMiddleItemWithAnimation:(NPRItemAnimation)animation;
+- (void)finishHideMiddleItemWithAnimation:(NPRItemAnimation)animation;
+
+- (void)finishShowRightItemWithAnimation:(NPRItemAnimation)animation;
+- (void)finishHideRightItemWithAnimation:(NPRItemAnimation)animation;
+
 @end
