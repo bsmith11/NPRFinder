@@ -293,6 +293,15 @@ static const NSInteger kLinksIndexPath = 0;
             
         case UIGestureRecognizerStateChanged: {
             CGFloat percentComplete = (translation.y - self.startPoint.y) / self.maxPanDistance;
+            
+            if (percentComplete >= 1.0) {
+                percentComplete = 0.99;
+            }
+            else if (percentComplete < 0.0) {
+                percentComplete = 0.0;
+            }
+            
+            NSLog(@"%f", percentComplete);
             [self.transitionController.interactionController updateInteractiveTransition:percentComplete];
             break;
         }

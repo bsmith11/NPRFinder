@@ -70,10 +70,10 @@ static const CGFloat kDetailAnimationDuration = 0.75;
     }
     
     [UIView animateWithDuration:[self transitionDuration:transitionContext]
-//                          delay:0
+                          delay:0
 //         usingSpringWithDamping:kDetailAnimationSpringDampingValue
 //          initialSpringVelocity:kDetailAnimationInitialSpringVelocityValue
-//                        options:UIViewAnimationOptionCurveEaseInOut
+                        options:UIViewAnimationOptionCurveEaseInOut
                      animations:^{
                          if (self.detailDirection == DetailDirectionIn) {
                              self.topView.transform = CGAffineTransformMakeTranslation(0, self.topTranslationDistance);
@@ -86,13 +86,6 @@ static const CGFloat kDetailAnimationDuration = 0.75;
                              self.contentView.transform = CGAffineTransformIdentity;
                              
                              [fromViewController.view setAlpha:0.0];
-                             
-//                             [toViewController.nprNavigationBar showRightItemWithAnimation:NPRItemAnimationSlideHorizontally
-//                                                                                  animated:NO
-//                                                                                completion:nil];
-//                             [toViewController.nprNavigationBar showLeftItemWithAnimation:NPRItemAnimationFadeIn
-//                                                                                 animated:NO
-//                                                                               completion:nil];
                          }
                      }
                      completion:^(BOOL finished) {
