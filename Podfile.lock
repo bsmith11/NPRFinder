@@ -44,12 +44,12 @@ DEPENDENCIES:
   - TTTAttributedLabel
 
 SPEC CHECKSUMS:
-  AFNetworking: 0f54cb5d16ce38c1b76948faffb8d5fb705021c7
-  CocoaLumberjack: 9d198d6e19909b3b113a38c5f06f7bb8eedd0427
-  Flannel: 3cb1ddb412595ebad88d75a5114a5505fb9f587e
-  Mantle: 8d84cacd6c2a69ff6fbce985a2b51298a5495de3
-  Reachability: 1ef8adf5c4e3d362f96515d4278f68dad3c26930
-  SSPullToRefresh: da7acfb8e269acbd040be7f0b091824cda365a17
-  TTTAttributedLabel: a847b59a75c92d59f4eabc9cc1745704cff2dc36
+  AFNetworking: 96ac9bf3eda33582701cb1fcc5b896aa1e20311e
+  CocoaLumberjack: 555162681b9c20a271909b235c43f6bbd5d512e1
+  Flannel: f1c85483e873bdf7f4a199aba2d3e455c0981d96
+  Mantle: 7dddb082367d3e13bd244636d56838481c4552fe
+  Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
+  SSPullToRefresh: 699d592f8e4264edc36b20b49d60f25eeb5fb77d
+  TTTAttributedLabel: 8aeaf67481bb38970711e2641211cba912bd5239
 
-COCOAPODS: 0.35.0
+COCOAPODS: 0.37.1

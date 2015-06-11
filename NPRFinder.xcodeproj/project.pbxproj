@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		062582F71B2907FD00AA98A1 /* PrivateConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 062582F61B2907FD00AA98A1 /* PrivateConstants.m */; };
 		23E5A6989EE922B4A7866FF6 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 265456F037BDBA03C95999CA /* libPods.a */; };
 		4800883C1A6F1162004AB56C /* StationDetailsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4800883B1A6F1162004AB56C /* StationDetailsTableViewCell.m */; };
 		4800883E1A6F1282004AB56C /* StationDetailsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4800883D1A6F1282004AB56C /* StationDetailsTableViewCell.xib */; };
@@ -54,12 +55,9 @@
 		483C2D781A5C7A1E007B9995 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 483C2D771A5C7A1E007B9995 /* HomeViewController.xib */; };
 		483C2D7D1A5C7CFA007B9995 /* UIImage+NPRFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = 483C2D7C1A5C7CFA007B9995 /* UIImage+NPRFinder.m */; };
 		488809121A76B473001C537D /* SwitchConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 488809111A76B473001C537D /* SwitchConstants.m */; };
-		488809141A76B4E7001C537D /* PrivateConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 488809131A76B4E7001C537D /* PrivateConstants.m */; };
 		488809161A76B5BA001C537D /* ErrorConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 488809151A76B5BA001C537D /* ErrorConstants.m */; };
 		488809201A794528001C537D /* UINavigationItem+NPRFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4888091F1A794528001C537D /* UINavigationItem+NPRFinder.m */; };
 		48A744EC1A7B5066001B1401 /* NPRNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 48A744EB1A7B5066001B1401 /* NPRNavigationBar.m */; };
-		48B348921A6C72DB000A5FE0 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48B348911A6C72DB000A5FE0 /* Crashlytics.framework */; };
-		48B348951A6C74DE000A5FE0 /* CrashlyticsLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B348941A6C74DE000A5FE0 /* CrashlyticsLogger.m */; };
 		48E5049B1A5CA06D005856D8 /* UIFont+NPRFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = 48E5049A1A5CA06D005856D8 /* UIFont+NPRFinder.m */; };
 		48E5049E1A5CAB47005856D8 /* UITableViewCell+NPRFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = 48E5049D1A5CAB47005856D8 /* UITableViewCell+NPRFinder.m */; };
 		48E504A11A5CABB5005856D8 /* StationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 48E504A01A5CABB5005856D8 /* StationTableViewCell.m */; };
@@ -82,6 +80,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		062582F51B2907FD00AA98A1 /* PrivateConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrivateConstants.h; sourceTree = "<group>"; };
+		062582F61B2907FD00AA98A1 /* PrivateConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrivateConstants.m; sourceTree = "<group>"; };
 		265456F037BDBA03C95999CA /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		33D19D9A881CFE329A7961F8 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		4800883A1A6F1162004AB56C /* StationDetailsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StationDetailsTableViewCell.h; sourceTree = "<group>"; };
@@ -92,7 +92,6 @@
 		480088431A6F203D004AB56C /* ProgramsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProgramsViewController.xib; sourceTree = "<group>"; };
 		480088471A6F2C44004AB56C /* SlideAnimationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideAnimationController.h; sourceTree = "<group>"; };
 		480088481A6F2C44004AB56C /* SlideAnimationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideAnimationController.m; sourceTree = "<group>"; };
-		480FA7EC1A649FBD00FC1C52 /* PrivateConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrivateConstants.h; sourceTree = "<group>"; };
 		480FA7ED1A650A4E00FC1C52 /* Program.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Program.h; sourceTree = "<group>"; };
 		480FA7EE1A650A4E00FC1C52 /* Program.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Program.m; sourceTree = "<group>"; };
 		480FA7F01A650D5100FC1C52 /* ProgramTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgramTableViewCell.h; sourceTree = "<group>"; };
@@ -166,15 +165,11 @@
 		483C2D7B1A5C7CFA007B9995 /* UIImage+NPRFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+NPRFinder.h"; sourceTree = "<group>"; };
 		483C2D7C1A5C7CFA007B9995 /* UIImage+NPRFinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+NPRFinder.m"; sourceTree = "<group>"; };
 		488809111A76B473001C537D /* SwitchConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwitchConstants.m; sourceTree = "<group>"; };
-		488809131A76B4E7001C537D /* PrivateConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrivateConstants.m; sourceTree = "<group>"; };
 		488809151A76B5BA001C537D /* ErrorConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ErrorConstants.m; sourceTree = "<group>"; };
 		4888091E1A794528001C537D /* UINavigationItem+NPRFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationItem+NPRFinder.h"; sourceTree = "<group>"; };
 		4888091F1A794528001C537D /* UINavigationItem+NPRFinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationItem+NPRFinder.m"; sourceTree = "<group>"; };
 		48A744EA1A7B5066001B1401 /* NPRNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRNavigationBar.h; sourceTree = "<group>"; };
 		48A744EB1A7B5066001B1401 /* NPRNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRNavigationBar.m; sourceTree = "<group>"; };
-		48B348911A6C72DB000A5FE0 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
-		48B348931A6C74DE000A5FE0 /* CrashlyticsLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrashlyticsLogger.h; sourceTree = "<group>"; };
-		48B348941A6C74DE000A5FE0 /* CrashlyticsLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrashlyticsLogger.m; sourceTree = "<group>"; };
 		48E504991A5CA06D005856D8 /* UIFont+NPRFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+NPRFinder.h"; sourceTree = "<group>"; };
 		48E5049A1A5CA06D005856D8 /* UIFont+NPRFinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+NPRFinder.m"; sourceTree = "<group>"; };
 		48E5049C1A5CAB47005856D8 /* UITableViewCell+NPRFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewCell+NPRFinder.h"; sourceTree = "<group>"; };
@@ -203,7 +198,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				48B348921A6C72DB000A5FE0 /* Crashlytics.framework in Frameworks */,
 				23E5A6989EE922B4A7866FF6 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -221,7 +215,6 @@
 		0E525F4E1FACF5F41C46BC91 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				48B348911A6C72DB000A5FE0 /* Crashlytics.framework */,
 				265456F037BDBA03C95999CA /* libPods.a */,
 			);
 			name = Frameworks;
@@ -282,8 +275,8 @@
 				488809111A76B473001C537D /* SwitchConstants.m */,
 				48E504B61A5D237F005856D8 /* ErrorConstants.h */,
 				488809151A76B5BA001C537D /* ErrorConstants.m */,
-				480FA7EC1A649FBD00FC1C52 /* PrivateConstants.h */,
-				488809131A76B4E7001C537D /* PrivateConstants.m */,
+				062582F51B2907FD00AA98A1 /* PrivateConstants.h */,
+				062582F61B2907FD00AA98A1 /* PrivateConstants.m */,
 			);
 			name = Constants;
 			sourceTree = "<group>";
@@ -379,8 +372,6 @@
 				48E504AB1A5CB06A005856D8 /* Models */,
 				48E504AC1A5CB071005856D8 /* Categories */,
 				48E504AA1A5CB063005856D8 /* App Delegate */,
-				48B348931A6C74DE000A5FE0 /* CrashlyticsLogger.h */,
-				48B348941A6C74DE000A5FE0 /* CrashlyticsLogger.m */,
 				483C2D521A5C72FA007B9995 /* LaunchScreen.xib */,
 				483C2D501A5C72FA007B9995 /* Images.xcassets */,
 				483C2D431A5C72FA007B9995 /* Supporting Files */,
@@ -654,7 +645,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "./Crashlytics.framework/run 6c53e07ce4264c564f36e794785f771e94051f8b 42f4b62d1beeb9d9308c5b24996d23c4027874e0cc1c8d550bf83defbd3c02c3";
+			shellScript = "";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -671,7 +662,6 @@
 				48E504B51A5D22F1005856D8 /* ErrorManager.m in Sources */,
 				482D704E1A5F4B580006315B /* SplashViewController.m in Sources */,
 				483C2D491A5C72FA007B9995 /* AppDelegate.m in Sources */,
-				48B348951A6C74DE000A5FE0 /* CrashlyticsLogger.m in Sources */,
 				48E504B11A5D1FE9005856D8 /* LocationManager.m in Sources */,
 				482D70251A5D903A0006315B /* StationUrl.m in Sources */,
 				482D703D1A5E4F5D0006315B /* FadeAnimationController.m in Sources */,
@@ -681,6 +671,7 @@
 				482D70221A5D2FA60006315B /* NetworkManager.m in Sources */,
 				4800883C1A6F1162004AB56C /* StationDetailsTableViewCell.m in Sources */,
 				482D70761A62681D0006315B /* StationUrlTableViewCell.m in Sources */,
+				062582F71B2907FD00AA98A1 /* PrivateConstants.m in Sources */,
 				48E5049B1A5CA06D005856D8 /* UIFont+NPRFinder.m in Sources */,
 				480FA7FC1A6748FB00FC1C52 /* UIView+NPRConstraints.m in Sources */,
 				482D70611A605A420006315B /* DetailAnimationController.m in Sources */,
@@ -705,7 +696,6 @@
 				4837D6761A7EEDE5009F2A0F /* AudioTableViewCell.m in Sources */,
 				488809121A76B473001C537D /* SwitchConstants.m in Sources */,
 				482D70281A5D99A90006315B /* UILabel+NPRFinder.m in Sources */,
-				488809141A76B4E7001C537D /* PrivateConstants.m in Sources */,
 				482D70311A5DE0230006315B /* UIColor+NPRFinder.m in Sources */,
 				480FA8031A678F0300FC1C52 /* TransitionController.m in Sources */,
 				482D70711A6260390006315B /* TaglineTableViewCell.m in Sources */,
@@ -778,7 +768,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -816,7 +806,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -837,6 +827,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NPRFinder/NPRFinder-Prefix.pch";
 				INFOPLIST_FILE = NPRFinder/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = Discover;
 				PROVISIONING_PROFILE = "7fbc042c-5f45-4d21-bc80-b1ec39933f58";
@@ -848,7 +839,7 @@
 			baseConfigurationReference = E734911B2C8F14D8A94B2E77 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Bradley Smith (Q9WZ7ZSJK2)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -856,6 +847,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NPRFinder/NPRFinder-Prefix.pch";
 				INFOPLIST_FILE = NPRFinder/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = Discover;
 				PROVISIONING_PROFILE = "d78108cc-8b27-4985-a542-c1e0a64ca95e";
@@ -877,7 +869,7 @@
 				INFOPLIST_FILE = NPRFinderTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NPRFinder.app/NPRFinder";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Discover.app/Discover";
 			};
 			name = Debug;
 		};
@@ -892,7 +884,7 @@
 				INFOPLIST_FILE = NPRFinderTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NPRFinder.app/NPRFinder";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Discover.app/Discover";
 			};
 			name = Release;
 		};

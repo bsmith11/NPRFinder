@@ -11,12 +11,10 @@
 #import "UIColor+NPRFinder.h"
 #import "BaseNavigationController.h"
 #import "PrivateConstants.h"
-#import "CrashlyticsLogger.h"
 #import "TransitionController.h"
 
 #import <Flannel/FLAVerboseLogFormatter.h>
 #import <CocoaLumberjack/DDASLLogger.h>
-#import <Crashlytics/Crashlytics.h>
 
 @interface AppDelegate ()
 
@@ -27,8 +25,6 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [Crashlytics startWithAPIKey:kCrashlyticsApiKey];
-    
     [self setupLoggers];
         
     SplashViewController *splashViewController = [SplashViewController new];
@@ -55,12 +51,8 @@
     DDTTYLogger *ttyLogger = [DDTTYLogger sharedInstance];
     [ttyLogger setLogFormatter:formatter];
     
-    CrashlyticsLogger *crashLogger = [CrashlyticsLogger new];
-    [crashLogger setLogFormatter:formatter];
-
     [DDLog addLogger:ttyLogger];
     [DDLog addLogger:aslLogger];
-    [DDLog addLogger:crashLogger];
 }
 
 - (void)requestUserNotificationPermissions {
