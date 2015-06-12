@@ -7,7 +7,7 @@
 //
 
 #import "NPRNavigationBar.h"
-#import "UIScreen+NPRFinder.h"
+#import "UIScreen+NPRUtil.h"
 
 static const CGFloat kNPRItemMargin = 10.0;
 static const CGFloat kNPRItemAnimationDuration = 0.4;
