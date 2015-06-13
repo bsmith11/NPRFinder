@@ -59,7 +59,7 @@ static NSString * const kLastUpdateDateKey = @"npr_last_update_date";
         _locationManager.distanceFilter = 25.0f;
         _locationManager.desiredAccuracy = kCLLocationAccuracyKilometer;
         _locationManager.activityType = CLActivityTypeOther;
-        _locationManager.pausesLocationUpdatesAutomatically = YES;
+        _locationManager.pausesLocationUpdatesAutomatically = NO;
         
         _running = NO;
         _requestingAuthorization = NO;
@@ -79,10 +79,16 @@ static NSString * const kLastUpdateDateKey = @"npr_last_update_date";
     return [CLLocationManager locationServicesEnabled];
 }
 
-+ (BOOL)locationServicesAuthorized {
++ (BOOL)locationServicesAlwaysAuthorized {
     CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
     
-    return (status == kCLAuthorizationStatusAuthorizedAlways || status == kCLAuthorizationStatusAuthorizedWhenInUse);
+    return (status == kCLAuthorizationStatusAuthorizedAlways);
+}
+
++ (BOOL)locationServicesWhenInUseAuthorized {
+    CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
+    
+    return (status == kCLAuthorizationStatusAuthorizedWhenInUse);
 }
 
 + (BOOL)locationServicesDetermined {
@@ -145,10 +151,11 @@ static NSString * const kLastUpdateDateKey = @"npr_last_update_date";
     [userDefaults synchronize];
 }
 
-#pragma mark - Permissions
+#pragma mark - Permissions Requests
 
 - (void)requestAlwaysAuthorization {
     if ([self.locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
+        self.requestingAuthorization = YES;
         [self.locationManager requestAlwaysAuthorization];
     }
     else {
@@ -158,6 +165,7 @@ static NSString * const kLastUpdateDateKey = @"npr_last_update_date";
 
 - (void)requestWhenInUseAuthorization {
     if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+        self.requestingAuthorization = YES;
         [self.locationManager requestWhenInUseAuthorization];
     }
     else {
@@ -168,21 +176,19 @@ static NSString * const kLastUpdateDateKey = @"npr_last_update_date";
 #pragma mark - Location Monitoring
 
 - (void)start {
-    if (!self.isRunning) {
+    if (!self.running) {
         if ([NPRLocationManager locationServicesDetermined]) {
-            if ([NPRLocationManager locationServicesEnabled] && [NPRLocationManager locationServicesAuthorized]) {
+            if ([NPRLocationManager locationServicesEnabled] && ([NPRLocationManager locationServicesAlwaysAuthorized] || [NPRLocationManager locationServicesWhenInUseAuthorized])) {
                 self.running = YES;
                 
                 [self startUpdatingLocation];
             }
             else {
-                NSError *error = [NSError errorWithDomain:@"" code:kCLErrorDenied userInfo:nil];
+                NSError *error = [NSError errorWithDomain:@"npr_location_services_unable_to_start" code:kCLErrorDenied userInfo:nil];
                 [self locationManager:self.locationManager didFailWithError:error];
             }
         }
         else {
-            self.running = YES;
-            
             if (kNPRRequestLocationServicesRequestAlwaysAuthorization) {
                 [self requestAlwaysAuthorization];
             }
@@ -194,7 +200,7 @@ static NSString * const kLastUpdateDateKey = @"npr_last_update_date";
 }
 
 - (void)stop {
-    if (self.isRunning) {
+    if (self.running) {
         self.running = NO;
         
         [self stopUpdatingLocation];
@@ -277,8 +283,7 @@ static NSString * const kLastUpdateDateKey = @"npr_last_update_date";
             if (self.requestingAuthorization) {
                 self.requestingAuthorization = NO;
                 
-                self.running = YES;
-                [self startUpdatingLocation];
+                [self start];
             }
             else {
                 if ([self.delegate respondsToSelector:@selector(didChangeAuthorizationStatus:)]) {
@@ -291,6 +296,8 @@ static NSString * const kLastUpdateDateKey = @"npr_last_update_date";
         case kCLAuthorizationStatusRestricted:
             if (self.requestingAuthorization) {
                 self.requestingAuthorization = NO;
+                
+                [self stop];
             }
             else {
                 if ([self.delegate respondsToSelector:@selector(didChangeAuthorizationStatus:)]) {
@@ -316,10 +323,6 @@ static NSString * const kLastUpdateDateKey = @"npr_last_update_date";
     }
 }
 
-- (void)locationManager:(CLLocationManager *)manager didFinishDeferredUpdatesWithError:(NSError *)error {
-    DDLogInfo(@"didFinishDeferredUpdatesWithError: %@", error);
-}
-
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     DDLogInfo(@"didUpdateLocations: %@", locations);
     
@@ -333,14 +336,6 @@ static NSString * const kLastUpdateDateKey = @"npr_last_update_date";
         
         [self stop];
     }
-}
-
-- (void)locationManagerDidPauseLocationUpdates:(CLLocationManager *)manager {
-    DDLogInfo(@"locationManagerDidPauseLocationUpdates");
-}
-
-- (void)locationManagerDidResumeLocationUpdates:(CLLocationManager *)manager {
-    DDLogInfo(@"locationManagerDidResumeLocationUpdates");
 }
 
 @end

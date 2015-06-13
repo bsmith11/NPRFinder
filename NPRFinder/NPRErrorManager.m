@@ -37,17 +37,17 @@ static NSString * const kNPRLocationErrorLinkText = @"Settings";
         NSRange messageRange = [[mutableAttributedString string] rangeOfString:errorMessage];
         NSRange settingsRange = [[mutableAttributedString string] rangeOfString:kNPRLocationErrorLinkText];
         
-        [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont npr_errorTitleFont] range:titleRange];
-        [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont npr_errorMessageFont] range:messageRange];
-        [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont npr_errorLinkFont] range:settingsRange];
+//        [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont npr_errorTitleFont] range:titleRange];
+//        [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont npr_errorMessageFont] range:messageRange];
+//        [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont npr_errorLinkFont] range:settingsRange];
         
         return mutableAttributedString;
     }];
     
-    [label setLinkAttributes:@{NSFontAttributeName:[UIFont npr_errorLinkFont],
-                               NSForegroundColorAttributeName:[UIColor npr_foregroundColor]}];
-    [label setActiveLinkAttributes:@{NSFontAttributeName:[UIFont npr_errorLinkFont],
-                                     NSForegroundColorAttributeName:[UIColor npr_highlightColor]}];
+//    [label setLinkAttributes:@{NSFontAttributeName:[UIFont npr_errorLinkFont],
+//                               NSForegroundColorAttributeName:[UIColor npr_foregroundColor]}];
+//    [label setActiveLinkAttributes:@{NSFontAttributeName:[UIFont npr_errorLinkFont],
+//                                     NSForegroundColorAttributeName:[UIColor npr_highlightColor]}];
     
     NSRange settingsRange = [label.text rangeOfString:kNPRLocationErrorLinkText];
     NSURL *url = nil;
@@ -69,8 +69,8 @@ static NSString * const kNPRLocationErrorLinkText = @"Settings";
         NSRange titleRange = [[mutableAttributedString string] rangeOfString:errorTitle];
         NSRange messageRange = [[mutableAttributedString string] rangeOfString:errorMessage];
         
-        [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont npr_errorTitleFont] range:titleRange];
-        [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont npr_errorMessageFont] range:messageRange];
+//        [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont npr_errorTitleFont] range:titleRange];
+//        [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont npr_errorMessageFont] range:messageRange];
         
         return mutableAttributedString;
     }];

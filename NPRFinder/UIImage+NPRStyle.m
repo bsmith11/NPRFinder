@@ -14,17 +14,15 @@ static NSString * const kSignalWeakIconName = @"Signal Weak Icon";
 static NSString * const kSignalMediumIconName = @"Signal Medium Icon";
 static NSString * const kSignalStrongIconName = @"Signal Strong Icon";
 static NSString * const kSignalUnknownIconName = @"Signal Unknown Icon";
-static NSString * const kLogoLineName = @"NPR Logo Line";
-static NSString * const kBackgroundImageName = @"Background Image";
 static NSString * const kFacebookIconName = @"Facebook Icon";
 static NSString * const kTwitterIconName = @"Twitter Icon";
-static NSString * const kHomeIconName = @"Home Icon";
 static NSString * const kBackIconName = @"Back Icon";
-static NSString * const kForwardIconName = @"Forward Icon";
 static NSString * const kFollowIconName = @"Follow Icon";
-static NSString * const kFollowedIconName = @"Followed Icon";
 static NSString * const kPlayIconName = @"Play Icon";
 static NSString * const kPauseIconName = @"Pause Icon";
+static NSString * const kStopIconName = @"Stop Icon";
+static NSString * const kMusicIconName = @"Music Icon";
+static NSString * const kWebIconName = @"Web Icon";
 
 @implementation UIImage (NPRStyle)
 
@@ -79,14 +77,6 @@ static NSString * const kPauseIconName = @"Pause Icon";
     return image;
 }
 
-+ (UIImage *)npr_logoLine {
-    return [[UIImage imageNamed:kLogoLineName] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-}
-
-+ (UIImage *)npr_backgroundImage {
-    return [UIImage imageNamed:kBackgroundImageName];
-}
-
 + (UIImage *)npr_facebookIcon {
     return [[UIImage imageNamed:kFacebookIconName] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 }
@@ -95,24 +85,12 @@ static NSString * const kPauseIconName = @"Pause Icon";
     return [[UIImage imageNamed:kTwitterIconName] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 }
 
-+ (UIImage *)npr_homeIcon {
-    return [[UIImage imageNamed:kHomeIconName] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-}
-
 + (UIImage *)npr_backIcon {
     return [[UIImage imageNamed:kBackIconName] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 }
 
-+ (UIImage *)npr_forwardIcon {
-    return [[UIImage imageNamed:kForwardIconName] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-}
-
 + (UIImage *)npr_followIcon {
     return [[UIImage imageNamed:kFollowIconName] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-}
-
-+ (UIImage *)npr_followedIcon {
-    return [[UIImage imageNamed:kFollowedIconName] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 }
 
 + (UIImage *)npr_playIcon {
@@ -121,6 +99,18 @@ static NSString * const kPauseIconName = @"Pause Icon";
 
 + (UIImage *)npr_pauseIcon {
     return [[UIImage imageNamed:kPauseIconName] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+}
+
++ (UIImage *)npr_stopIcon {
+    return [[UIImage imageNamed:kStopIconName] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+}
+
++ (UIImage *)npr_musicIcon {
+    return [[UIImage imageNamed:kMusicIconName] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+}
+
++ (UIImage *)npr_webIcon {
+    return [[UIImage imageNamed:kWebIconName] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 }
 
 @end

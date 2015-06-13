@@ -8,50 +8,38 @@
 
 #import "UIFont+NPRStyle.h"
 
-static NSString * const kTitleFontName = @"HelveticaNeue-Thin";
-static NSString * const kFocusFontName = @"HelveticaNeue-UltraLight";
-static NSString * const kDetailFontName = @"HelveticaNeue-Thin";
-static NSString * const kSplashFontName = @"HelveticaNeue-UltraLight";
-static NSString * const kErrorLinkFontName = @"HelveticaNeue-Medium";
-static NSString * const kErrorTitleFontName = @"HelveticaNeue-Thin";
-static NSString * const kErrorMessageFontName = @"HelveticaNeue-Thin";
+static NSString * const kNPRAudioPlayerToolbarFontName = @"GothamRounded-Bold";
+static NSString * const kNPRHomeStationFrequencyFontName = @"GothamRounded-Bold";
+static NSString * const kNPRStationFrequencyFontName = @"GothamRounded-Bold";
+static NSString * const kNPRStationCallFontName = @"GothamRounded-Bold";
+static NSString * const kNPRStationMarketLocationFontName = @"GothamRounded-Bold";
 
-static const CGFloat kTitleFontSize = 24.0f;
-static const CGFloat kFocusFontSize = 64.0f;
-static const CGFloat kDetailFontSize = 24.0f;
-static const CGFloat kSplashFontSize = 70.0f;
-static const CGFloat kErrorLinkFontSize = 20.0f;
-static const CGFloat kErrorTitleFontSize = 24.0f;
-static const CGFloat kErrorMessageFontSize = 20.0f;
+static const CGFloat kNPRAudioPlayerToolbarFontSize = 24.0f;
+static const CGFloat kNPRHomeStationFrequencyFontSize = 64.0f;
+static const CGFloat kNPRStationFrequencyFontSize = 64.0f;
+static const CGFloat kNPRStationCallFontSize = 32.0f;
+static const CGFloat kNPRStationMarketLocationFontSize = 24.0f;
 
 @implementation UIFont (NPRStyle)
 
-+ (UIFont *)npr_titleFont {
-    return [UIFont fontWithName:kTitleFontName size:kTitleFontSize];
++ (UIFont *)npr_audioPlayerToolbarFont {
+    return [UIFont fontWithName:kNPRAudioPlayerToolbarFontName size:kNPRAudioPlayerToolbarFontSize];
 }
 
-+ (UIFont *)npr_focusFont {
-    return [UIFont fontWithName:kFocusFontName size:kFocusFontSize];
++ (UIFont *)npr_homeStationFrequencyFont {
+    return [UIFont fontWithName:kNPRHomeStationFrequencyFontName size:kNPRHomeStationFrequencyFontSize];
 }
 
-+ (UIFont *)npr_detailFont {
-    return [UIFont fontWithName:kDetailFontName size:kDetailFontSize];
++ (UIFont *)npr_stationFrequencyFont {
+    return [UIFont fontWithName:kNPRStationFrequencyFontName size:kNPRStationFrequencyFontSize];
 }
 
-+ (UIFont *)npr_splashFont {
-    return [UIFont fontWithName:kSplashFontName size:kSplashFontSize];
++ (UIFont *)npr_stationCallFont {
+    return [UIFont fontWithName:kNPRStationCallFontName size:kNPRStationCallFontSize];
 }
 
-+ (UIFont *)npr_errorLinkFont {
-    return [UIFont fontWithName:kErrorLinkFontName size:kErrorLinkFontSize];
-}
-
-+ (UIFont *)npr_errorTitleFont {
-    return [UIFont fontWithName:kErrorTitleFontName size:kErrorTitleFontSize];
-}
-
-+ (UIFont *)npr_errorMessageFont {
-    return [UIFont fontWithName:kErrorMessageFontName size:kErrorMessageFontSize];
++ (UIFont *)npr_stationMarketLocationFont {
+    return [UIFont fontWithName:kNPRStationMarketLocationFontName size:kNPRStationMarketLocationFontSize];
 }
 
 @end

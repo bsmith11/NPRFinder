@@ -37,4 +37,43 @@
     return [NSString stringWithFormat:@"%@, %@", self.marketCity, self.marketState];
 }
 
+- (NSURL *)homepageUrl {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@", @"typeId", @(NPRStationUrlTypeOrganizationHomePage)];
+    NSArray *homepageUrls = [self.urls filteredArrayUsingPredicate:predicate];
+    NPRStationUrl *stationUrl = [homepageUrls firstObject];
+    
+    if (stationUrl) {
+        return stationUrl.url;
+    }
+    else {
+        return nil;
+    }
+}
+
+- (NSURL *)facebookUrl {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@", @"typeId", @(NPRStationUrlTypeFacebookUrl)];
+    NSArray *facebookUrls = [self.urls filteredArrayUsingPredicate:predicate];
+    NPRStationUrl *stationUrl = [facebookUrls firstObject];
+    
+    if (stationUrl) {
+        return stationUrl.url;
+    }
+    else {
+        return nil;
+    }
+}
+
+- (NSURL *)twitterUrl {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@", @"typeId", @(NPRStationUrlTypeTwitterFeed)];
+    NSArray *twitterUrls = [self.urls filteredArrayUsingPredicate:predicate];
+    NPRStationUrl *stationUrl = [twitterUrls firstObject];
+    
+    if (stationUrl) {
+        return stationUrl.url;
+    }
+    else {
+        return nil;
+    }
+}
+
 @end

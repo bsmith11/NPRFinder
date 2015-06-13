@@ -7,7 +7,9 @@
 //
 
 #import "NPRBaseViewController.h"
+
 #import "NPRAppDelegate.h"
+#import "NPRAudioManager.h"
 
 @interface NPRBaseViewController ()
 
@@ -42,6 +44,40 @@
     NPRAppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     
     return appDelegate.transitionController;
+}
+
+#pragma mark - Lifecycle
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveAudioPlayerToolbarNotification:) name:kNPRNotificationWillShowAudioPlayerToolbar object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveAudioPlayerToolbarNotification:) name:kNPRNotificationWillHideAudioPlayerToolbar object:nil];
+}
+
+#pragma mark - Actions
+
+- (void)didReceiveAudioPlayerToolbarNotification:(NSNotification *)notification {
+    NSDictionary *userInfo = notification.userInfo;
+    CGFloat height;
+    
+    if (userInfo) {
+        height = [userInfo[kNPRNotificationKeyAudioPlayerToolbarHeight] doubleValue];
+    }
+    else {
+        height = 0.0f;
+    }
+    
+    [self audioPlayerToolbarHeightWillChange:height];
+}
+
+- (void)audioPlayerToolbarHeightWillChange:(CGFloat)height {
+    //Should be overrided by subclasses
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kNPRNotificationWillShowAudioPlayerToolbar object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kNPRNotificationWillHideAudioPlayerToolbar object:nil];
 }
 
 @end

@@ -8,32 +8,32 @@
 
 #import <Foundation/Foundation.h>
 
-typedef NS_ENUM(NSInteger, StationUrlType) {
-    StationUrlTypeOrganizationHomePage = 1,
-    StationUrlTypeProgramSchedule,
-    StationUrlTypeOnlineStore,
-    StationUrlTypePledgePage,
-    StationUrlTypeENewsletter,
-    StationUrlTypeLocalNews,
-    StationUrlTypeAudioStreamLandingPage,
-    StationUrlTypeRSSFeed,
-    StationUrlTypePodcast,
-    StationUrlTypeAudioMP3Stream,
-    StationUrlTypeAudioWindowsMediaStream,
-    StationUrlTypeAudioRealMediaStream,
-    StationUrlTypeAudioAACStream,
-    StationUrlTypeVideoPodcast,
-    StationUrlTypeNewscast,
-    StationUrlTypeFacebookUrl,
-    StationUrlTypeTwitterFeed,
-    StationUrlTypeStationLogo,
-    StationUrlTypeStreamLogo,
-    StationUrlTypeStationIDNPROneAudioIntro,
-    StationUrlTypeStationHelloAudio,
-    StationUrlTypeStationSonicIDAudio,
-    StationUrlTypeStationNPROneLogo,
-    StationUrlTypeStationIdentifierAudioMP3,
-    StationUrlTypeStationIdentifierAudioACC
+typedef NS_ENUM(NSInteger, NPRStationUrlType) {
+    NPRStationUrlTypeOrganizationHomePage = 1,
+    NPRStationUrlTypeProgramSchedule,
+    NPRStationUrlTypeOnlineStore,
+    NPRStationUrlTypePledgePage,
+    NPRStationUrlTypeENewsletter,
+    NPRStationUrlTypeLocalNews,
+    NPRStationUrlTypeAudioStreamLandingPage,
+    NPRStationUrlTypeRSSFeed,
+    NPRStationUrlTypePodcast,
+    NPRStationUrlTypeAudioMP3Stream,
+    NPRStationUrlTypeAudioWindowsMediaStream,
+    NPRStationUrlTypeAudioRealMediaStream,
+    NPRStationUrlTypeAudioAACStream,
+    NPRStationUrlTypeVideoPodcast,
+    NPRStationUrlTypeNewscast,
+    NPRStationUrlTypeFacebookUrl,
+    NPRStationUrlTypeTwitterFeed,
+    NPRStationUrlTypeStationLogo,
+    NPRStationUrlTypeStreamLogo,
+    NPRStationUrlTypeStationIDNPROneAudioIntro,
+    NPRStationUrlTypeStationHelloAudio,
+    NPRStationUrlTypeStationSonicIDAudio,
+    NPRStationUrlTypeStationNPROneLogo,
+    NPRStationUrlTypeStationIdentifierAudioMP3,
+    NPRStationUrlTypeStationIdentifierAudioACC
 };
 
 @interface NPRStationUrl : NSObject

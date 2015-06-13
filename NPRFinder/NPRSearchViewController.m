@@ -52,7 +52,7 @@ static NSString * const kSearchTextFieldPlaceholderText = @"Search for stations"
 
 #pragma mark - Actions
 
-- (void)closeButtonPressed {
+- (void)closeButtonTapped {
     [self.searchTextField resignFirstResponder];
     
     [self.navigationController popViewControllerAnimated:YES];

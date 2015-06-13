@@ -8,6 +8,8 @@
 
 #import "NPRSlideAnimationController.h"
 
+#import "NPRStationCollectionViewCell.h"
+
 #import <pop/POP.h>
 #import <POP+MCAnimate/POP+MCAnimate.h>
 #import <objc/runtime.h>
@@ -30,7 +32,6 @@ static char kNPRInitialFramesAssocKey;
     
     if (self.isPositive) {
         NSMutableArray *cells = [self.collectionView.visibleCells mutableCopy];
-//        UICollectionViewCell *selectedCell = [self.collectionView cellForItemAtIndexPath:self.selectedIndexPath];
         
         [cells sortUsingComparator:^NSComparisonResult(UIView *view1, UIView *view2) {
             CGFloat minY1 = CGRectGetMinY(view1.frame);
@@ -49,7 +50,7 @@ static char kNPRInitialFramesAssocKey;
         NSMutableArray *snapshots = [NSMutableArray array];
         NSMutableArray *initialFrames = [NSMutableArray array];
         
-        for (UICollectionView *cell in cells) {
+        for (UICollectionViewCell *cell in cells) {
             UIView *snapshot = [cell snapshotViewAfterScreenUpdates:NO];
             CGRect frame = [containerView convertRect:cell.frame fromView:cell.superview];
             snapshot.frame = frame;
@@ -66,6 +67,7 @@ static char kNPRInitialFramesAssocKey;
         
         NSInteger modifier = arc4random_uniform(2);
         modifier = modifier ? modifier : -1;
+        modifier = 1;
         
         [snapshots pop_sequenceWithInterval:kNPRAnimationInterval animations:^(UIView *snapshot, NSInteger index) {
             CGRect frame = snapshot.frame;

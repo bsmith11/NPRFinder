@@ -9,6 +9,15 @@
 /* Begin PBXBuildFile section */
 		06362F421B2A88E700CB30FA /* NPRNetworkConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 06362F411B2A88E700CB30FA /* NPRNetworkConstants.m */; };
 		06CBF3121B2B27B3005F6210 /* UIImage+NPRStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CBF3111B2B27B3005F6210 /* UIImage+NPRStyle.m */; };
+		06CBF3181B2B59DD005F6210 /* NPRAudioPlayerToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CBF3171B2B59DD005F6210 /* NPRAudioPlayerToolbar.m */; };
+		06CBF3231B2B7F44005F6210 /* GothamRounded-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = 06CBF3221B2B7E37005F6210 /* GothamRounded-Book.otf */; };
+		06CBF3241B2B7FCB005F6210 /* GothamRounded-BookItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 06CBF31D1B2B7C51005F6210 /* GothamRounded-BookItalic.otf */; };
+		06CBF3251B2B7FCE005F6210 /* GothamRounded-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 06CBF31A1B2B7C51005F6210 /* GothamRounded-Bold.otf */; };
+		06CBF3261B2B7FD1005F6210 /* GothamRounded-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 06CBF31B1B2B7C51005F6210 /* GothamRounded-BoldItalic.otf */; };
+		06CBF3271B2B7FD4005F6210 /* GothamRounded-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 06CBF31E1B2B7C51005F6210 /* GothamRounded-Light.otf */; };
+		06CBF3281B2B7FD8005F6210 /* GothamRounded-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 06CBF31F1B2B7C51005F6210 /* GothamRounded-LightItalic.otf */; };
+		06CBF3291B2B7FDB005F6210 /* GothamRounded-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 06CBF3211B2B7C51005F6210 /* GothamRounded-Medium.otf */; };
+		06CBF32A1B2B7FDF005F6210 /* GothamRounded-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 06CBF3201B2B7C51005F6210 /* GothamRounded-MediumItalic.otf */; };
 		06EAC5881B29413E000FC33A /* NPRStationCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 06EAC5861B29413E000FC33A /* NPRStationCollectionViewCell.m */; };
 		06EAC5891B29413E000FC33A /* NPRStationCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 06EAC5871B29413E000FC33A /* NPRStationCollectionViewCell.xib */; };
 		06EAC58C1B2943CC000FC33A /* UICollectionReusableView+NPRUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 06EAC58B1B2943CC000FC33A /* UICollectionReusableView+NPRUtil.m */; };
@@ -71,6 +80,16 @@
 		06362F411B2A88E700CB30FA /* NPRNetworkConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRNetworkConstants.m; sourceTree = "<group>"; };
 		06CBF3101B2B27B3005F6210 /* UIImage+NPRStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+NPRStyle.h"; sourceTree = "<group>"; };
 		06CBF3111B2B27B3005F6210 /* UIImage+NPRStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+NPRStyle.m"; sourceTree = "<group>"; };
+		06CBF3161B2B59DD005F6210 /* NPRAudioPlayerToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRAudioPlayerToolbar.h; sourceTree = "<group>"; };
+		06CBF3171B2B59DD005F6210 /* NPRAudioPlayerToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRAudioPlayerToolbar.m; sourceTree = "<group>"; };
+		06CBF31A1B2B7C51005F6210 /* GothamRounded-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GothamRounded-Bold.otf"; sourceTree = "<group>"; };
+		06CBF31B1B2B7C51005F6210 /* GothamRounded-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GothamRounded-BoldItalic.otf"; sourceTree = "<group>"; };
+		06CBF31D1B2B7C51005F6210 /* GothamRounded-BookItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GothamRounded-BookItalic.otf"; sourceTree = "<group>"; };
+		06CBF31E1B2B7C51005F6210 /* GothamRounded-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GothamRounded-Light.otf"; sourceTree = "<group>"; };
+		06CBF31F1B2B7C51005F6210 /* GothamRounded-LightItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GothamRounded-LightItalic.otf"; sourceTree = "<group>"; };
+		06CBF3201B2B7C51005F6210 /* GothamRounded-MediumItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GothamRounded-MediumItalic.otf"; sourceTree = "<group>"; };
+		06CBF3211B2B7C51005F6210 /* GothamRounded-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GothamRounded-Medium.otf"; sourceTree = "<group>"; };
+		06CBF3221B2B7E37005F6210 /* GothamRounded-Book.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GothamRounded-Book.otf"; sourceTree = "<group>"; };
 		06EAC5851B29413E000FC33A /* NPRStationCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRStationCollectionViewCell.h; sourceTree = "<group>"; };
 		06EAC5861B29413E000FC33A /* NPRStationCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRStationCollectionViewCell.m; sourceTree = "<group>"; };
 		06EAC5871B29413E000FC33A /* NPRStationCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NPRStationCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -177,6 +196,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		06CBF3191B2B6CCB005F6210 /* Audio Player Toolbar */ = {
+			isa = PBXGroup;
+			children = (
+				06CBF3161B2B59DD005F6210 /* NPRAudioPlayerToolbar.h */,
+				06CBF3171B2B59DD005F6210 /* NPRAudioPlayerToolbar.m */,
+			);
+			name = "Audio Player Toolbar";
+			sourceTree = "<group>";
+		};
 		06EAC5841B291139000FC33A /* Style */ = {
 			isa = PBXGroup;
 			children = (
@@ -352,6 +380,7 @@
 				06EAC59F1B2A0FB9000FC33A /* Util */,
 				06EAC5841B291139000FC33A /* Style */,
 				482D701C1A5D2E290006315B /* Constants */,
+				06CBF3191B2B6CCB005F6210 /* Audio Player Toolbar */,
 				48E504AA1A5CB063005856D8 /* App Delegate */,
 				483C2D521A5C72FA007B9995 /* LaunchScreen.xib */,
 				483C2D501A5C72FA007B9995 /* Images.xcassets */,
@@ -365,6 +394,14 @@
 		483C2D431A5C72FA007B9995 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				06CBF3221B2B7E37005F6210 /* GothamRounded-Book.otf */,
+				06CBF31D1B2B7C51005F6210 /* GothamRounded-BookItalic.otf */,
+				06CBF31A1B2B7C51005F6210 /* GothamRounded-Bold.otf */,
+				06CBF31B1B2B7C51005F6210 /* GothamRounded-BoldItalic.otf */,
+				06CBF31E1B2B7C51005F6210 /* GothamRounded-Light.otf */,
+				06CBF31F1B2B7C51005F6210 /* GothamRounded-LightItalic.otf */,
+				06CBF3211B2B7C51005F6210 /* GothamRounded-Medium.otf */,
+				06CBF3201B2B7C51005F6210 /* GothamRounded-MediumItalic.otf */,
 				483C2D441A5C72FA007B9995 /* Info.plist */,
 				483C2D451A5C72FA007B9995 /* main.m */,
 			);
@@ -529,12 +566,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				06CBF3291B2B7FDB005F6210 /* GothamRounded-Medium.otf in Resources */,
+				06CBF3261B2B7FD1005F6210 /* GothamRounded-BoldItalic.otf in Resources */,
+				06CBF3231B2B7F44005F6210 /* GothamRounded-Book.otf in Resources */,
 				06EAC5B71B2A2037000FC33A /* NPRPermissionViewController.xib in Resources */,
 				482D705D1A60547D0006315B /* NPRStationViewController.xib in Resources */,
 				483C2D541A5C72FA007B9995 /* LaunchScreen.xib in Resources */,
 				482D70501A5F4B620006315B /* NPRSplashViewController.xib in Resources */,
 				483C2D511A5C72FA007B9995 /* Images.xcassets in Resources */,
+				06CBF3271B2B7FD4005F6210 /* GothamRounded-Light.otf in Resources */,
+				06CBF3241B2B7FCB005F6210 /* GothamRounded-BookItalic.otf in Resources */,
+				06CBF32A1B2B7FDF005F6210 /* GothamRounded-MediumItalic.otf in Resources */,
 				482D703A1A5E43F20006315B /* NPRSearchViewController.xib in Resources */,
+				06CBF3281B2B7FD8005F6210 /* GothamRounded-LightItalic.otf in Resources */,
+				06CBF3251B2B7FCE005F6210 /* GothamRounded-Bold.otf in Resources */,
 				483C2D781A5C7A1E007B9995 /* NPRHomeViewController.xib in Resources */,
 				06EAC5891B29413E000FC33A /* NPRStationCollectionViewCell.xib in Resources */,
 			);
@@ -600,6 +645,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				06CBF3181B2B59DD005F6210 /* NPRAudioPlayerToolbar.m in Sources */,
 				06EAC5B61B2A2037000FC33A /* NPRPermissionViewController.m in Sources */,
 				06EAC5AB1B2A1B65000FC33A /* NPRSwitchConstants.m in Sources */,
 				48A744EC1A7B5066001B1401 /* NPRNavigationBar.m in Sources */,
@@ -758,6 +804,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -768,7 +815,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = Discover;
-				PROVISIONING_PROFILE = "7fbc042c-5f45-4d21-bc80-b1ec39933f58";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -778,6 +825,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -788,7 +836,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = Discover;
-				PROVISIONING_PROFILE = "d78108cc-8b27-4985-a542-c1e0a64ca95e";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

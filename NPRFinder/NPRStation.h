@@ -40,5 +40,8 @@ typedef NS_ENUM(NSInteger, NPRSignalStrength) {
 @property (assign, nonatomic, getter=isMusicOnly) BOOL musicOnly;
 
 - (NSString *)marketLocation;
+- (NSURL *)homepageUrl;
+- (NSURL *)facebookUrl;
+- (NSURL *)twitterUrl;
 
 @end

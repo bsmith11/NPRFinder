@@ -9,6 +9,16 @@
 #import "NPRStationCollectionViewCell.h"
 
 #import "UIColor+NPRStyle.h"
+#import "UIFont+NPRStyle.h"
+#import "UIImage+NPRStyle.h"
+#import "NPRStation+RZImport.h"
+
+@interface NPRStationCollectionViewCell ()
+
+@property (weak, nonatomic) IBOutlet UILabel *frequencyLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *musicOnlyImageView;
+
+@end
 
 @implementation NPRStationCollectionViewCell
 
@@ -17,6 +27,8 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
+    [self setupFrequencyLabel];
+    [self setupMusicOnlyImageView];
 }
 
 - (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes {
@@ -37,8 +49,25 @@
 
 #pragma mark - Setup
 
+- (void)setupFrequencyLabel {
+    self.frequencyLabel.backgroundColor = [UIColor clearColor];
+    self.frequencyLabel.textColor = [UIColor npr_foregroundColor];
+    self.frequencyLabel.font = [UIFont npr_homeStationFrequencyFont];
+    self.frequencyLabel.numberOfLines = 1;
+    self.frequencyLabel.lineBreakMode = NSLineBreakByClipping;
+    self.frequencyLabel.textAlignment = NSTextAlignmentLeft;
+}
+
+- (void)setupMusicOnlyImageView {
+    self.musicOnlyImageView.backgroundColor = [UIColor clearColor];
+    self.musicOnlyImageView.contentMode = UIViewContentModeScaleAspectFit;
+    self.musicOnlyImageView.image = [UIImage npr_musicIcon];
+    self.musicOnlyImageView.tintColor = [UIColor npr_foregroundColor];
+}
+
 - (void)setupWithStation:(NPRStation *)station {
-    
+    self.frequencyLabel.text = station.frequency;
+    self.musicOnlyImageView.hidden = !station.isMusicOnly;
 }
 
 #pragma mark - Size

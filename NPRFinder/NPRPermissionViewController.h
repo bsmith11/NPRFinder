@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger, NPRPermissionType) {
+    NPRPermissionTypeNotifications,
+    NPRPermissionTypeLocationAlways,
+    NPRPermissionTypeLocationWhenInUse
+};
+
 @interface NPRPermissionViewController : UIViewController
+
+- (instancetype)initWithType:(NPRPermissionType)type;
 
 @end

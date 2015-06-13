@@ -13,9 +13,9 @@
 static NSString * const kForegroundColorHexString = @"0BC78C";
 static NSString * const kBackgroundColorHexString = @"000000";
 static NSString * const kHighlightColorHexString = @"FFFFFF";
-static NSString * const kRedColorHexString = @"FF3300";
+static NSString * const kRedColorHexString = @"EE411B";
 static NSString * const kBlackColorHexString = @"000000";
-static NSString * const kBlueColorHexString = @"3266CC";
+static NSString * const kBlueColorHexString = @"005AB0";
 
 @implementation UIColor (NPRStyle)
 

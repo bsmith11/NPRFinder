@@ -16,16 +16,14 @@
 + (UIImage *)npr_signalMediumIcon;
 + (UIImage *)npr_signalStrongIcon;
 + (UIImage *)npr_imageForSignal:(NSNumber *)signal;
-+ (UIImage *)npr_logoLine;
-+ (UIImage *)npr_backgroundImage;
 + (UIImage *)npr_facebookIcon;
 + (UIImage *)npr_twitterIcon;
-+ (UIImage *)npr_homeIcon;
 + (UIImage *)npr_backIcon;
-+ (UIImage *)npr_forwardIcon;
 + (UIImage *)npr_followIcon;
-+ (UIImage *)npr_followedIcon;
 + (UIImage *)npr_playIcon;
 + (UIImage *)npr_pauseIcon;
++ (UIImage *)npr_stopIcon;
++ (UIImage *)npr_musicIcon;
++ (UIImage *)npr_webIcon;
 
 @end

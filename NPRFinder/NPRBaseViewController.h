@@ -16,4 +16,6 @@
 - (NPRBaseNavigationController *)npr_baseNavigationController;
 - (NPRTransitionController *)npr_transitionController;
 
+- (void)audioPlayerToolbarHeightWillChange:(CGFloat)height;
+
 @end

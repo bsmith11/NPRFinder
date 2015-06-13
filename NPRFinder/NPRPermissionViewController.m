@@ -12,12 +12,14 @@ static NSString * const kRequestLabelText = @"Can we use your location to find N
 
 @interface NPRPermissionViewController ()
 
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIView *requestContainerView;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *requestLabel;
 @property (weak, nonatomic) IBOutlet UIView *buttonContainerView;
 @property (weak, nonatomic) IBOutlet UIButton *acceptButton;
 @property (weak, nonatomic) IBOutlet UIButton *denyButton;
+
+@property (assign, nonatomic) NPRPermissionType type;
 
 @end
 
@@ -25,11 +27,21 @@ static NSString * const kRequestLabelText = @"Can we use your location to find N
 
 #pragma mark - Lifecycle
 
+- (instancetype)initWithType:(NPRPermissionType)type {
+    self = [super init];
+    
+    if (self) {
+        _type = type;
+    }
+    
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self setupTitleLabel];
     [self setupRequestContainerView];
+    [self setupTitleLabel];
     [self setupRequestLabel];
     [self setupButtonContainerView];
     [self setupAcceptButton];
@@ -38,58 +50,38 @@ static NSString * const kRequestLabelText = @"Can we use your location to find N
 
 #pragma mark - Setup
 
-- (void)setupTitleLabel {
-//    [self.titleLabel npr_setupWithStyle:NPRLabelStyleSplash];
-//    [self.titleLabel setText:kSplashTitleLabelText];
+- (void)setupRequestContainerView {
+    
 }
 
-- (void)setupRequestContainerView {
-//    [self.requestContainerView setBackgroundColor:[UIColor clearColor]];
+- (void)setupTitleLabel {
+
 }
 
 - (void)setupRequestLabel {
-//    [self.requestLabel npr_setupWithStyle:NPRLabelStyleError];
-//    [self.requestLabel setText:kRequestLabelText];
+
 }
 
 - (void)setupButtonContainerView {
-    [self.buttonContainerView setBackgroundColor:[UIColor clearColor]];
+    
 }
 
 - (void)setupAcceptButton {
-//    [self.acceptButton npr_setupWithStyle:NPRButtonStyleAcceptButton
-//                                   target:self
-//                                   action:@selector(acceptButtonPressed)];
+
 }
 
 - (void)setupDenyButton {
-//    [self.denyButton npr_setupWithStyle:NPRButtonStyleDenyButton
-//                                 target:self
-//                                 action:@selector(denyButtonPressed)];
+
 }
 
 #pragma mark - Actions
 
-- (void)acceptButtonPressed {
-//    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-//    [userDefaults setObject:@YES forKey:kHasPassedFirstLaunch];
-//    [userDefaults synchronize];
-//    
-//    [self pushToHome];
+- (void)acceptButtonTapped {
+
 }
 
-- (void)denyButtonPressed {
-//    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-//    [userDefaults setObject:@YES forKey:kHasPassedFirstLaunch];
-//    [userDefaults synchronize];
-//    
-//    [self pushToHome];
-}
+- (void)denyButtonTapped {
 
-- (void)pushToHome {
-//    HomeViewController *homeViewController = [[HomeViewController alloc] init];
-//    
-//    [self.navigationController pushViewController:homeViewController animated:NO];
 }
 
 @end

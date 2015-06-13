@@ -45,21 +45,21 @@ static const NSInteger kNPRMockStationCount = 10;
         return NO;
     }
     else if ([key isEqualToString:kNPRResponseKeyStationMusicOnly]) {
-        if ([value isKindOfClass:[NSNumber class]]) {
+        if ([value isKindOfClass:[NSString class]]) {
             self.musicOnly = [value boolValue];
         }
         
         return NO;
     }
     else if ([key isEqualToString:kNPRResponseKeyStationSignalStrength]) {
-        if ([value isKindOfClass:[NSNumber class]]) {
+        if ([value isKindOfClass:[NSString class]]) {
             self.signalStrength = [value integerValue];
         }
         
         return NO;
     }
     else if ([key isEqualToString:kNPRResponseKeyStationStatus]) {
-        if ([value isKindOfClass:[NSNumber class]]) {
+        if ([value isKindOfClass:[NSString class]]) {
             self.open = [value boolValue];
         }
         

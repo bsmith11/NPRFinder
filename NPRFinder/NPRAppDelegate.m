@@ -11,6 +11,7 @@
 #import "NPRBaseNavigationController.h"
 #import "NPRTransitionController.h"
 #import "NPRHomeViewController.h"
+#import "NPRAudioManager.h"
 
 #import <CocoaLumberjack/CocoaLumberjack.h>
 
@@ -37,7 +38,7 @@
     self.window.backgroundColor = [UIColor whiteColor];
     self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];
-    
+        
     return YES;
 }
 

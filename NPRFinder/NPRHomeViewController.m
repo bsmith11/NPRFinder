@@ -15,6 +15,7 @@
 #import "NPRSwitchConstants.h"
 #import "NPRLocationManager.h"
 #import "NPRErrorManager.h"
+#import "NPRAudioManager.h"
 
 #import "UICollectionReusableView+NPRUtil.h"
 #import "NPRStationCollectionViewCell.h"
@@ -23,6 +24,11 @@ static NSString * const kLocationTitleLabelTextPending = @"Finding your location
 static NSString * const kLocationTitleLabelTextFound = @"Nearest NPR stations";
 static NSString * const kLocationTitleLabelTextError = @"Failed to find stations";
 static NSString * const kLocationTitleLabelTextErrorLocation = @"Failed to find location";
+
+static const CGFloat kNPRHomeContentInsetAnimationDuration = 0.2f;
+static const CGFloat kNPRHomeMinimumInteritemSpacing = 0.0f;
+static const CGFloat kNPRHomeMinimumLineSpacing = 0.0f;
+static const CGFloat kNPRHomeStationCellHeight = 150.0f;
 
 @interface NPRHomeViewController () <UICollectionViewDelegate, UICollectionViewDataSource, NPRLocationManagerDelegate>
 
@@ -60,6 +66,7 @@ static NSString * const kLocationTitleLabelTextErrorLocation = @"Failed to find 
 - (void)setupFeedCollectionView {
     self.feedCollectionView.backgroundColor = [UIColor npr_redColor];
     self.feedCollectionView.showsVerticalScrollIndicator = NO;
+    self.feedCollectionView.alwaysBounceVertical = YES;
     self.feedCollectionView.delegate = self;
     self.feedCollectionView.dataSource = self;
     [self.feedCollectionView registerNib:[NPRStationCollectionViewCell npr_nib]
@@ -68,13 +75,24 @@ static NSString * const kLocationTitleLabelTextErrorLocation = @"Failed to find 
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
     flowLayout.sectionInset = UIEdgeInsetsZero;
-    flowLayout.minimumInteritemSpacing = 0.0f;
-    flowLayout.minimumLineSpacing = 0.0f;
-    flowLayout.itemSize = CGSizeMake([UIScreen npr_screenWidth], 150.0f);
+    flowLayout.minimumInteritemSpacing = kNPRHomeMinimumInteritemSpacing;
+    flowLayout.minimumLineSpacing = kNPRHomeMinimumLineSpacing;
+    flowLayout.itemSize = CGSizeMake([UIScreen npr_screenWidth], kNPRHomeStationCellHeight);
     self.feedCollectionView.collectionViewLayout = flowLayout;
 }
 
 #pragma mark - Actions
+
+- (void)audioPlayerToolbarHeightWillChange:(CGFloat)height {
+    [super audioPlayerToolbarHeightWillChange:height];
+    
+    UIEdgeInsets contentInset = UIEdgeInsetsZero;
+    contentInset.bottom = height;
+    
+    [UIView animateWithDuration:kNPRHomeContentInsetAnimationDuration animations:^{
+        self.feedCollectionView.contentInset = contentInset;
+    }];
+}
 
 - (void)findCurrentLocation {
     [self startProgressIndicator];
@@ -89,6 +107,8 @@ static NSString * const kLocationTitleLabelTextErrorLocation = @"Failed to find 
         else {
             self.stations = stations;
             [self.feedCollectionView reloadData];
+            
+            [[NPRAudioManager sharedManager] startPlayingStation:[self.stations firstObject]];
         }
     }];
 }
@@ -109,8 +129,9 @@ static NSString * const kLocationTitleLabelTextErrorLocation = @"Failed to find 
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     NPRStationCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[NPRStationCollectionViewCell npr_reuseIdentifier] forIndexPath:indexPath];
+    NPRStation *station = self.stations[indexPath.item];
     
-    [cell setupWithStation:nil];
+    [cell setupWithStation:station];
     
     return cell;
 }
@@ -122,7 +143,6 @@ static NSString * const kLocationTitleLabelTextErrorLocation = @"Failed to find 
     NPRStationCollectionViewCell *cell = (NPRStationCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
     NPRStationViewController *stationViewController = [[NPRStationViewController alloc] initWithStation:station color:cell.backgroundColor];
     
-//    self.npr_transitionController.expandAnimationController.expandingView = cell;
     self.npr_transitionController.slideAnimationController.collectionView = collectionView;
     self.npr_transitionController.slideAnimationController.selectedIndexPath = indexPath;
     

@@ -23,12 +23,14 @@
 + (instancetype)sharedManager;
 
 + (BOOL)locationServicesEnabled;
-+ (BOOL)locationServicesAuthorized;
++ (BOOL)locationServicesAlwaysAuthorized;
++ (BOOL)locationServicesWhenInUseAuthorized;
 + (BOOL)backgroundAppRefreshEnabled;
 
 - (CLLocation *)location;
 
 - (void)requestAlwaysAuthorization;
+- (void)requestWhenInUseAuthorization;
 
 - (void)startUpdatingLocation;
 - (void)stopUpdatingLocation;

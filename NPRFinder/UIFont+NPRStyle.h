@@ -10,12 +10,10 @@
 
 @interface UIFont (NPRStyle)
 
-+ (UIFont *)npr_titleFont;
-+ (UIFont *)npr_focusFont;
-+ (UIFont *)npr_detailFont;
-+ (UIFont *)npr_splashFont;
-+ (UIFont *)npr_errorLinkFont;
-+ (UIFont *)npr_errorTitleFont;
-+ (UIFont *)npr_errorMessageFont;
++ (UIFont *)npr_audioPlayerToolbarFont;
++ (UIFont *)npr_homeStationFrequencyFont;
++ (UIFont *)npr_stationFrequencyFont;
++ (UIFont *)npr_stationCallFont;
++ (UIFont *)npr_stationMarketLocationFont;
 
 @end
