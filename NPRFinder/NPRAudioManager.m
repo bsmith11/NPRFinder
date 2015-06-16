@@ -9,18 +9,15 @@
 #import "NPRAudioManager.h"
 
 #import "NPRStation+RZImport.h"
+#import "NPRAudioStream+RZImport.h"
 #import "UIScreen+NPRUtil.h"
 #import "UIColor+NPRStyle.h"
 #import "NPRAudioPlayerToolbar.h"
 
 #import <pop/POP.h>
 #import <POP+MCAnimate/POP+MCAnimate.h>
-
-typedef NS_ENUM(NSInteger, NPRAudioManagerState) {
-    NPRAudioManagerStatePlaying,
-    NPRAudioManagerStatePaused,
-    NPRAudioManagerStateStopped
-};
+#import <AVFoundation/AVFoundation.h>
+#import <RZDataBinding/RZDataBinding.h>
 
 NSString * const kNPRNotificationWillShowAudioPlayerToolbar = @"npr_notification_will_show_audio_player_toolbar";
 NSString * const kNPRNotificationWillHideAudioPlayerToolbar = @"npr_notification_will_hide_audio_player_toolbar";
@@ -31,9 +28,10 @@ static const CGFloat kNPRAudioPlayerToolbarHeight = 44.0f;
 @interface NPRAudioManager () <NPRAudioPlayerToolbarDelegate>
 
 @property (strong, nonatomic) NPRAudioPlayerToolbar *audioPlayerToolbar;
-@property (strong, nonatomic) NPRStation *station;
+@property (strong, nonatomic, readwrite) NPRStation *station;
+@property (strong, nonatomic) NPRAudioStream *audioStream;
+@property (strong, nonatomic) AVPlayer *audioPlayer;
 
-@property (assign, nonatomic) NPRAudioManagerState state;
 @property (assign, nonatomic, getter=isAudioPlayerToolbarVisible, readwrite) BOOL audioPlayerToolbarVisible;
 
 @end
@@ -57,12 +55,20 @@ static const CGFloat kNPRAudioPlayerToolbarHeight = 44.0f;
     self = [super init];
     
     if (self) {
-        _state = NPRAudioManagerStateStopped;
-        
         [self setupAudioPlayerToolbar];
+        
+        _state = NPRAudioManagerStateStopped;
     }
     
     return self;
+}
+
+- (void)setState:(NPRAudioManagerState)state {
+    if (_state != state) {
+        _state = state;
+        
+        self.audioPlayerToolbar.state = [self audioPlayerToolbarStateForAudioManagerState:state];
+    }
 }
 
 #pragma mark - Setup
@@ -78,59 +84,111 @@ static const CGFloat kNPRAudioPlayerToolbarHeight = 44.0f;
 #pragma mark - Actions
 
 - (void)startPlayingStation:(NPRStation *)station {
-    switch (self.state) {
-        case NPRAudioManagerStatePlaying:
-            [self stop];
-            break;
-            
-        case NPRAudioManagerStatePaused:
-            [self stop];
-            break;
-            
-        case NPRAudioManagerStateStopped:
-            //no-op
-            break;
+    NPRAudioStream *audioStream = [station preferredAudioStream];
+    
+    if ([self.station isEqual:station] && [self.audioStream isEqual:audioStream]) {
+        [self play];
     }
-    
-    self.station = station;
-    
-    [self play];
-    
-    if (!self.isAudioPlayerToolbarVisible) {
-        [self showAudioPlayerToolbarAnimated:YES completion:nil];
+    else {
+        [self stop];
+        
+        self.station = station;
+        self.audioStream = audioStream;
+        
+        [self play];
     }
 }
 
 - (void)play {
-    if (self.station && self.state != NPRAudioManagerStatePlaying) {
-        self.state = NPRAudioManagerStatePlaying;
+    if (self.station && self.audioStream) {
+        switch (self.state) {
+            case NPRAudioManagerStatePlaying:
+                NSLog(@"Audio stream is already playing");
+                break;
+                
+            case NPRAudioManagerStateLoading:
+                NSLog(@"Audio stream is loading");
+                break;
+                
+            case NPRAudioManagerStatePaused:
+                [self.audioPlayer play];
+                self.state = NPRAudioManagerStatePlaying;
+                break;
+                
+            case NPRAudioManagerStateStopped: {
+                NSString *nowPlayingText = [NSString stringWithFormat:@"%@ %@", self.station.call, self.station.frequency];
+                self.audioPlayerToolbar.nowPlayingText = nowPlayingText;
+                
+                self.audioPlayer = [AVPlayer playerWithURL:self.audioStream.URL];
+                self.state = NPRAudioManagerStateLoading;
+                [self.audioPlayer rz_addTarget:self
+                                        action:@selector(audioPlayerStateDidChange:)
+                              forKeyPathChange:@"status"
+                               callImmediately:YES];
+            }
+                break;
+        }
         
-        self.audioPlayerToolbar.nowPlayingText = self.station.name;
+        [self showAudioPlayerToolbarAnimated:YES completion:nil];
+    }
+    else {
+        NSLog(@"Station or audio stream is nil");
         
-        //play
+        self.state = NPRAudioManagerStateStopped;
+        
+        [self hideAudioPlayerToolbarAnimated:YES completion:nil];
     }
 }
 
 - (void)pause {
-    if (self.station && self.state != NPRAudioManagerStatePaused) {
-        self.state = NPRAudioManagerStatePaused;
+    if (self.station && self.audioStream) {
+        switch (self.state) {
+            case NPRAudioManagerStatePlaying:
+                [self.audioPlayer pause];
+                self.state = NPRAudioManagerStatePaused;
+                
+                [self showAudioPlayerToolbarAnimated:YES completion:nil];
+                break;
+                
+            case NPRAudioManagerStateLoading:
+                NSLog(@"Audio stream is loading");
+                
+                [self showAudioPlayerToolbarAnimated:YES completion:nil];
+                break;
+                
+            case NPRAudioManagerStatePaused:
+                NSLog(@"Audio stream is already paused");
+                
+                [self showAudioPlayerToolbarAnimated:YES completion:nil];
+                break;
+                
+            case NPRAudioManagerStateStopped:
+                NSLog(@"Audio stream is stopped");
+                break;
+        }
+    }
+    else {
+        NSLog(@"Station or audio stream is nil");
         
-        //pause
+        self.state = NPRAudioManagerStateStopped;
+        
+        [self hideAudioPlayerToolbarAnimated:YES completion:nil];
     }
 }
 
 - (void)stop {
-    if (self.station) {
-        self.station = nil;
+    if (self.audioPlayer) {
+        [self.audioPlayer pause];
     }
     
     self.state = NPRAudioManagerStateStopped;
     
-    //stop
-}
-
-- (NPRStation *)currentPlayingStation {
-    return self.station;
+    self.station = nil;
+    self.audioStream = nil;
+    self.audioPlayer = nil;
+    self.audioPlayerToolbar.nowPlayingText = nil;
+    
+    [self hideAudioPlayerToolbarAnimated:YES completion:nil];
 }
 
 - (void)postWillShowAudioPlayerToolbarNotification {
@@ -140,6 +198,54 @@ static const CGFloat kNPRAudioPlayerToolbarHeight = 44.0f;
 
 - (void)postWillHideAudioPlayerToolbarNotification {
     [[NSNotificationCenter defaultCenter] postNotificationName:kNPRNotificationWillHideAudioPlayerToolbar object:nil userInfo:nil];
+}
+
+- (void)audioPlayerStateDidChange:(NSDictionary *)change {
+    NSNumber *statusObject = change[kRZDBChangeKeyNew];
+    AVPlayerStatus status = [statusObject integerValue];
+    
+    switch (status) {
+        case AVPlayerStatusReadyToPlay:
+            NSLog(@"Audio player ready to play");
+            
+            [self.audioPlayer play];
+            self.state = NPRAudioManagerStatePlaying;
+            break;
+            
+        case AVPlayerStatusFailed:
+            NSLog(@"Failed to play audio player with error: %@", self.audioPlayer.error);
+            
+            self.state = NPRAudioManagerStateStopped;
+            break;
+            
+        case AVPlayerStatusUnknown:
+            NSLog(@"Audio player status unknown");
+            break;
+    }
+}
+
+- (NPRAudioPlayerToolbarState)audioPlayerToolbarStateForAudioManagerState:(NPRAudioManagerState)state {
+    NPRAudioPlayerToolbarState audioPlayerToolbarState;
+    
+    switch (state) {
+        case NPRAudioManagerStatePlaying:
+            audioPlayerToolbarState = NPRAudioPlayerToolbarStatePlaying;
+            break;
+            
+        case NPRAudioManagerStatePaused:
+            audioPlayerToolbarState = NPRAudioPlayerToolbarStatePaused;
+            break;
+            
+        case NPRAudioManagerStateLoading:
+            audioPlayerToolbarState = NPRAudioPlayerToolbarStateLoading;
+            break;
+            
+        case NPRAudioManagerStateStopped:
+            audioPlayerToolbarState = NPRAudioPlayerToolbarStateNone;
+            break;
+    }
+    
+    return audioPlayerToolbarState;
 }
 
 #pragma mark - Audio Player Toolbar Delegate
@@ -154,32 +260,44 @@ static const CGFloat kNPRAudioPlayerToolbarHeight = 44.0f;
 
 - (void)audioPlayerToolbarDidSelectStop:(NPRAudioPlayerToolbar *)audioPlayerToolbar {
     [self stop];
-    
-    [self hideAudioPlayerToolbarAnimated:YES completion:nil];
 }
 
 #pragma mark - Animations
 
 - (void)showAudioPlayerToolbarAnimated:(BOOL)animated completion:(NPRAnimationCompletionBlock)completion {
-    [self postWillShowAudioPlayerToolbarNotification];
-    
-    self.audioPlayerToolbarVisible = YES;
-    
-    CGRect frame = self.audioPlayerToolbar.frame;
-    frame.origin.y = [UIScreen npr_screenHeight] - kNPRAudioPlayerToolbarHeight;
-    
-    [self animateAudioPlayerToolbarFrame:frame animated:animated completion:completion];
+    if (!self.isAudioPlayerToolbarVisible) {
+        self.audioPlayerToolbarVisible = YES;
+        
+        [self postWillShowAudioPlayerToolbarNotification];
+        
+        CGRect frame = self.audioPlayerToolbar.frame;
+        frame.origin.y = [UIScreen npr_screenHeight] - kNPRAudioPlayerToolbarHeight;
+        
+        [self animateAudioPlayerToolbarFrame:frame animated:animated completion:completion];
+    }
+    else {
+        if (completion) {
+            completion(YES);
+        }
+    }
 }
 
 - (void)hideAudioPlayerToolbarAnimated:(BOOL)animated completion:(NPRAnimationCompletionBlock)completion {
-    [self postWillHideAudioPlayerToolbarNotification];
-    
-    self.audioPlayerToolbarVisible = NO;
-    
-    CGRect frame = self.audioPlayerToolbar.frame;
-    frame.origin.y = [UIScreen npr_screenHeight];
-    
-    [self animateAudioPlayerToolbarFrame:frame animated:animated completion:completion];
+    if (self.isAudioPlayerToolbarVisible) {
+        self.audioPlayerToolbarVisible = NO;
+        
+        [self postWillHideAudioPlayerToolbarNotification];
+        
+        CGRect frame = self.audioPlayerToolbar.frame;
+        frame.origin.y = [UIScreen npr_screenHeight];
+        
+        [self animateAudioPlayerToolbarFrame:frame animated:animated completion:completion];
+    }
+    else {
+        if (completion) {
+            completion(YES);
+        }
+    }
 }
 
 - (void)animateAudioPlayerToolbarFrame:(CGRect)frame animated:(BOOL)animated completion:(NPRAnimationCompletionBlock)completion {

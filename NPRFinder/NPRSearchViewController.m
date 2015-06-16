@@ -29,9 +29,7 @@ static NSString * const kSearchTextFieldPlaceholderText = @"Search for stations"
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.view.backgroundColor = [UIColor clearColor];
-    
+        
     self.stations = [NSArray array];
     
     [self setupCloseButton];

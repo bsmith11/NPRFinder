@@ -10,12 +10,14 @@
 
 static NSString * const kNPRAudioPlayerToolbarFontName = @"GothamRounded-Bold";
 static NSString * const kNPRHomeStationFrequencyFontName = @"GothamRounded-Bold";
+static NSString * const kNPRHomeStationNoResultsFontName = @"GothamRounded-Bold";
 static NSString * const kNPRStationFrequencyFontName = @"GothamRounded-Bold";
 static NSString * const kNPRStationCallFontName = @"GothamRounded-Bold";
 static NSString * const kNPRStationMarketLocationFontName = @"GothamRounded-Bold";
 
 static const CGFloat kNPRAudioPlayerToolbarFontSize = 24.0f;
 static const CGFloat kNPRHomeStationFrequencyFontSize = 64.0f;
+static const CGFloat kNPRHomeStationNoResultsFontSize = 48.0f;
 static const CGFloat kNPRStationFrequencyFontSize = 64.0f;
 static const CGFloat kNPRStationCallFontSize = 32.0f;
 static const CGFloat kNPRStationMarketLocationFontSize = 24.0f;
@@ -28,6 +30,10 @@ static const CGFloat kNPRStationMarketLocationFontSize = 24.0f;
 
 + (UIFont *)npr_homeStationFrequencyFont {
     return [UIFont fontWithName:kNPRHomeStationFrequencyFontName size:kNPRHomeStationFrequencyFontSize];
+}
+
++ (UIFont *)npr_homeNoResultsFont {
+    return [UIFont fontWithName:kNPRHomeStationNoResultsFontName size:kNPRHomeStationNoResultsFontSize];
 }
 
 + (UIFont *)npr_stationFrequencyFont {

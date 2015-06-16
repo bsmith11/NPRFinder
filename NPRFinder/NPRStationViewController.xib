@@ -6,11 +6,16 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NPRStationViewController">
             <connections>
+                <outlet property="audioActionButton" destination="oTC-92-ZlJ" id="mMy-0K-nge"/>
+                <outlet property="audioActivityIndicatorView" destination="2bD-8O-Jxf" id="vJv-mQ-24M"/>
                 <outlet property="backButton" destination="KWF-yN-oAf" id="0en-53-ite"/>
                 <outlet property="callLabel" destination="fv0-5u-pn5" id="pE8-EK-0yX"/>
+                <outlet property="closeButton" destination="ajf-hL-OdR" id="gK4-3F-mYA"/>
+                <outlet property="emailButton" destination="iFa-HC-YwY" id="t1o-cK-rgH"/>
                 <outlet property="facebookButton" destination="oZK-kf-us9" id="Bik-fL-xph"/>
                 <outlet property="frequencyLabel" destination="OyO-xa-jIC" id="ivM-4O-OK3"/>
                 <outlet property="marketLocationLabel" destination="seE-yj-6Tj" id="RGS-5Z-qgB"/>
+                <outlet property="overflowButton" destination="y93-zY-72d" id="VNn-OV-JYh"/>
                 <outlet property="twitterButton" destination="3Wf-BP-41f" id="0wb-LZ-H4e"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="webButton" destination="DVH-aU-v4Y" id="8rH-ap-jQM"/>
@@ -22,7 +27,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v3l-2K-h5M" userLabel="Top Bar Container View">
-                    <rect key="frame" x="0.0" y="20" width="600" height="44"/>
+                    <rect key="frame" x="0.0" y="30" width="600" height="44"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KWF-yN-oAf" userLabel="Back Button">
                             <rect key="frame" x="20" y="7" width="30" height="30"/>
@@ -40,60 +45,107 @@
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OyO-xa-jIC" userLabel="Frequency Label">
-                    <rect key="frame" x="279" y="64" width="42" height="20.5"/>
+                    <rect key="frame" x="279" y="74" width="42" height="20.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fv0-5u-pn5" userLabel="Call Label">
-                    <rect key="frame" x="279" y="94" width="42" height="20.5"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fv0-5u-pn5" userLabel="Call Label">
+                    <rect key="frame" x="279" y="104" width="42" height="20.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iFa-HC-YwY" userLabel="Email Button">
+                    <rect key="frame" x="550" y="352.5" width="30" height="30"/>
+                    <state key="normal">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DVH-aU-v4Y" userLabel="Web Button">
-                    <rect key="frame" x="20" y="419" width="30" height="30"/>
+                    <rect key="frame" x="550" y="402.5" width="30" height="30"/>
                     <state key="normal">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oZK-kf-us9" userLabel="Facebook Button">
-                    <rect key="frame" x="20" y="469" width="30" height="30"/>
+                    <rect key="frame" x="550" y="452.5" width="30" height="30"/>
                     <state key="normal">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Wf-BP-41f" userLabel="Twitter Button">
-                    <rect key="frame" x="20" y="519" width="30" height="30"/>
+                    <rect key="frame" x="550" y="502.5" width="30" height="30"/>
+                    <state key="normal">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y93-zY-72d" userLabel="Overflow Button">
+                    <rect key="frame" x="550" y="552.5" width="30" height="34"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ajf-hL-OdR" userLabel="Close Button">
+                    <rect key="frame" x="550" y="552.5" width="30" height="34"/>
+                    <state key="normal">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oTC-92-ZlJ" userLabel="Audio Action Button">
+                    <rect key="frame" x="285" y="165" width="30" height="30"/>
                     <state key="normal">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="seE-yj-6Tj" userLabel="Market Location Label">
-                    <rect key="frame" x="20" y="569" width="42" height="20.5"/>
+                    <rect key="frame" x="20" y="559.5" width="42" height="20.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="2bD-8O-Jxf" userLabel="Audio Activity Indicator View">
+                    <rect key="frame" x="290" y="170" width="20" height="20"/>
+                </activityIndicatorView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="centerX" secondItem="fv0-5u-pn5" secondAttribute="centerX" id="2rz-Ox-A1u"/>
-                <constraint firstItem="3Wf-BP-41f" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="3cy-UM-teI"/>
+                <constraint firstItem="oTC-92-ZlJ" firstAttribute="top" secondItem="fv0-5u-pn5" secondAttribute="bottom" constant="40" id="2zT-K6-jHb"/>
+                <constraint firstItem="y93-zY-72d" firstAttribute="centerX" secondItem="oZK-kf-us9" secondAttribute="centerX" id="3q0-6F-Cn6"/>
+                <constraint firstItem="DVH-aU-v4Y" firstAttribute="top" secondItem="iFa-HC-YwY" secondAttribute="bottom" constant="20" id="3rp-H6-7HE"/>
                 <constraint firstItem="OyO-xa-jIC" firstAttribute="top" secondItem="v3l-2K-h5M" secondAttribute="bottom" id="5bF-3g-XNq"/>
-                <constraint firstItem="seE-yj-6Tj" firstAttribute="top" secondItem="3Wf-BP-41f" secondAttribute="bottom" constant="20" id="7lY-fm-hax"/>
+                <constraint firstItem="DVH-aU-v4Y" firstAttribute="centerX" secondItem="oZK-kf-us9" secondAttribute="centerX" id="7BV-bd-T6l"/>
+                <constraint firstItem="y93-zY-72d" firstAttribute="centerX" secondItem="ajf-hL-OdR" secondAttribute="centerX" id="B3r-7U-6d5"/>
+                <constraint firstItem="oTC-92-ZlJ" firstAttribute="centerX" secondItem="2bD-8O-Jxf" secondAttribute="centerX" id="Bkb-Fk-wF4"/>
+                <constraint firstAttribute="centerX" secondItem="oTC-92-ZlJ" secondAttribute="centerX" id="Ecs-oK-RRU"/>
                 <constraint firstAttribute="trailing" secondItem="v3l-2K-h5M" secondAttribute="trailing" id="GoJ-fw-lSQ"/>
-                <constraint firstAttribute="bottom" secondItem="seE-yj-6Tj" secondAttribute="bottom" constant="10" id="H40-fv-E3z"/>
+                <constraint firstAttribute="bottom" secondItem="seE-yj-6Tj" secondAttribute="bottom" constant="20" id="H40-fv-E3z"/>
                 <constraint firstItem="oZK-kf-us9" firstAttribute="top" secondItem="DVH-aU-v4Y" secondAttribute="bottom" constant="20" id="H61-ub-T1x"/>
+                <constraint firstItem="DVH-aU-v4Y" firstAttribute="centerX" secondItem="y93-zY-72d" secondAttribute="centerX" id="HZ4-5S-X2H"/>
                 <constraint firstItem="v3l-2K-h5M" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="KY2-HO-q8W"/>
                 <constraint firstItem="3Wf-BP-41f" firstAttribute="top" secondItem="oZK-kf-us9" secondAttribute="bottom" constant="20" id="KZK-ZV-Lvr"/>
                 <constraint firstAttribute="centerX" secondItem="OyO-xa-jIC" secondAttribute="centerX" id="NzK-V3-FoK"/>
+                <constraint firstItem="DVH-aU-v4Y" firstAttribute="centerX" secondItem="y93-zY-72d" secondAttribute="centerX" id="OCN-Iz-jZM"/>
+                <constraint firstItem="DVH-aU-v4Y" firstAttribute="centerX" secondItem="iFa-HC-YwY" secondAttribute="centerX" id="Pmu-i1-OQZ"/>
                 <constraint firstItem="seE-yj-6Tj" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="UFG-OK-OQb"/>
-                <constraint firstItem="oZK-kf-us9" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="Uus-Zl-Xfb"/>
-                <constraint firstItem="v3l-2K-h5M" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="cv9-hZ-a1R"/>
+                <constraint firstAttribute="trailing" secondItem="y93-zY-72d" secondAttribute="trailing" constant="20" id="aX7-1P-ehC"/>
+                <constraint firstItem="y93-zY-72d" firstAttribute="centerX" secondItem="iFa-HC-YwY" secondAttribute="centerX" id="cfq-fJ-vDv"/>
+                <constraint firstItem="v3l-2K-h5M" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="30" id="cv9-hZ-a1R"/>
+                <constraint firstItem="y93-zY-72d" firstAttribute="centerX" secondItem="3Wf-BP-41f" secondAttribute="centerX" id="fyg-hg-huK"/>
+                <constraint firstItem="y93-zY-72d" firstAttribute="centerY" secondItem="ajf-hL-OdR" secondAttribute="centerY" id="hsp-vp-7dt"/>
+                <constraint firstItem="oTC-92-ZlJ" firstAttribute="centerY" secondItem="2bD-8O-Jxf" secondAttribute="centerY" id="jHo-OB-f3r"/>
+                <constraint firstItem="y93-zY-72d" firstAttribute="centerY" secondItem="seE-yj-6Tj" secondAttribute="centerY" id="sj2-mO-Ofs"/>
+                <constraint firstItem="DVH-aU-v4Y" firstAttribute="centerX" secondItem="3Wf-BP-41f" secondAttribute="centerX" id="tEl-P4-8fp"/>
+                <constraint firstItem="y93-zY-72d" firstAttribute="top" secondItem="3Wf-BP-41f" secondAttribute="bottom" constant="20" id="vjr-8P-Lw1"/>
                 <constraint firstItem="fv0-5u-pn5" firstAttribute="top" secondItem="OyO-xa-jIC" secondAttribute="bottom" constant="10" id="xDT-rQ-mgc"/>
-                <constraint firstItem="DVH-aU-v4Y" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="yR6-3c-W4T"/>
             </constraints>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="7BV-bd-T6l"/>
+                    <exclude reference="HZ4-5S-X2H"/>
+                    <exclude reference="Pmu-i1-OQZ"/>
+                    <exclude reference="tEl-P4-8fp"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="241" y="212"/>
         </view>
     </objects>
 </document>

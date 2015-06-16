@@ -23,9 +23,9 @@
     return UIStatusBarStyleLightContent;
 }
 
-- (BOOL)prefersStatusBarHidden {
-    return YES;
-}
+//- (BOOL)prefersStatusBarHidden {
+//    return YES;
+//}
 
 #pragma mark - Base Navigation Controller
 
@@ -50,6 +50,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.view.backgroundColor = [UIColor clearColor];
+    self.automaticallyAdjustsScrollViewInsets = NO;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveAudioPlayerToolbarNotification:) name:kNPRNotificationWillShowAudioPlayerToolbar object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveAudioPlayerToolbarNotification:) name:kNPRNotificationWillHideAudioPlayerToolbar object:nil];

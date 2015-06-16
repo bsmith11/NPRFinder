@@ -12,6 +12,7 @@
 
 + (UIFont *)npr_audioPlayerToolbarFont;
 + (UIFont *)npr_homeStationFrequencyFont;
++ (UIFont *)npr_homeNoResultsFont;
 + (UIFont *)npr_stationFrequencyFont;
 + (UIFont *)npr_stationCallFont;
 + (UIFont *)npr_stationMarketLocationFont;

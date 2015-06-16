@@ -10,7 +10,7 @@
 
 const BOOL kNPRShowNetworkErrorAlerts = NO;
 const BOOL kNPRShowLocationErrorAlerts = NO;
-const BOOL kNPRUseLocationServices = NO;
+const BOOL kNPRUseLocationServices = YES;
 const BOOL kNPRUseMockStationObjects = YES;
 const BOOL kNPRUseMockProgramObjects = NO;
 

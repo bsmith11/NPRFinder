@@ -8,20 +8,48 @@
 
 #import "NPRStation+RZImport.h"
 
-#import "NPRStationUrl+RZImport.h"
 #import "NPRSwitchConstants.h"
 #import "NPRNetworkConstants.h"
 #import "NSString+NPRUtil.h"
 #import "NPRNetworkManager.h"
+#import "NPRAudioStream+RZImport.h"
 
 static const NSInteger kNPRMockStationCount = 10;
+
+typedef NS_ENUM(NSInteger, NPRStationURLType) {
+    NPRStationURLTypeOrganizationHomePage = 1,
+    NPRStationURLTypeProgramSchedule,
+    NPRStationURLTypeOnlineStore,
+    NPRStationURLTypePledgePage,
+    NPRStationURLTypeENewsletter,
+    NPRStationURLTypeLocalNews,
+    NPRStationURLTypeAudioStreamLandingPage,
+    NPRStationURLTypeRSSFeed,
+    NPRStationURLTypePodcast,
+    NPRStationURLTypeAudioMP3Stream,
+    NPRStationURLTypeAudioWindowsMediaStream,
+    NPRStationURLTypeAudioRealMediaStream,
+    NPRStationURLTypeAudioAACStream,
+    NPRStationURLTypeVideoPodcast,
+    NPRStationURLTypeNewscast,
+    NPRStationURLTypeFacebookURL,
+    NPRStationURLTypeTwitterFeed,
+    NPRStationURLTypeStationLogo,
+    NPRStationURLTypeStreamLogo,
+    NPRStationURLTypeStationIDNPROneAudioIntro,
+    NPRStationURLTypeStationHelloAudio,
+    NPRStationURLTypeStationSonicIDAudio,
+    NPRStationURLTypeStationNPROneLogo,
+    NPRStationURLTypeStationIdentifierAudioMP3,
+    NPRStationURLTypeStationIdentifierAudioACC
+};
 
 @implementation NPRStation (RZImport)
 
 #pragma mark - RZImportable
 
 + (NSDictionary *)rzi_customMappings {
-    return @{kNPRResponseKeyStationOrganizationId:@"organizationId"};
+    return @{kNPRResponseKeyStationOrganizationID:@"organizationID"};
 }
 
 + (NSString *)rzi_dateFormatForKey:(NSString *)key {
@@ -32,14 +60,25 @@ static const NSInteger kNPRMockStationCount = 10;
     return @[kNPRResponseKeyStationAddress,
              kNPRResponseKeyStationSignal,
              kNPRResponseKeyStationHomepage,
-             kNPRResponseKeyStationDonationUrl,
-             kNPRResponseKeyStationLogo];
+             kNPRResponseKeyStationDonationURL,
+             kNPRResponseKeyStationLogo,
+             kNPRResponseKeyStationNetwork,
+             kNPRResponseKeyStationStatusName,
+             kNPRResponseKeyStationAbbreviation,
+             kNPRResponseKeyStationTitle,
+             kNPRResponseKeyStationTagline,
+             kNPRResponseKeyStationFax,
+             kNPRResponseKeyStationName,
+             kNPRResponseKeyStationPhone,
+             kNPRResponseKeyStationPhoneExtension,
+             kNPRResponseKeyStationAreaCode,
+             kNPRResponseKeyStationFormat];
 }
 
 - (BOOL)rzi_shouldImportValue:(id)value forKey:(NSString *)key {
-    if ([key isEqualToString:kNPRResponseKeyStationUrls]) {
+    if ([key isEqualToString:kNPRResponseKeyStationURLs]) {
         if ([value isKindOfClass:[NSArray class]]) {
-            self.urls = [NPRStationUrl rzi_objectsFromArray:value];
+            [self importURLs:value];
         }
         
         return NO;
@@ -69,12 +108,54 @@ static const NSInteger kNPRMockStationCount = 10;
     return YES;
 }
 
+- (void)importURLs:(NSArray *)URLs {
+    for (NSDictionary *URLDictionary in URLs) {
+        NSString *typeId = URLDictionary[kNPRResponseKeyStationURLTypeID];
+        NSString *href = URLDictionary[kNPRResponseKeyStationURLHREF];
+        NSURL *URL = [NSURL URLWithString:href];
+        
+        switch ([typeId integerValue]) {
+            case NPRStationURLTypeOrganizationHomePage:
+                self.homepageURL = URL;
+                break;
+                
+            case NPRStationURLTypePledgePage:
+                self.pledgePageURL = URL;
+                break;
+                
+            case NPRStationURLTypeFacebookURL:
+                self.facebookURL = URL;
+                break;
+                
+            case NPRStationURLTypeTwitterFeed:
+                self.twitterURL = URL;
+                break;
+                
+            case NPRStationURLTypeAudioAACStream:
+            case NPRStationURLTypeAudioMP3Stream:
+            case NPRStationURLTypeAudioRealMediaStream:
+            case NPRStationURLTypeAudioWindowsMediaStream: {
+                NPRAudioStream *audioStream = [NPRAudioStream rzi_objectFromDictionary:URLDictionary];
+                
+                if (audioStream.streamGUID) {
+                    self.audioStreams = [self.audioStreams arrayByAddingObject:audioStream];
+                }
+            }
+                break;
+                
+            default:
+                //no-op
+                break;
+        }
+    }
+}
+
 #pragma mark - Network Requests
 
 + (void)getStationsNearLocation:(CLLocation *)location completion:(NPRStationCompletionBlock)completion {
     NSString *coordinates = [NSString npr_coordinatesFromLocation:location];
     
-    [NPRStation getStationsWithSearchText:coordinates completion:completion];
+    [NPRStation getStationsWithSearchText:@"wamu" completion:completion];
 }
 
 + (void)getStationsWithSearchText:(NSString *)searchText completion:(NPRStationCompletionBlock)completion {
@@ -101,7 +182,15 @@ static const NSInteger kNPRMockStationCount = 10;
 
 + (void)handleSuccessfulStationRequestWithResponseObject:(id)responseObject completion:(NPRStationCompletionBlock)completion {
     if ([responseObject isKindOfClass:[NSArray class]]) {
-        NSMutableArray *stations = [[NPRStation rzi_objectsFromArray:responseObject] mutableCopy];
+        NSArray *responseArray = (NSArray *)responseObject;
+        
+        if ([[responseArray firstObject] isKindOfClass:[NSString class]]) {
+            responseArray = @[];
+        }
+        
+        NSMutableArray *stations = [[NPRStation rzi_objectsFromArray:responseArray] mutableCopy];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"open == YES"];
+        [stations filterUsingPredicate:predicate];
         
         NSSortDescriptor *sortDescripter = [NSSortDescriptor sortDescriptorWithKey:@"signalStrength" ascending:NO];
         [stations sortUsingDescriptors:@[sortDescripter]];
@@ -127,14 +216,23 @@ static const NSInteger kNPRMockStationCount = 10;
 
 #pragma mark - Mock Object
 
++ (NSDictionary *)mockStationURLJSONWithType:(NPRStationURLType)type {
+    NSDictionary *json = @{kNPRResponseKeyStationURLTypeID:@(type),
+                           kNPRResponseKeyStationURLTypeName:@"Organization Home Page",
+                           kNPRResponseKeyStationURLTitle:@"WAMU Homepage",
+                           kNPRResponseKeyStationURLHREF:@"http://wamu.org"};
+    
+    return json;
+}
+
 + (NSDictionary *)mockStationJsonWithFrequency:(NSString *)frequency signalStrength:(NSNumber *)signalStrength {
-    NSArray *stationUrls = @[[NPRStationUrl mockStationUrlJSONWithTypeId:@(1)],
-                             [NPRStationUrl mockStationUrlJSONWithTypeId:@(2)],
-                             [NPRStationUrl mockStationUrlJSONWithTypeId:@(3)],
-                             [NPRStationUrl mockStationUrlJSONWithTypeId:@(4)]];
+    NSArray *stationURLs = @[[NPRStation mockStationURLJSONWithType:NPRStationURLTypeOrganizationHomePage],
+                             [NPRStation mockStationURLJSONWithType:NPRStationURLTypeFacebookURL],
+                             [NPRStation mockStationURLJSONWithType:NPRStationURLTypeTwitterFeed],
+                             [NPRStation mockStationURLJSONWithType:NPRStationURLTypeAudioAACStream]];
     
     NSDictionary *json = @{kNPRResponseKeyStationGUID:@"4fcf701003f74f83946fc90857d03ef8",
-                           kNPRResponseKeyStationOrganizationId:@"305",
+                           kNPRResponseKeyStationOrganizationID:@"305",
                            kNPRResponseKeyStationName:@"WAMU 88.5",
                            kNPRResponseKeyStationTitle:@"WAMU-FM",
                            kNPRResponseKeyStationCall:@"WAMU",
@@ -149,7 +247,7 @@ static const NSInteger kNPRMockStationCount = 10;
                            kNPRResponseKeyStationMarketCity:@"Washington",
                            kNPRResponseKeyStationMarketState:@"DC",
                            kNPRResponseKeyStationFormat:@"Public Radio",
-                           kNPRResponseKeyStationMusicOnly:@"0",
+                           kNPRResponseKeyStationMusicOnly:@"1",
                            kNPRResponseKeyStationStatus:@"1",
                            kNPRResponseKeyStationEmail:@"feedback@wamu.org",
                            kNPRResponseKeyStationAreaCode:[NSNull null],
@@ -158,9 +256,9 @@ static const NSInteger kNPRMockStationCount = 10;
                            kNPRResponseKeyStationFax:@"2028851280",
                            kNPRResponseKeyStationSignal:@"strong",
                            kNPRResponseKeyStationSignalStrength:[signalStrength stringValue],
-                           kNPRResponseKeyStationUrls:stationUrls,
+                           kNPRResponseKeyStationURLs:stationURLs,
                            kNPRResponseKeyStationHomepage:@"http://wamu.org",
-                           kNPRResponseKeyStationDonationUrl:@"http://wamu.org/support/donate/",
+                           kNPRResponseKeyStationDonationURL:@"http://wamu.org/support/donate/",
                            kNPRResponseKeyStationLogo:@"http://media.npr.org/images/stations/logos/wamu_fm.gif"};
     
     return json;

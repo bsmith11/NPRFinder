@@ -28,14 +28,14 @@
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedManager = [[self alloc] initWithBaseURL:[NSURL URLWithString:kNPRBaseUrl]];
+        sharedManager = [[self alloc] initWithBaseURL:[NSURL URLWithString:kNPRBaseURL]];
     });
     
     return sharedManager;
 }
 
-- (instancetype)initWithBaseURL:(NSURL *)url {
-    self = [super initWithBaseURL:url];
+- (instancetype)initWithBaseURL:(NSURL *)URL {
+    self = [super initWithBaseURL:URL];
     
     if (self) {
         [self setResponseSerializer:[AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingAllowFragments]];
@@ -58,7 +58,7 @@
 - (void)searchForStationsWithText:(NSString *)text
                           success:(void (^)(NSURLSessionDataTask *task, id responseObject))success
                           failure:(void (^)(NSURLSessionDataTask *task, NSError *error))failure {
-    NSDictionary *parameters = @{kNPRRequestKeyApiKey:kNPRStationFinderApiKey};
+    NSDictionary *parameters = @{kNPRRequestKeyAPIKey:kNPRStationFinderAPIKey};
     NSString *path = [NSString stringWithFormat:@"%@%@", kNPRRouteStations, text];
     
     for (NSURLSessionDataTask *task in self.outstandingSearchTasks) {
@@ -90,11 +90,11 @@
                       failure:(void (^)(NSURLSessionDataTask *task, NSError *error))failure {
     NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
     numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
-    NSNumber *requestValueId = [numberFormatter numberFromString:kNPRRequestValueId];
+    NSNumber *requestValueID = [numberFormatter numberFromString:kNPRRequestValueID];
     
-    NSDictionary *parameters = @{kNPRRequestKeyApiKey:kNPRStationFinderApiKey,
-                                 kNPRRequestKeyId:requestValueId,
-                                 kNPRRequestKeyOrganizationId:station.organizationId,
+    NSDictionary *parameters = @{kNPRRequestKeyAPIKey:kNPRStationFinderAPIKey,
+                                 kNPRRequestKeyID:requestValueID,
+                                 kNPRRequestKeyOrganizationID:station.organizationID,
                                  kNPRRequestKeyOutput:kNPRRequestValueOutput};
     
     NSString *path = kNPRRouteProgramsList;

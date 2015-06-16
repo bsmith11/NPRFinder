@@ -18,12 +18,14 @@
 		06CBF3281B2B7FD8005F6210 /* GothamRounded-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 06CBF31F1B2B7C51005F6210 /* GothamRounded-LightItalic.otf */; };
 		06CBF3291B2B7FDB005F6210 /* GothamRounded-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 06CBF3211B2B7C51005F6210 /* GothamRounded-Medium.otf */; };
 		06CBF32A1B2B7FDF005F6210 /* GothamRounded-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 06CBF3201B2B7C51005F6210 /* GothamRounded-MediumItalic.otf */; };
+		06CBF32D1B2C504C005F6210 /* NPRHomeCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CBF32C1B2C504C005F6210 /* NPRHomeCollectionViewFlowLayout.m */; };
+		06CBF3331B2C8905005F6210 /* NPRAudioStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CBF3321B2C8905005F6210 /* NPRAudioStream.m */; };
+		06CBF3361B2C90E9005F6210 /* NPRAudioStream+RZImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CBF3351B2C90E9005F6210 /* NPRAudioStream+RZImport.m */; };
 		06EAC5881B29413E000FC33A /* NPRStationCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 06EAC5861B29413E000FC33A /* NPRStationCollectionViewCell.m */; };
 		06EAC5891B29413E000FC33A /* NPRStationCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 06EAC5871B29413E000FC33A /* NPRStationCollectionViewCell.xib */; };
 		06EAC58C1B2943CC000FC33A /* UICollectionReusableView+NPRUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 06EAC58B1B2943CC000FC33A /* UICollectionReusableView+NPRUtil.m */; };
 		06EAC58F1B29518B000FC33A /* NPRExpandAnimationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 06EAC58E1B29518B000FC33A /* NPRExpandAnimationController.m */; };
 		06EAC5921B29EFBE000FC33A /* NPRStation+RZImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 06EAC5911B29EFBE000FC33A /* NPRStation+RZImport.m */; };
-		06EAC5951B29F3E1000FC33A /* NPRStationUrl+RZImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 06EAC5941B29F3E1000FC33A /* NPRStationUrl+RZImport.m */; };
 		06EAC5981B29F51B000FC33A /* NPRProgram+RZImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 06EAC5971B29F51B000FC33A /* NPRProgram+RZImport.m */; };
 		06EAC59B1B2A0DF7000FC33A /* UIFont+NPRStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 06EAC59A1B2A0DF7000FC33A /* UIFont+NPRStyle.m */; };
 		06EAC59E1B2A0E39000FC33A /* UIColor+NPRStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 06EAC59D1B2A0E39000FC33A /* UIColor+NPRStyle.m */; };
@@ -41,7 +43,6 @@
 		480FA7FF1A678B5D00FC1C52 /* NPRBaseNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 480FA7FE1A678B5D00FC1C52 /* NPRBaseNavigationController.m */; };
 		480FA8031A678F0300FC1C52 /* NPRTransitionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 480FA8021A678F0300FC1C52 /* NPRTransitionController.m */; };
 		482D70221A5D2FA60006315B /* NPRNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 482D70211A5D2FA60006315B /* NPRNetworkManager.m */; };
-		482D70251A5D903A0006315B /* NPRStationUrl.m in Sources */ = {isa = PBXBuildFile; fileRef = 482D70241A5D903A0006315B /* NPRStationUrl.m */; };
 		482D70341A5E17270006315B /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 482D70331A5E17270006315B /* UIImage+ImageEffects.m */; };
 		482D70381A5E43E40006315B /* NPRSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 482D70371A5E43E40006315B /* NPRSearchViewController.m */; };
 		482D703A1A5E43F20006315B /* NPRSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 482D70391A5E43F20006315B /* NPRSearchViewController.xib */; };
@@ -90,6 +91,12 @@
 		06CBF3201B2B7C51005F6210 /* GothamRounded-MediumItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GothamRounded-MediumItalic.otf"; sourceTree = "<group>"; };
 		06CBF3211B2B7C51005F6210 /* GothamRounded-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GothamRounded-Medium.otf"; sourceTree = "<group>"; };
 		06CBF3221B2B7E37005F6210 /* GothamRounded-Book.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GothamRounded-Book.otf"; sourceTree = "<group>"; };
+		06CBF32B1B2C504C005F6210 /* NPRHomeCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRHomeCollectionViewFlowLayout.h; sourceTree = "<group>"; };
+		06CBF32C1B2C504C005F6210 /* NPRHomeCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRHomeCollectionViewFlowLayout.m; sourceTree = "<group>"; };
+		06CBF3311B2C8905005F6210 /* NPRAudioStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRAudioStream.h; sourceTree = "<group>"; };
+		06CBF3321B2C8905005F6210 /* NPRAudioStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRAudioStream.m; sourceTree = "<group>"; };
+		06CBF3341B2C90E9005F6210 /* NPRAudioStream+RZImport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NPRAudioStream+RZImport.h"; sourceTree = "<group>"; };
+		06CBF3351B2C90E9005F6210 /* NPRAudioStream+RZImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NPRAudioStream+RZImport.m"; sourceTree = "<group>"; };
 		06EAC5851B29413E000FC33A /* NPRStationCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRStationCollectionViewCell.h; sourceTree = "<group>"; };
 		06EAC5861B29413E000FC33A /* NPRStationCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRStationCollectionViewCell.m; sourceTree = "<group>"; };
 		06EAC5871B29413E000FC33A /* NPRStationCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NPRStationCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -99,8 +106,6 @@
 		06EAC58E1B29518B000FC33A /* NPRExpandAnimationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRExpandAnimationController.m; sourceTree = "<group>"; };
 		06EAC5901B29EFBE000FC33A /* NPRStation+RZImport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NPRStation+RZImport.h"; sourceTree = "<group>"; };
 		06EAC5911B29EFBE000FC33A /* NPRStation+RZImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NPRStation+RZImport.m"; sourceTree = "<group>"; };
-		06EAC5931B29F3E1000FC33A /* NPRStationUrl+RZImport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NPRStationUrl+RZImport.h"; sourceTree = "<group>"; };
-		06EAC5941B29F3E1000FC33A /* NPRStationUrl+RZImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NPRStationUrl+RZImport.m"; sourceTree = "<group>"; };
 		06EAC5961B29F51B000FC33A /* NPRProgram+RZImport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NPRProgram+RZImport.h"; sourceTree = "<group>"; };
 		06EAC5971B29F51B000FC33A /* NPRProgram+RZImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NPRProgram+RZImport.m"; sourceTree = "<group>"; };
 		06EAC5991B2A0DF7000FC33A /* UIFont+NPRStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+NPRStyle.h"; sourceTree = "<group>"; };
@@ -134,8 +139,6 @@
 		480FA8021A678F0300FC1C52 /* NPRTransitionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRTransitionController.m; sourceTree = "<group>"; };
 		482D70201A5D2FA60006315B /* NPRNetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRNetworkManager.h; sourceTree = "<group>"; };
 		482D70211A5D2FA60006315B /* NPRNetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRNetworkManager.m; sourceTree = "<group>"; };
-		482D70231A5D903A0006315B /* NPRStationUrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRStationUrl.h; sourceTree = "<group>"; };
-		482D70241A5D903A0006315B /* NPRStationUrl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRStationUrl.m; sourceTree = "<group>"; };
 		482D70321A5E17270006315B /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
 		482D70331A5E17270006315B /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		482D70361A5E43E40006315B /* NPRSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRSearchViewController.h; sourceTree = "<group>"; };
@@ -441,14 +444,14 @@
 				48E504A51A5CAC52005856D8 /* NPRStation.m */,
 				06EAC5901B29EFBE000FC33A /* NPRStation+RZImport.h */,
 				06EAC5911B29EFBE000FC33A /* NPRStation+RZImport.m */,
-				482D70231A5D903A0006315B /* NPRStationUrl.h */,
-				482D70241A5D903A0006315B /* NPRStationUrl.m */,
-				06EAC5931B29F3E1000FC33A /* NPRStationUrl+RZImport.h */,
-				06EAC5941B29F3E1000FC33A /* NPRStationUrl+RZImport.m */,
 				480FA7ED1A650A4E00FC1C52 /* NPRProgram.h */,
 				480FA7EE1A650A4E00FC1C52 /* NPRProgram.m */,
 				06EAC5961B29F51B000FC33A /* NPRProgram+RZImport.h */,
 				06EAC5971B29F51B000FC33A /* NPRProgram+RZImport.m */,
+				06CBF3311B2C8905005F6210 /* NPRAudioStream.h */,
+				06CBF3321B2C8905005F6210 /* NPRAudioStream.m */,
+				06CBF3341B2C90E9005F6210 /* NPRAudioStream+RZImport.h */,
+				06CBF3351B2C90E9005F6210 /* NPRAudioStream+RZImport.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -462,6 +465,8 @@
 				06EAC5851B29413E000FC33A /* NPRStationCollectionViewCell.h */,
 				06EAC5861B29413E000FC33A /* NPRStationCollectionViewCell.m */,
 				06EAC5871B29413E000FC33A /* NPRStationCollectionViewCell.xib */,
+				06CBF32B1B2C504C005F6210 /* NPRHomeCollectionViewFlowLayout.h */,
+				06CBF32C1B2C504C005F6210 /* NPRHomeCollectionViewFlowLayout.m */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -659,13 +664,15 @@
 				482D704E1A5F4B580006315B /* NPRSplashViewController.m in Sources */,
 				483C2D491A5C72FA007B9995 /* NPRAppDelegate.m in Sources */,
 				48E504B11A5D1FE9005856D8 /* NPRLocationManager.m in Sources */,
-				482D70251A5D903A0006315B /* NPRStationUrl.m in Sources */,
+				06CBF3331B2C8905005F6210 /* NPRAudioStream.m in Sources */,
+				06CBF32D1B2C504C005F6210 /* NPRHomeCollectionViewFlowLayout.m in Sources */,
 				06EAC58F1B29518B000FC33A /* NPRExpandAnimationController.m in Sources */,
 				48E504B91A5D2510005856D8 /* NPRNotificationManager.m in Sources */,
 				483C2D461A5C72FA007B9995 /* main.m in Sources */,
 				482D70221A5D2FA60006315B /* NPRNetworkManager.m in Sources */,
 				06EAC5881B29413E000FC33A /* NPRStationCollectionViewCell.m in Sources */,
 				06EAC58C1B2943CC000FC33A /* UICollectionReusableView+NPRUtil.m in Sources */,
+				06CBF3361B2C90E9005F6210 /* NPRAudioStream+RZImport.m in Sources */,
 				06EAC5AE1B2A1B9D000FC33A /* NPRErrorConstants.m in Sources */,
 				06EAC59E1B2A0E39000FC33A /* UIColor+NPRStyle.m in Sources */,
 				06EAC5A81B2A15D0000FC33A /* NSString+NPRUtil.m in Sources */,
@@ -680,7 +687,6 @@
 				06EAC5981B29F51B000FC33A /* NPRProgram+RZImport.m in Sources */,
 				480FA7EF1A650A4E00FC1C52 /* NPRProgram.m in Sources */,
 				06EAC59B1B2A0DF7000FC33A /* UIFont+NPRStyle.m in Sources */,
-				06EAC5951B29F3E1000FC33A /* NPRStationUrl+RZImport.m in Sources */,
 				06CBF3121B2B27B3005F6210 /* UIImage+NPRStyle.m in Sources */,
 				480FA8031A678F0300FC1C52 /* NPRTransitionController.m in Sources */,
 			);

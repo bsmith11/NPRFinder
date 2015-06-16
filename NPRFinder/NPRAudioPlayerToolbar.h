@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger, NPRAudioPlayerToolbarState) {
+    NPRAudioPlayerToolbarStatePlaying,
+    NPRAudioPlayerToolbarStatePaused,
+    NPRAudioPlayerToolbarStateLoading,
+    NPRAudioPlayerToolbarStateNone
+};
+
 @class NPRAudioPlayerToolbar;
 
 @protocol NPRAudioPlayerToolbarDelegate <NSObject>
@@ -23,5 +30,7 @@
 @property (copy, nonatomic) NSString *nowPlayingText;
 
 @property (weak, nonatomic) id <NPRAudioPlayerToolbarDelegate> audioPlayerToolbarDelegate;
+
+@property (assign, nonatomic) NPRAudioPlayerToolbarState state;
 
 @end

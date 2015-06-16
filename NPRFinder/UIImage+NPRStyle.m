@@ -23,6 +23,8 @@ static NSString * const kPauseIconName = @"Pause Icon";
 static NSString * const kStopIconName = @"Stop Icon";
 static NSString * const kMusicIconName = @"Music Icon";
 static NSString * const kWebIconName = @"Web Icon";
+static NSString * const kEmailIconName = @"Email Icon";
+static NSString * const kOverflowIconName = @"Overflow Icon";
 
 @implementation UIImage (NPRStyle)
 
@@ -111,6 +113,14 @@ static NSString * const kWebIconName = @"Web Icon";
 
 + (UIImage *)npr_webIcon {
     return [[UIImage imageNamed:kWebIconName] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+}
+
++ (UIImage *)npr_emailIcon {
+    return [[UIImage imageNamed:kEmailIconName] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+}
+
++ (UIImage *)npr_overflowIcon {
+    return [[UIImage imageNamed:kOverflowIconName] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 }
 
 @end

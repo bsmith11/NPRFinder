@@ -8,7 +8,7 @@
 
 #import "NPRStation.h"
 
-#import "NPRStationUrl.h"
+#import "NPRAudioStream+RZImport.h"
 
 @interface NPRStation ()
 
@@ -26,54 +26,57 @@
     }
     
     NPRStation *station = (NPRStation *)object;
-    if ([station.organizationId integerValue] == [self.organizationId integerValue]) {
+    if ([station.organizationID integerValue] == [self.organizationID integerValue]) {
         return YES;
     }
     
     return [super isEqual:object];
 }
 
-- (NSString *)marketLocation {
-    return [NSString stringWithFormat:@"%@, %@", self.marketCity, self.marketState];
+- (NSArray *)audioStreams {
+    if (!_audioStreams) {
+        _audioStreams = [NSArray array];
+    }
+    
+    return _audioStreams;
 }
 
-- (NSURL *)homepageUrl {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@", @"typeId", @(NPRStationUrlTypeOrganizationHomePage)];
-    NSArray *homepageUrls = [self.urls filteredArrayUsingPredicate:predicate];
-    NPRStationUrl *stationUrl = [homepageUrls firstObject];
+- (NPRAudioStream *)preferredAudioStream {
+    NSPredicate *typePredicate = [self typePredicateWithType:NPRAudioStreamTypeAAC];
+    NSPredicate *primaryPredicate = [self primaryPredicate:YES];
+    NSPredicate *compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[typePredicate, primaryPredicate]];
+    NSArray *results = [self.audioStreams filteredArrayUsingPredicate:compoundPredicate];
+    NPRAudioStream *audioStream;
     
-    if (stationUrl) {
-        return stationUrl.url;
+    if ([results count] > 0) {
+        audioStream = [results firstObject];
     }
     else {
-        return nil;
+        typePredicate = [self typePredicateWithType:NPRAudioStreamTypeMP3];
+        compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[typePredicate, primaryPredicate]];
+        results = [self.audioStreams filteredArrayUsingPredicate:compoundPredicate];
+        
+        if ([results count] > 0) {
+            audioStream = [results firstObject];
+        }
+        else {
+            audioStream = nil;
+        }
     }
+    
+    return audioStream;
 }
 
-- (NSURL *)facebookUrl {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@", @"typeId", @(NPRStationUrlTypeFacebookUrl)];
-    NSArray *facebookUrls = [self.urls filteredArrayUsingPredicate:predicate];
-    NPRStationUrl *stationUrl = [facebookUrls firstObject];
+- (NSPredicate *)typePredicateWithType:(NPRAudioStreamType)type {
+    NSPredicate *typePredicate = [NSPredicate predicateWithFormat:@"%K == %@", @"type", @(type)];
     
-    if (stationUrl) {
-        return stationUrl.url;
-    }
-    else {
-        return nil;
-    }
+    return typePredicate;
 }
 
-- (NSURL *)twitterUrl {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@", @"typeId", @(NPRStationUrlTypeTwitterFeed)];
-    NSArray *twitterUrls = [self.urls filteredArrayUsingPredicate:predicate];
-    NPRStationUrl *stationUrl = [twitterUrls firstObject];
+- (NSPredicate *)primaryPredicate:(BOOL)primary {
+    NSPredicate *primaryPredicate = [NSPredicate predicateWithFormat:@"%K == %@", @"primaryStream", @(primary)];
     
-    if (stationUrl) {
-        return stationUrl.url;
-    }
-    else {
-        return nil;
-    }
+    return primaryPredicate;
 }
 
 @end

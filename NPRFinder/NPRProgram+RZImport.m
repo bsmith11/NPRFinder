@@ -13,8 +13,6 @@
 #import "NPRNetworkManager.h"
 #import "NPRStation+RZImport.h"
 
-#import <RZDataBinding/RZDBMacros.h>
-
 static const NSInteger kNPRMockProgramCount = 5;
 
 @implementation NPRProgram (RZImport)
@@ -22,7 +20,7 @@ static const NSInteger kNPRMockProgramCount = 5;
 #pragma mark - RZImportable
 
 + (NSDictionary *)rzi_customMappings {
-    return @{kNPRResponseKeyProgramId:@"programId"};
+    return @{kNPRResponseKeyProgramID:@"programID"};
 }
 
 + (NSString *)rzi_dateFormatForKey:(NSString *)key {
@@ -107,7 +105,7 @@ static const NSInteger kNPRMockProgramCount = 5;
 
 + (NSDictionary *)mockProgramJsonWithTitle:(NSString *)title {
     NSDictionary *json = @{kNPRResponseKeyProgramAdditionalInfo:@{kNPRResponseKeyProgramText:@"test description"},
-                           kNPRResponseKeyProgramId:@0,
+                           kNPRResponseKeyProgramID:@0,
                            kNPRResponseKeyProgramNum:@"0",
                            kNPRResponseKeyProgramTitle:@{kNPRResponseKeyProgramText:title},
                            kNPRResponseKeyProgramType:@"program"};

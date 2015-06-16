@@ -8,4 +8,4 @@
 
 #import <Foundation/Foundation.h>
 
-OBJC_EXTERN NSString * const kNPRStationFinderApiKey;
+OBJC_EXTERN NSString * const kNPRStationFinderAPIKey;

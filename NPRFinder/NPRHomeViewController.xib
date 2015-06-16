@@ -7,6 +7,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NPRHomeViewController">
             <connections>
                 <outlet property="feedCollectionView" destination="ghW-qJ-swg" id="vZo-BE-xOl"/>
+                <outlet property="noResultsLabel" destination="3P4-dL-U2N" id="2At-Yh-YTr"/>
                 <outlet property="view" destination="zIR-er-Ru0" id="5Aq-5b-a7Y"/>
             </connections>
         </placeholder>
@@ -24,12 +25,21 @@
                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                     </collectionViewFlowLayout>
                 </collectionView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3P4-dL-U2N" userLabel="No Results Label" customClass="TTTAttributedLabel">
+                    <rect key="frame" x="40" y="290" width="520" height="20.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="ghW-qJ-swg" firstAttribute="top" secondItem="zIR-er-Ru0" secondAttribute="top" id="6N1-Ad-Bzb"/>
                 <constraint firstAttribute="bottom" secondItem="ghW-qJ-swg" secondAttribute="bottom" id="F1O-g0-yZh"/>
+                <constraint firstAttribute="centerY" secondItem="3P4-dL-U2N" secondAttribute="centerY" id="IsS-Ha-OFI"/>
                 <constraint firstItem="ghW-qJ-swg" firstAttribute="leading" secondItem="zIR-er-Ru0" secondAttribute="leading" id="Qpa-Ne-RcT"/>
+                <constraint firstItem="3P4-dL-U2N" firstAttribute="leading" secondItem="zIR-er-Ru0" secondAttribute="leading" constant="40" id="beU-X8-MaA"/>
+                <constraint firstAttribute="trailing" secondItem="3P4-dL-U2N" secondAttribute="trailing" constant="40" id="cbe-JR-kUN"/>
                 <constraint firstAttribute="trailing" secondItem="ghW-qJ-swg" secondAttribute="trailing" id="q5f-JA-MvS"/>
             </constraints>
             <point key="canvasLocation" x="495" y="374"/>

@@ -25,5 +25,7 @@
 + (UIImage *)npr_stopIcon;
 + (UIImage *)npr_musicIcon;
 + (UIImage *)npr_webIcon;
++ (UIImage *)npr_emailIcon;
++ (UIImage *)npr_overflowIcon;
 
 @end

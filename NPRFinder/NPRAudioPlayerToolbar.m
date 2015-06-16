@@ -14,25 +14,20 @@
 
 static const CGFloat kNPRAudioPlayerToolbarMargin = 10.0f;
 static const CGFloat kNPRAudioPlayerToolbarPadding = 10.0f;
-
-typedef NS_ENUM(NSInteger, NPRAudioPlayerToolbarState) {
-    NPRAudioPlayerToolbarStateNone,
-    NPRAudioPlayerToolbarStatePlaying,
-    NPRAudioPlayerToolbarStatePaused
-};
+static const CGFloat kNPRAudioPlayerToolbarTitleSizeModifier = 5.0f / 8.0f;
 
 @interface NPRAudioPlayerToolbar ()
 
 @property (strong, nonatomic) UIBarButtonItem *playBarButtonItem;
 @property (strong, nonatomic) UIBarButtonItem *pauseBarButtonItem;
 @property (strong, nonatomic) UIBarButtonItem *stopBarButtonItem;
+@property (strong, nonatomic) UIBarButtonItem *loadingBarButtonItem;
 @property (strong, nonatomic) UIBarButtonItem *titleBarButtonItem;
 @property (strong, nonatomic) UIBarButtonItem *leftMarginBarButtonItem;
 @property (strong, nonatomic) UIBarButtonItem *rightMarginBarButtonItem;
 @property (strong, nonatomic) UIBarButtonItem *interButtonPaddingBarButtonItem;
 @property (strong, nonatomic) UIBarButtonItem *fillPaddingBarButtonItem;
-
-@property (assign, nonatomic) NPRAudioPlayerToolbarState state;
+@property (strong, nonatomic) UIActivityIndicatorView *activityIndicatorView;
 
 @end
 
@@ -72,6 +67,12 @@ typedef NS_ENUM(NSInteger, NPRAudioPlayerToolbarState) {
                                                              target:self
                                                              action:@selector(stopBarButtonItemTapped)];
     
+    self.activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    self.activityIndicatorView.color = self.tintColor;
+    self.activityIndicatorView.hidesWhenStopped = YES;
+    
+    self.loadingBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.activityIndicatorView];
+    
     self.leftMarginBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
                                                                                  target:nil
                                                                                  action:nil];
@@ -102,71 +103,88 @@ typedef NS_ENUM(NSInteger, NPRAudioPlayerToolbarState) {
     self.rightMarginBarButtonItem.width = kNPRAudioPlayerToolbarMargin;
     self.interButtonPaddingBarButtonItem.width = kNPRAudioPlayerToolbarPadding;
     
-    self.state = NPRAudioPlayerToolbarStatePlaying;
+    self.state = NPRAudioPlayerToolbarStateNone;
 }
 
 - (void)setState:(NPRAudioPlayerToolbarState)state {
-    _state = state;
-    
-    UIBarButtonItem *actionItem;
-    if (self.state == NPRAudioPlayerToolbarStateNone) {
-        [self setItems:nil animated:NO];
-    }
-    else {
-        switch (state) {
-            case NPRAudioPlayerToolbarStatePlaying:
-                actionItem = self.pauseBarButtonItem;
-                break;
-                
-            case NPRAudioPlayerToolbarStatePaused:
-                actionItem = self.playBarButtonItem;
-                break;
-                
-            default:
-                actionItem = self.playBarButtonItem;
-                break;
+    if (_state != state) {
+        _state = state;
+        
+        UIBarButtonItem *actionItem;
+        if (_state == NPRAudioPlayerToolbarStateNone) {
+            [self setItems:nil animated:NO];
+        }
+        else {
+            switch (_state) {
+                case NPRAudioPlayerToolbarStatePlaying:
+                    actionItem = self.pauseBarButtonItem;
+                    break;
+                    
+                case NPRAudioPlayerToolbarStatePaused:
+                    actionItem = self.playBarButtonItem;
+                    break;
+                    
+                case NPRAudioPlayerToolbarStateLoading:
+                    actionItem = self.loadingBarButtonItem;
+                    break;
+                    
+                default:
+                    actionItem = self.playBarButtonItem;
+                    break;
+            }
+            
+            NSArray *items = @[self.leftMarginBarButtonItem, actionItem, self.interButtonPaddingBarButtonItem, self.stopBarButtonItem, self.fillPaddingBarButtonItem, self.titleBarButtonItem, self.rightMarginBarButtonItem];
+            [self setItems:items animated:NO];
         }
         
-        NSArray *items = @[self.leftMarginBarButtonItem, actionItem, self.interButtonPaddingBarButtonItem, self.stopBarButtonItem, self.fillPaddingBarButtonItem, self.titleBarButtonItem, self.rightMarginBarButtonItem];
-        [self setItems:items animated:NO];
+        if (_state == NPRAudioPlayerToolbarStateLoading) {
+            [self.activityIndicatorView startAnimating];
+        }
+        else {
+            [self.activityIndicatorView stopAnimating];
+        }
     }
 }
 
 - (void)setNowPlayingText:(NSString *)nowPlayingText {
-    _nowPlayingText = nowPlayingText;
-    
-    UILabel *titleLabel = (UILabel *)self.titleBarButtonItem.customView;
-    titleLabel.text = _nowPlayingText;
-    
+    if (![_nowPlayingText isEqualToString:nowPlayingText]) {
+        _nowPlayingText = nowPlayingText;
+        
+        UILabel *titleLabel = (UILabel *)self.titleBarButtonItem.customView;
+        titleLabel.text = _nowPlayingText;
+        
+        [self sizeTitleLabelToFit:titleLabel];
+    }
+}
+
+#pragma mark - Actions
+
+- (void)sizeTitleLabelToFit:(UILabel *)titleLabel {
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     paragraphStyle.lineBreakMode = titleLabel.lineBreakMode;
     paragraphStyle.alignment = titleLabel.textAlignment;
     
-    CGFloat modifier = 5.0f / 8.0f;
-    CGSize size = CGSizeMake(CGRectGetWidth(self.frame) * modifier, CGRectGetHeight(self.frame));
+    CGSize size = CGSizeMake(CGRectGetWidth(self.frame) * kNPRAudioPlayerToolbarTitleSizeModifier, CGRectGetHeight(self.frame));
     
     NSDictionary *attributes = @{NSParagraphStyleAttributeName:paragraphStyle,
                                  NSFontAttributeName:titleLabel.font};
     
-    CGRect boundingRect = [titleLabel.text boundingRectWithSize:size options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:NULL];
+    CGRect boundingRect = [titleLabel.text boundingRectWithSize:size
+                                                        options:NSStringDrawingUsesLineFragmentOrigin
+                                                     attributes:attributes
+                                                        context:NULL];
     CGRect frame = titleLabel.frame;
     frame.size = boundingRect.size;
     titleLabel.frame = frame;
 }
 
-#pragma mark - Actions
-
-- (void)playBarButtonItemTapped {
-    self.state = NPRAudioPlayerToolbarStatePlaying;
-    
+- (void)playBarButtonItemTapped {    
     if ([self.audioPlayerToolbarDelegate respondsToSelector:@selector(audioPlayerToolbarDidSelectPlay:)]) {
         [self.audioPlayerToolbarDelegate audioPlayerToolbarDidSelectPlay:self];
     }
 }
 
 - (void)pauseBarButtonItemTapped {
-    self.state = NPRAudioPlayerToolbarStatePaused;
-    
     if ([self.audioPlayerToolbarDelegate respondsToSelector:@selector(audioPlayerToolbarDidSelectPause:)]) {
         [self.audioPlayerToolbarDelegate audioPlayerToolbarDidSelectPause:self];
     }

@@ -10,7 +10,7 @@
 
 @interface NPRProgram : NSObject
 
-@property (copy, nonatomic) NSNumber *programId;
+@property (copy, nonatomic) NSNumber *programID;
 @property (copy, nonatomic) NSString *title;
 @property (copy, nonatomic) NSString *programDescription;
 

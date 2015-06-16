@@ -8,9 +8,9 @@
 
 #import "NPRProgram.h"
 
-#import "NPRStation+RZImport.h"
-
 #import <RZImport/NSObject+RZImport.h>
+
+@class NPRStation;
 
 typedef void(^NPRProgramCompletionBlock)(NSArray *programs, NSError *error);
 

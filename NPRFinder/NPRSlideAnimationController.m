@@ -65,9 +65,9 @@ static char kNPRInitialFramesAssocKey;
         
         [containerView insertSubview:toViewController.view aboveSubview:fromViewController.view];
         
-        NSInteger modifier = arc4random_uniform(2);
-        modifier = modifier ? modifier : -1;
-        modifier = 1;
+        NSInteger modifier = 1;
+//        NSInteger modifier = arc4random_uniform(2);
+//        modifier = modifier ? modifier : -1;
         
         [snapshots pop_sequenceWithInterval:kNPRAnimationInterval animations:^(UIView *snapshot, NSInteger index) {
             CGRect frame = snapshot.frame;

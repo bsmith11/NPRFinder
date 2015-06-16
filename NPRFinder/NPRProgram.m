@@ -20,7 +20,7 @@
     }
     
     NPRProgram *program = (NPRProgram *)object;
-    if ([program.programId integerValue] == [self.programId integerValue]) {
+    if ([program.programID integerValue] == [self.programID integerValue]) {
         return YES;
     }
     

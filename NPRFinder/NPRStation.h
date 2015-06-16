@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class NPRAudioStream;
+
 typedef NS_ENUM(NSInteger, NPRSignalStrength) {
     NPRSignalStrengthWeak = 1,
     NPRSignalStrengthMedium = 3,
@@ -16,32 +18,24 @@ typedef NS_ENUM(NSInteger, NPRSignalStrength) {
 
 @interface NPRStation : NSObject
 
-@property (copy, nonatomic) NSString *guid;
-@property (copy, nonatomic) NSNumber *organizationId;
-@property (copy, nonatomic) NSString *name;
-@property (copy, nonatomic) NSString *title;
+@property (copy, nonatomic) NSString *GUID;
+@property (copy, nonatomic) NSNumber *organizationID;
 @property (copy, nonatomic) NSString *call;
 @property (copy, nonatomic) NSString *frequency;
 @property (copy, nonatomic) NSString *band;
-@property (copy, nonatomic) NSString *tagline;
-@property (copy, nonatomic) NSString *address;
 @property (copy, nonatomic) NSString *marketCity;
 @property (copy, nonatomic) NSString *marketState;
-@property (copy, nonatomic) NSString *format;
 @property (copy, nonatomic) NSString *email;
-@property (copy, nonatomic) NSString *areaCode;
-@property (copy, nonatomic) NSString *phone;
-@property (copy, nonatomic) NSString *phoneExtension;
-@property (copy, nonatomic) NSString *fax;
-@property (copy, nonatomic) NSArray *urls;
+@property (copy, nonatomic) NSURL *homepageURL;
+@property (copy, nonatomic) NSURL *pledgePageURL;
+@property (copy, nonatomic) NSURL *facebookURL;
+@property (copy, nonatomic) NSURL *twitterURL;
+@property (copy, nonatomic) NSArray *audioStreams;
 
 @property (assign, nonatomic) NPRSignalStrength signalStrength;
 @property (assign, nonatomic, getter=isOpen) BOOL open;
 @property (assign, nonatomic, getter=isMusicOnly) BOOL musicOnly;
 
-- (NSString *)marketLocation;
-- (NSURL *)homepageUrl;
-- (NSURL *)facebookUrl;
-- (NSURL *)twitterUrl;
+- (NPRAudioStream *)preferredAudioStream;
 
 @end
