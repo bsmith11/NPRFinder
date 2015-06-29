@@ -6,15 +6,13 @@
 //  Copyright (c) 2015 Bradley Smith. All rights reserved.
 //
 
+@import UIKit;
+@import CoreLocation;
+
 #import "NPRErrorManager.h"
+
 #import "NPRErrorConstants.h"
 #import "NPRSwitchConstants.h"
-#import "UIFont+NPRStyle.h"
-#import "UIColor+NPRStyle.h"
-
-#import <UIKit/UIKit.h>
-#import <CoreLocation/CoreLocation.h>
-#import <TTTAttributedLabel/TTTAttributedLabel.h>
 
 static NSString * const kNPRErrorAlertCancelButtonTitle = @"OK";
 static NSString * const kNPRNetworkErrorResponseKey = @"com.alamofire.serialization.response.error.response";
@@ -26,55 +24,6 @@ static NSString * const kNPRNetworkErrorAlertMessage500 = @"We seem to be having
 static NSString * const kNPRLocationErrorLinkText = @"Settings";
 
 @implementation NPRErrorManager
-
-+ (void)setupLabel:(TTTAttributedLabel *)label locationError:(NSError *)error {
-    NSInteger code = error.code;
-    NSString *errorTitle = [NPRErrorManager titleForLocationErrorCode:code];
-    NSString *errorMessage = [NPRErrorManager messageForLocationErrorCode:code];
-    
-    [label setText:[NSString stringWithFormat:@"%@\n%@", errorTitle, errorMessage] afterInheritingLabelAttributesAndConfiguringWithBlock:^NSMutableAttributedString *(NSMutableAttributedString *mutableAttributedString) {
-        NSRange titleRange = [[mutableAttributedString string] rangeOfString:errorTitle];
-        NSRange messageRange = [[mutableAttributedString string] rangeOfString:errorMessage];
-        NSRange settingsRange = [[mutableAttributedString string] rangeOfString:kNPRLocationErrorLinkText];
-        
-//        [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont npr_errorTitleFont] range:titleRange];
-//        [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont npr_errorMessageFont] range:messageRange];
-//        [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont npr_errorLinkFont] range:settingsRange];
-        
-        return mutableAttributedString;
-    }];
-    
-//    [label setLinkAttributes:@{NSFontAttributeName:[UIFont npr_errorLinkFont],
-//                               NSForegroundColorAttributeName:[UIColor npr_foregroundColor]}];
-//    [label setActiveLinkAttributes:@{NSFontAttributeName:[UIFont npr_errorLinkFont],
-//                                     NSForegroundColorAttributeName:[UIColor npr_highlightColor]}];
-    
-    NSRange settingsRange = [label.text rangeOfString:kNPRLocationErrorLinkText];
-    NSURL *url = nil;
-    
-    if ([[UIApplication sharedApplication] respondsToSelector:@selector(isRegisteredForRemoteNotifications)]) {
-        url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
-    }
-    
-    [label addLinkToURL:url withRange:settingsRange];
-}
-
-+ (void)setupLabel:(TTTAttributedLabel *)label networkError:(NSError *)error {
-    NSHTTPURLResponse *response = error.userInfo[kNPRNetworkErrorResponseKey];
-    NSInteger code = response.statusCode;
-    NSString *errorTitle = [NPRErrorManager titleForNetworkStatusCode:code];
-    NSString *errorMessage = [NPRErrorManager messageForNetworkStatusCode:code];
-    
-    [label setText:[NSString stringWithFormat:@"%@\n%@", errorTitle, errorMessage] afterInheritingLabelAttributesAndConfiguringWithBlock:^NSMutableAttributedString *(NSMutableAttributedString *mutableAttributedString) {
-        NSRange titleRange = [[mutableAttributedString string] rangeOfString:errorTitle];
-        NSRange messageRange = [[mutableAttributedString string] rangeOfString:errorMessage];
-        
-//        [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont npr_errorTitleFont] range:titleRange];
-//        [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont npr_errorMessageFont] range:messageRange];
-        
-        return mutableAttributedString;
-    }];
-}
 
 + (void)showAlertForNetworkError:(NSError *)error {
     NSHTTPURLResponse *response = error.userInfo[kNPRNetworkErrorResponseKey];

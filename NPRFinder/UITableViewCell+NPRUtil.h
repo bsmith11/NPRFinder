@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Bradley Smith. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
 
 @interface UITableViewCell (NPRUtil)
 

@@ -20,9 +20,6 @@ PODS:
   - AFNetworking/UIKit (2.5.0):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - AsyncDisplayKit (1.2):
-    - AsyncDisplayKit/ASDealloc2MainObject (= 1.2)
-  - AsyncDisplayKit/ASDealloc2MainObject (1.2)
   - CocoaLumberjack (2.0.0):
     - CocoaLumberjack/Default (= 2.0.0)
     - CocoaLumberjack/Extensions (= 2.0.0)
@@ -125,28 +122,23 @@ PODS:
     - RZUtils/Utilities/RZDispatch (= 2.5.1)
   - RZUtils/Utilities/RZCommonUtils (2.5.1)
   - RZUtils/Utilities/RZDispatch (2.5.1)
-  - TTTAttributedLabel (1.13.0)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.5)
-  - AsyncDisplayKit (~> 1.2)
   - CocoaLumberjack (~> 2.0)
   - pop (~> 1.0)
   - POP+MCAnimate (~> 2.0)
   - RZDataBinding (~> 2.0)
   - RZImport (~> 1.2)
   - RZUtils (~> 2.5)
-  - TTTAttributedLabel (~> 1.13)
 
 SPEC CHECKSUMS:
   AFNetworking: 96ac9bf3eda33582701cb1fcc5b896aa1e20311e
-  AsyncDisplayKit: 32d5b9112b8c1b6644b54429e0cda4fbf6563781
   CocoaLumberjack: a6f77d987d65dc7ba86b0f84db7d0b9084f77bcb
   pop: 628ffc631644601567ee8bfaaaea493ebd7d0923
   POP+MCAnimate: a99e209148c602512de487f1160a44bf78572024
   RZDataBinding: 32857fd99029a3ed2e9f4545506b350f7e04b4e7
   RZImport: 49854bbe281928b71aad0d04999849690ac214e7
   RZUtils: cd28b216417433030583aaffe98ecfc761a22978
-  TTTAttributedLabel: 8aeaf67481bb38970711e2641211cba912bd5239
 
 COCOAPODS: 0.37.2

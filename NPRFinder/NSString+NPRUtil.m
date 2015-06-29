@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 Bradley Smith. All rights reserved.
 //
 
-#import "NSString+NPRUtil.h"
+@import CoreLocation;
 
-#import <CoreLocation/CLLocation.h>
+#import "NSString+NPRUtil.h"
 
 @implementation NSString (NPRUtil)
 

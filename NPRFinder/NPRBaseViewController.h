@@ -6,16 +6,14 @@
 //  Copyright (c) 2015 Bradley Smith. All rights reserved.
 //
 
+@import UIKit;
+
 #import "NPRTransitionController.h"
 #import "NPRBaseNavigationController.h"
-
-#import <UIKit/UIKit.h>
 
 @interface NPRBaseViewController : UIViewController
 
 - (NPRBaseNavigationController *)npr_baseNavigationController;
 - (NPRTransitionController *)npr_transitionController;
-
-- (void)audioPlayerToolbarHeightWillChange:(CGFloat)height;
 
 @end

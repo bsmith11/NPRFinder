@@ -1,19 +1,22 @@
 //
-//  NPRStationCollectionViewCell.h
+//  NPRStationCell.h
 //  NPRFinder
 //
 //  Created by Bradley Smith on 6/11/15.
 //  Copyright (c) 2015 Bradley Smith. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
+
+#import "UICollectionReusableView+NPRUtil.h"
 
 @class NPRStation;
 
-@interface NPRStationCollectionViewCell : UICollectionViewCell
+@interface NPRStationCell : UICollectionViewCell
 
 - (void)setupWithStation:(NPRStation *)station;
 
 + (CGSize)sizeWithStation:(NPRStation *)station width:(CGFloat)width;
++ (CGSize)sizeWithWidth:(CGFloat)width;
 
 @end

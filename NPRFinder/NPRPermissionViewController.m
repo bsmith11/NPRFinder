@@ -8,16 +8,13 @@
 
 #import "NPRPermissionViewController.h"
 
-static NSString * const kRequestLabelText = @"Can we use your location to find NPR stations near you?";
+#import "NPRPermissionView.h"
+#import "NPRLocationManager.h"
+#import "UIView+NPRAutoLayout.h"
 
-@interface NPRPermissionViewController ()
+@interface NPRPermissionViewController () <NPRLocationManagerDelegate>
 
-@property (weak, nonatomic) IBOutlet UIView *requestContainerView;
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *requestLabel;
-@property (weak, nonatomic) IBOutlet UIView *buttonContainerView;
-@property (weak, nonatomic) IBOutlet UIButton *acceptButton;
-@property (weak, nonatomic) IBOutlet UIButton *denyButton;
+@property (strong, nonatomic) NPRPermissionView *permissionView;
 
 @property (assign, nonatomic) NPRPermissionType type;
 
@@ -39,49 +36,68 @@ static NSString * const kRequestLabelText = @"Can we use your location to find N
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [self setupRequestContainerView];
-    [self setupTitleLabel];
-    [self setupRequestLabel];
-    [self setupButtonContainerView];
-    [self setupAcceptButton];
-    [self setupDenyButton];
+
+    [self setupPermissionView];
+
+    [NPRLocationManager sharedManager].delegate = self;
 }
 
 #pragma mark - Setup
 
-- (void)setupRequestContainerView {
-    
-}
+- (void)setupPermissionView {
+    self.permissionView = [[NPRPermissionView alloc] init];
+    [self.view addSubview:self.permissionView];
 
-- (void)setupTitleLabel {
+    [self.permissionView npr_fillSuperview];
 
-}
-
-- (void)setupRequestLabel {
-
-}
-
-- (void)setupButtonContainerView {
-    
-}
-
-- (void)setupAcceptButton {
-
-}
-
-- (void)setupDenyButton {
-
+    [self.permissionView.acceptButton addTarget:self action:@selector(acceptButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+    [self.permissionView.denyButton addTarget:self action:@selector(denyButtonTapped) forControlEvents:UIControlEventTouchUpInside];
 }
 
 #pragma mark - Actions
 
 - (void)acceptButtonTapped {
+    switch (self.type) {
+        case NPRPermissionTypeLocationAlways:
+            [[NPRLocationManager sharedManager] requestAlwaysAuthorization];
+            break;
 
+        case NPRPermissionTypeLocationWhenInUse:
+            [[NPRLocationManager sharedManager] requestWhenInUseAuthorization];
+            break;
+    }
 }
 
 - (void)denyButtonTapped {
+    [self dismiss];
+}
 
+- (void)dismiss {
+    [self.navigationController popViewControllerAnimated:NO];
+}
+
+#pragma mark - Location Manager Delegate
+
+- (void)didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
+    switch (status) {
+        case kCLAuthorizationStatusAuthorizedAlways:
+        case kCLAuthorizationStatusAuthorizedWhenInUse:
+
+            break;
+            
+        case kCLAuthorizationStatusDenied:
+
+            break;
+            
+        case kCLAuthorizationStatusRestricted:
+            
+            break;
+            
+        default:
+            break;
+    }
+
+    [self dismiss];
 }
 
 @end

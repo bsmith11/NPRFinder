@@ -10,7 +10,6 @@
 
 #import "UIColor+NPRStyle.h"
 #import "UIFont+NPRStyle.h"
-#import "UIImage+NPRStyle.h"
 
 static const CGFloat kNPRAudioPlayerToolbarMargin = 10.0f;
 static const CGFloat kNPRAudioPlayerToolbarPadding = 10.0f;
@@ -50,19 +49,19 @@ static const CGFloat kNPRAudioPlayerToolbarTitleSizeModifier = 5.0f / 8.0f;
     [self setShadowImage:[[UIImage alloc] init] forToolbarPosition:UIBarPositionAny];
     self.translucent = NO;
     self.barTintColor = [UIColor darkGrayColor];
-    self.tintColor = [UIColor npr_highlightColor];
+    self.tintColor = [UIColor npr_foregroundColor];
     
-    self.playBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage npr_playIcon]
+    self.playBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Play Icon"]
                                                               style:UIBarButtonItemStylePlain
                                                              target:self
                                                              action:@selector(playBarButtonItemTapped)];
 
-    self.pauseBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage npr_pauseIcon]
+    self.pauseBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Pause Icon"]
                                                                style:UIBarButtonItemStylePlain
                                                               target:self
                                                               action:@selector(pauseBarButtonItemTapped)];
     
-    self.stopBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage npr_stopIcon]
+    self.stopBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Stop Icon"]
                                                               style:UIBarButtonItemStylePlain
                                                              target:self
                                                              action:@selector(stopBarButtonItemTapped)];

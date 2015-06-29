@@ -13,7 +13,6 @@
 #import "NPRStation+RZImport.h"
 
 #import <CocoaLumberjack/CocoaLumberjack.h>
-#import <UIKit/UIKit.h>
 
 static NSString * const kIsUpdatingLocationKey = @"npr_is_updating_location";
 static NSString * const kIsMonitoringSignificantLocationChangesKey = @"npr_is_monitoring_significant_location_changes";
@@ -95,12 +94,6 @@ static NSString * const kLastUpdateDateKey = @"npr_last_update_date";
     CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
     
     return (status != kCLAuthorizationStatusNotDetermined);
-}
-
-+ (BOOL)backgroundAppRefreshEnabled {
-    UIBackgroundRefreshStatus status = [[UIApplication sharedApplication] backgroundRefreshStatus];
-    
-    return (status == UIBackgroundRefreshStatusAvailable);
 }
 
 #pragma mark - Accessors / Mutators

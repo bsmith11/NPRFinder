@@ -8,12 +8,6 @@
 
 #import "NPRTransitionController.h"
 
-#import "NPRSearchViewController.h"
-
-@interface NPRTransitionController ()
-
-@end
-
 @implementation NPRTransitionController
 
 - (NPRSlideAnimationController *)slideAnimationController {
@@ -24,32 +18,16 @@
     return _slideAnimationController;
 }
 
-- (NPRExpandAnimationController *)expandAnimationController {
-    if (!_expandAnimationController) {
-        _expandAnimationController = [[NPRExpandAnimationController alloc] init];
-    }
-    
-    return _expandAnimationController;
-}
-
 #pragma mark - Navigation Controller Delegate
 
 - (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController
                                   animationControllerForOperation:(UINavigationControllerOperation)operation
                                                fromViewController:(UIViewController *)fromVC
                                                  toViewController:(UIViewController *)toVC {
-    if (operation == UINavigationControllerOperationPush) {
-        self.slideAnimationController.positive = YES;
-        
-        return self.slideAnimationController;
-    }
-    else {
-        self.slideAnimationController.positive = NO;
-        
-        return self.slideAnimationController;
-    }
+    BOOL positive = (operation == UINavigationControllerOperationPush);
+    self.slideAnimationController.positive = positive;
     
-    return nil;
+    return self.slideAnimationController;
 }
 
 - (id<UIViewControllerInteractiveTransitioning>)navigationController:(UINavigationController *)navigationController interactionControllerForAnimationController:(id<UIViewControllerAnimatedTransitioning>)animationController {

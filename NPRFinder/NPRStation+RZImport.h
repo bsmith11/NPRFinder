@@ -6,10 +6,11 @@
 //  Copyright (c) 2015 Bradley Smith. All rights reserved.
 //
 
+@import CoreLocation;
+
 #import "NPRStation.h"
 
 #import <RZImport/NSObject+RZImport.h>
-#import <CoreLocation/CLLocation.h>
 
 typedef void(^NPRStationCompletionBlock)(NSArray *stations, NSError *error);
 

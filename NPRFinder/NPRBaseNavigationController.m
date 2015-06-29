@@ -13,12 +13,12 @@
 #pragma mark - Status Bar
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
+    return [self.topViewController preferredStatusBarStyle];
 }
 
-//- (BOOL)prefersStatusBarHidden {
-//    return YES;
-//}
+- (BOOL)prefersStatusBarHidden {
+    return [self.topViewController prefersStatusBarHidden];
+}
 
 #pragma mark - Lifecycle
 
@@ -26,11 +26,13 @@
     [super viewDidLoad];
     
     [self.view setBackgroundColor:[UIColor darkGrayColor]];
+    [self.toolbar setTranslucent:NO];
+    [self.toolbar setShadowImage:[[UIImage alloc] init] forToolbarPosition:UIBarPositionAny];
     
     [self setNavigationBarHidden:YES animated:NO];
     [self.navigationBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
     [self.navigationBar setShadowImage:[[UIImage alloc] init]];
-    [self.navigationBar setTranslucent:YES];
+    [self.navigationBar setTranslucent:YES];    
 }
 
 @end

@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Bradley Smith. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 OBJC_EXTERN NSString * const kNPRNotificationWillShowAudioPlayerToolbar;
 OBJC_EXTERN NSString * const kNPRNotificationWillHideAudioPlayerToolbar;

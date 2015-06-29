@@ -6,13 +6,9 @@
 //  Copyright (c) 2015 Bradley Smith. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-
-@class NPRStation;
+@import Foundation;
 
 @interface NPRNotificationManager : NSObject
-
-+ (void)scheduleStationLocalNotificationWithStation:(NPRStation *)station;
 
 + (void)scheduleLocalNotificationWithText:(NSString *)text;
 + (void)scheduleLocationUpdatesStartLocalNotification;

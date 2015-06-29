@@ -8,7 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		06362F421B2A88E700CB30FA /* NPRNetworkConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 06362F411B2A88E700CB30FA /* NPRNetworkConstants.m */; };
-		06CBF3121B2B27B3005F6210 /* UIImage+NPRStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CBF3111B2B27B3005F6210 /* UIImage+NPRStyle.m */; };
+		064401BD1B2FDFC1005D3E72 /* NPREmptyListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 064401BC1B2FDFC1005D3E72 /* NPREmptyListView.m */; };
+		0657BBC11B36691300ADAAC8 /* NPRActivityIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0657BBC01B36691300ADAAC8 /* NPRActivityIndicatorView.m */; };
 		06CBF3181B2B59DD005F6210 /* NPRAudioPlayerToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CBF3171B2B59DD005F6210 /* NPRAudioPlayerToolbar.m */; };
 		06CBF3231B2B7F44005F6210 /* GothamRounded-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = 06CBF3221B2B7E37005F6210 /* GothamRounded-Book.otf */; };
 		06CBF3241B2B7FCB005F6210 /* GothamRounded-BookItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 06CBF31D1B2B7C51005F6210 /* GothamRounded-BookItalic.otf */; };
@@ -18,15 +19,18 @@
 		06CBF3281B2B7FD8005F6210 /* GothamRounded-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 06CBF31F1B2B7C51005F6210 /* GothamRounded-LightItalic.otf */; };
 		06CBF3291B2B7FDB005F6210 /* GothamRounded-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 06CBF3211B2B7C51005F6210 /* GothamRounded-Medium.otf */; };
 		06CBF32A1B2B7FDF005F6210 /* GothamRounded-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 06CBF3201B2B7C51005F6210 /* GothamRounded-MediumItalic.otf */; };
-		06CBF32D1B2C504C005F6210 /* NPRHomeCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CBF32C1B2C504C005F6210 /* NPRHomeCollectionViewFlowLayout.m */; };
 		06CBF3331B2C8905005F6210 /* NPRAudioStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CBF3321B2C8905005F6210 /* NPRAudioStream.m */; };
 		06CBF3361B2C90E9005F6210 /* NPRAudioStream+RZImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CBF3351B2C90E9005F6210 /* NPRAudioStream+RZImport.m */; };
-		06EAC5881B29413E000FC33A /* NPRStationCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 06EAC5861B29413E000FC33A /* NPRStationCollectionViewCell.m */; };
-		06EAC5891B29413E000FC33A /* NPRStationCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 06EAC5871B29413E000FC33A /* NPRStationCollectionViewCell.xib */; };
+		06EA1ACD1B3FB174002346C8 /* NPRPermissionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 06EA1ACC1B3FB174002346C8 /* NPRPermissionView.m */; };
+		06EA1AD01B3FBA68002346C8 /* NPRHomeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 06EA1ACF1B3FBA68002346C8 /* NPRHomeView.m */; };
+		06EA1AD31B40552A002346C8 /* NPRStyleConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 06EA1AD21B40552A002346C8 /* NPRStyleConstants.m */; };
+		06EA1AD61B405827002346C8 /* NPRSplashView.m in Sources */ = {isa = PBXBuildFile; fileRef = 06EA1AD51B405827002346C8 /* NPRSplashView.m */; };
+		06EA1AD91B40AA89002346C8 /* UIView+NPRAutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 06EA1AD81B40AA89002346C8 /* UIView+NPRAutoLayout.m */; };
+		06EA1ADC1B40C9BF002346C8 /* NPRStationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 06EA1ADB1B40C9BF002346C8 /* NPRStationView.m */; };
+		06EA1ADF1B40E3E4002346C8 /* NPRSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 06EA1ADE1B40E3E4002346C8 /* NPRSearchView.m */; };
+		06EAC5881B29413E000FC33A /* NPRStationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 06EAC5861B29413E000FC33A /* NPRStationCell.m */; };
 		06EAC58C1B2943CC000FC33A /* UICollectionReusableView+NPRUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 06EAC58B1B2943CC000FC33A /* UICollectionReusableView+NPRUtil.m */; };
-		06EAC58F1B29518B000FC33A /* NPRExpandAnimationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 06EAC58E1B29518B000FC33A /* NPRExpandAnimationController.m */; };
 		06EAC5921B29EFBE000FC33A /* NPRStation+RZImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 06EAC5911B29EFBE000FC33A /* NPRStation+RZImport.m */; };
-		06EAC5981B29F51B000FC33A /* NPRProgram+RZImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 06EAC5971B29F51B000FC33A /* NPRProgram+RZImport.m */; };
 		06EAC59B1B2A0DF7000FC33A /* UIFont+NPRStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 06EAC59A1B2A0DF7000FC33A /* UIFont+NPRStyle.m */; };
 		06EAC59E1B2A0E39000FC33A /* UIColor+NPRStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 06EAC59D1B2A0E39000FC33A /* UIColor+NPRStyle.m */; };
 		06EAC5A21B2A106C000FC33A /* UIScreen+NPRUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 06EAC5A11B2A106C000FC33A /* UIScreen+NPRUtil.m */; };
@@ -36,20 +40,14 @@
 		06EAC5AE1B2A1B9D000FC33A /* NPRErrorConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 06EAC5AD1B2A1B9D000FC33A /* NPRErrorConstants.m */; };
 		06EAC5B11B2A1BB2000FC33A /* NPRPrivateConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 06EAC5B01B2A1BB2000FC33A /* NPRPrivateConstants.m */; };
 		06EAC5B61B2A2037000FC33A /* NPRPermissionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 06EAC5B41B2A2037000FC33A /* NPRPermissionViewController.m */; };
-		06EAC5B71B2A2037000FC33A /* NPRPermissionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 06EAC5B51B2A2037000FC33A /* NPRPermissionViewController.xib */; };
 		23E5A6989EE922B4A7866FF6 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 265456F037BDBA03C95999CA /* libPods.a */; };
 		480088491A6F2C44004AB56C /* NPRSlideAnimationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 480088481A6F2C44004AB56C /* NPRSlideAnimationController.m */; };
-		480FA7EF1A650A4E00FC1C52 /* NPRProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = 480FA7EE1A650A4E00FC1C52 /* NPRProgram.m */; };
 		480FA7FF1A678B5D00FC1C52 /* NPRBaseNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 480FA7FE1A678B5D00FC1C52 /* NPRBaseNavigationController.m */; };
 		480FA8031A678F0300FC1C52 /* NPRTransitionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 480FA8021A678F0300FC1C52 /* NPRTransitionController.m */; };
 		482D70221A5D2FA60006315B /* NPRNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 482D70211A5D2FA60006315B /* NPRNetworkManager.m */; };
-		482D70341A5E17270006315B /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 482D70331A5E17270006315B /* UIImage+ImageEffects.m */; };
 		482D70381A5E43E40006315B /* NPRSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 482D70371A5E43E40006315B /* NPRSearchViewController.m */; };
-		482D703A1A5E43F20006315B /* NPRSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 482D70391A5E43F20006315B /* NPRSearchViewController.xib */; };
 		482D704E1A5F4B580006315B /* NPRSplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 482D704D1A5F4B580006315B /* NPRSplashViewController.m */; };
-		482D70501A5F4B620006315B /* NPRSplashViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 482D704F1A5F4B620006315B /* NPRSplashViewController.xib */; };
 		482D705C1A60547D0006315B /* NPRStationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 482D705A1A60547D0006315B /* NPRStationViewController.m */; };
-		482D705D1A60547D0006315B /* NPRStationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 482D705B1A60547D0006315B /* NPRStationViewController.xib */; };
 		4837D67A1A7EF972009F2A0F /* NPRAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4837D6791A7EF972009F2A0F /* NPRAudioManager.m */; };
 		483C2D461A5C72FA007B9995 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 483C2D451A5C72FA007B9995 /* main.m */; };
 		483C2D491A5C72FA007B9995 /* NPRAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 483C2D481A5C72FA007B9995 /* NPRAppDelegate.m */; };
@@ -57,8 +55,6 @@
 		483C2D541A5C72FA007B9995 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 483C2D521A5C72FA007B9995 /* LaunchScreen.xib */; };
 		483C2D601A5C72FB007B9995 /* NPRFinderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 483C2D5F1A5C72FB007B9995 /* NPRFinderTests.m */; };
 		483C2D731A5C79FB007B9995 /* NPRHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 483C2D721A5C79FB007B9995 /* NPRHomeViewController.m */; };
-		483C2D781A5C7A1E007B9995 /* NPRHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 483C2D771A5C7A1E007B9995 /* NPRHomeViewController.xib */; };
-		48A744EC1A7B5066001B1401 /* NPRNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 48A744EB1A7B5066001B1401 /* NPRNavigationBar.m */; };
 		48E504A61A5CAC52005856D8 /* NPRStation.m in Sources */ = {isa = PBXBuildFile; fileRef = 48E504A51A5CAC52005856D8 /* NPRStation.m */; };
 		48E504A91A5CAD3F005856D8 /* NPRBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48E504A81A5CAD3F005856D8 /* NPRBaseViewController.m */; };
 		48E504B11A5D1FE9005856D8 /* NPRLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 48E504B01A5D1FE9005856D8 /* NPRLocationManager.m */; };
@@ -79,8 +75,10 @@
 /* Begin PBXFileReference section */
 		06362F401B2A88E700CB30FA /* NPRNetworkConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRNetworkConstants.h; sourceTree = "<group>"; };
 		06362F411B2A88E700CB30FA /* NPRNetworkConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRNetworkConstants.m; sourceTree = "<group>"; };
-		06CBF3101B2B27B3005F6210 /* UIImage+NPRStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+NPRStyle.h"; sourceTree = "<group>"; };
-		06CBF3111B2B27B3005F6210 /* UIImage+NPRStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+NPRStyle.m"; sourceTree = "<group>"; };
+		064401BB1B2FDFC1005D3E72 /* NPREmptyListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPREmptyListView.h; sourceTree = "<group>"; };
+		064401BC1B2FDFC1005D3E72 /* NPREmptyListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPREmptyListView.m; sourceTree = "<group>"; };
+		0657BBBF1B36691300ADAAC8 /* NPRActivityIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRActivityIndicatorView.h; sourceTree = "<group>"; };
+		0657BBC01B36691300ADAAC8 /* NPRActivityIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRActivityIndicatorView.m; sourceTree = "<group>"; };
 		06CBF3161B2B59DD005F6210 /* NPRAudioPlayerToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRAudioPlayerToolbar.h; sourceTree = "<group>"; };
 		06CBF3171B2B59DD005F6210 /* NPRAudioPlayerToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRAudioPlayerToolbar.m; sourceTree = "<group>"; };
 		06CBF31A1B2B7C51005F6210 /* GothamRounded-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GothamRounded-Bold.otf"; sourceTree = "<group>"; };
@@ -91,23 +89,30 @@
 		06CBF3201B2B7C51005F6210 /* GothamRounded-MediumItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GothamRounded-MediumItalic.otf"; sourceTree = "<group>"; };
 		06CBF3211B2B7C51005F6210 /* GothamRounded-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GothamRounded-Medium.otf"; sourceTree = "<group>"; };
 		06CBF3221B2B7E37005F6210 /* GothamRounded-Book.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GothamRounded-Book.otf"; sourceTree = "<group>"; };
-		06CBF32B1B2C504C005F6210 /* NPRHomeCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRHomeCollectionViewFlowLayout.h; sourceTree = "<group>"; };
-		06CBF32C1B2C504C005F6210 /* NPRHomeCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRHomeCollectionViewFlowLayout.m; sourceTree = "<group>"; };
 		06CBF3311B2C8905005F6210 /* NPRAudioStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRAudioStream.h; sourceTree = "<group>"; };
 		06CBF3321B2C8905005F6210 /* NPRAudioStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRAudioStream.m; sourceTree = "<group>"; };
 		06CBF3341B2C90E9005F6210 /* NPRAudioStream+RZImport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NPRAudioStream+RZImport.h"; sourceTree = "<group>"; };
 		06CBF3351B2C90E9005F6210 /* NPRAudioStream+RZImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NPRAudioStream+RZImport.m"; sourceTree = "<group>"; };
-		06EAC5851B29413E000FC33A /* NPRStationCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRStationCollectionViewCell.h; sourceTree = "<group>"; };
-		06EAC5861B29413E000FC33A /* NPRStationCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRStationCollectionViewCell.m; sourceTree = "<group>"; };
-		06EAC5871B29413E000FC33A /* NPRStationCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NPRStationCollectionViewCell.xib; sourceTree = "<group>"; };
+		06EA1ACB1B3FB174002346C8 /* NPRPermissionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRPermissionView.h; sourceTree = "<group>"; };
+		06EA1ACC1B3FB174002346C8 /* NPRPermissionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRPermissionView.m; sourceTree = "<group>"; };
+		06EA1ACE1B3FBA68002346C8 /* NPRHomeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRHomeView.h; sourceTree = "<group>"; };
+		06EA1ACF1B3FBA68002346C8 /* NPRHomeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRHomeView.m; sourceTree = "<group>"; };
+		06EA1AD11B40552A002346C8 /* NPRStyleConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRStyleConstants.h; sourceTree = "<group>"; };
+		06EA1AD21B40552A002346C8 /* NPRStyleConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRStyleConstants.m; sourceTree = "<group>"; };
+		06EA1AD41B405827002346C8 /* NPRSplashView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRSplashView.h; sourceTree = "<group>"; };
+		06EA1AD51B405827002346C8 /* NPRSplashView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRSplashView.m; sourceTree = "<group>"; };
+		06EA1AD71B40AA89002346C8 /* UIView+NPRAutoLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+NPRAutoLayout.h"; sourceTree = "<group>"; };
+		06EA1AD81B40AA89002346C8 /* UIView+NPRAutoLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+NPRAutoLayout.m"; sourceTree = "<group>"; };
+		06EA1ADA1B40C9BF002346C8 /* NPRStationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRStationView.h; sourceTree = "<group>"; };
+		06EA1ADB1B40C9BF002346C8 /* NPRStationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRStationView.m; sourceTree = "<group>"; };
+		06EA1ADD1B40E3E4002346C8 /* NPRSearchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRSearchView.h; sourceTree = "<group>"; };
+		06EA1ADE1B40E3E4002346C8 /* NPRSearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRSearchView.m; sourceTree = "<group>"; };
+		06EAC5851B29413E000FC33A /* NPRStationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRStationCell.h; sourceTree = "<group>"; };
+		06EAC5861B29413E000FC33A /* NPRStationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRStationCell.m; sourceTree = "<group>"; };
 		06EAC58A1B2943CC000FC33A /* UICollectionReusableView+NPRUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UICollectionReusableView+NPRUtil.h"; sourceTree = "<group>"; };
 		06EAC58B1B2943CC000FC33A /* UICollectionReusableView+NPRUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UICollectionReusableView+NPRUtil.m"; sourceTree = "<group>"; };
-		06EAC58D1B29518B000FC33A /* NPRExpandAnimationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRExpandAnimationController.h; sourceTree = "<group>"; };
-		06EAC58E1B29518B000FC33A /* NPRExpandAnimationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRExpandAnimationController.m; sourceTree = "<group>"; };
 		06EAC5901B29EFBE000FC33A /* NPRStation+RZImport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NPRStation+RZImport.h"; sourceTree = "<group>"; };
 		06EAC5911B29EFBE000FC33A /* NPRStation+RZImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NPRStation+RZImport.m"; sourceTree = "<group>"; };
-		06EAC5961B29F51B000FC33A /* NPRProgram+RZImport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NPRProgram+RZImport.h"; sourceTree = "<group>"; };
-		06EAC5971B29F51B000FC33A /* NPRProgram+RZImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NPRProgram+RZImport.m"; sourceTree = "<group>"; };
 		06EAC5991B2A0DF7000FC33A /* UIFont+NPRStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+NPRStyle.h"; sourceTree = "<group>"; };
 		06EAC59A1B2A0DF7000FC33A /* UIFont+NPRStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+NPRStyle.m"; sourceTree = "<group>"; };
 		06EAC59C1B2A0E39000FC33A /* UIColor+NPRStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+NPRStyle.h"; sourceTree = "<group>"; };
@@ -126,30 +131,22 @@
 		06EAC5B01B2A1BB2000FC33A /* NPRPrivateConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRPrivateConstants.m; sourceTree = "<group>"; };
 		06EAC5B31B2A2037000FC33A /* NPRPermissionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRPermissionViewController.h; sourceTree = "<group>"; };
 		06EAC5B41B2A2037000FC33A /* NPRPermissionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRPermissionViewController.m; sourceTree = "<group>"; };
-		06EAC5B51B2A2037000FC33A /* NPRPermissionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NPRPermissionViewController.xib; sourceTree = "<group>"; };
 		265456F037BDBA03C95999CA /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		33D19D9A881CFE329A7961F8 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		480088471A6F2C44004AB56C /* NPRSlideAnimationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRSlideAnimationController.h; sourceTree = "<group>"; };
 		480088481A6F2C44004AB56C /* NPRSlideAnimationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRSlideAnimationController.m; sourceTree = "<group>"; };
-		480FA7ED1A650A4E00FC1C52 /* NPRProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRProgram.h; sourceTree = "<group>"; };
-		480FA7EE1A650A4E00FC1C52 /* NPRProgram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRProgram.m; sourceTree = "<group>"; };
 		480FA7FD1A678B5D00FC1C52 /* NPRBaseNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRBaseNavigationController.h; sourceTree = "<group>"; };
 		480FA7FE1A678B5D00FC1C52 /* NPRBaseNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRBaseNavigationController.m; sourceTree = "<group>"; };
 		480FA8011A678F0300FC1C52 /* NPRTransitionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRTransitionController.h; sourceTree = "<group>"; };
 		480FA8021A678F0300FC1C52 /* NPRTransitionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRTransitionController.m; sourceTree = "<group>"; };
 		482D70201A5D2FA60006315B /* NPRNetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRNetworkManager.h; sourceTree = "<group>"; };
 		482D70211A5D2FA60006315B /* NPRNetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRNetworkManager.m; sourceTree = "<group>"; };
-		482D70321A5E17270006315B /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
-		482D70331A5E17270006315B /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		482D70361A5E43E40006315B /* NPRSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRSearchViewController.h; sourceTree = "<group>"; };
 		482D70371A5E43E40006315B /* NPRSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRSearchViewController.m; sourceTree = "<group>"; };
-		482D70391A5E43F20006315B /* NPRSearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NPRSearchViewController.xib; sourceTree = "<group>"; };
 		482D704C1A5F4B580006315B /* NPRSplashViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRSplashViewController.h; sourceTree = "<group>"; };
 		482D704D1A5F4B580006315B /* NPRSplashViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRSplashViewController.m; sourceTree = "<group>"; };
-		482D704F1A5F4B620006315B /* NPRSplashViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NPRSplashViewController.xib; sourceTree = "<group>"; };
 		482D70591A60547D0006315B /* NPRStationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRStationViewController.h; sourceTree = "<group>"; };
 		482D705A1A60547D0006315B /* NPRStationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRStationViewController.m; sourceTree = "<group>"; };
-		482D705B1A60547D0006315B /* NPRStationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NPRStationViewController.xib; sourceTree = "<group>"; };
 		4837D6781A7EF972009F2A0F /* NPRAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRAudioManager.h; sourceTree = "<group>"; };
 		4837D6791A7EF972009F2A0F /* NPRAudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRAudioManager.m; sourceTree = "<group>"; };
 		483C2D401A5C72FA007B9995 /* Discover.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Discover.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -164,9 +161,6 @@
 		483C2D5F1A5C72FB007B9995 /* NPRFinderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NPRFinderTests.m; sourceTree = "<group>"; };
 		483C2D711A5C79FB007B9995 /* NPRHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRHomeViewController.h; sourceTree = "<group>"; };
 		483C2D721A5C79FB007B9995 /* NPRHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRHomeViewController.m; sourceTree = "<group>"; };
-		483C2D771A5C7A1E007B9995 /* NPRHomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NPRHomeViewController.xib; sourceTree = "<group>"; };
-		48A744EA1A7B5066001B1401 /* NPRNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRNavigationBar.h; sourceTree = "<group>"; };
-		48A744EB1A7B5066001B1401 /* NPRNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRNavigationBar.m; sourceTree = "<group>"; };
 		48E504A41A5CAC52005856D8 /* NPRStation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRStation.h; sourceTree = "<group>"; };
 		48E504A51A5CAC52005856D8 /* NPRStation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRStation.m; sourceTree = "<group>"; };
 		48E504A71A5CAD3F005856D8 /* NPRBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRBaseViewController.h; sourceTree = "<group>"; };
@@ -208,6 +202,24 @@
 			name = "Audio Player Toolbar";
 			sourceTree = "<group>";
 		};
+		06EA1ACA1B3F9A0E002346C8 /* Activity Indicator */ = {
+			isa = PBXGroup;
+			children = (
+				0657BBBF1B36691300ADAAC8 /* NPRActivityIndicatorView.h */,
+				0657BBC01B36691300ADAAC8 /* NPRActivityIndicatorView.m */,
+			);
+			name = "Activity Indicator";
+			sourceTree = "<group>";
+		};
+		06EA1AE21B40F9D5002346C8 /* Empty List */ = {
+			isa = PBXGroup;
+			children = (
+				064401BB1B2FDFC1005D3E72 /* NPREmptyListView.h */,
+				064401BC1B2FDFC1005D3E72 /* NPREmptyListView.m */,
+			);
+			name = "Empty List";
+			sourceTree = "<group>";
+		};
 		06EAC5841B291139000FC33A /* Style */ = {
 			isa = PBXGroup;
 			children = (
@@ -215,8 +227,6 @@
 				06EAC59A1B2A0DF7000FC33A /* UIFont+NPRStyle.m */,
 				06EAC59C1B2A0E39000FC33A /* UIColor+NPRStyle.h */,
 				06EAC59D1B2A0E39000FC33A /* UIColor+NPRStyle.m */,
-				06CBF3101B2B27B3005F6210 /* UIImage+NPRStyle.h */,
-				06CBF3111B2B27B3005F6210 /* UIImage+NPRStyle.m */,
 			);
 			name = Style;
 			sourceTree = "<group>";
@@ -232,8 +242,8 @@
 				06EAC5A11B2A106C000FC33A /* UIScreen+NPRUtil.m */,
 				06EAC5A61B2A15D0000FC33A /* NSString+NPRUtil.h */,
 				06EAC5A71B2A15D0000FC33A /* NSString+NPRUtil.m */,
-				482D70321A5E17270006315B /* UIImage+ImageEffects.h */,
-				482D70331A5E17270006315B /* UIImage+ImageEffects.m */,
+				06EA1AD71B40AA89002346C8 /* UIView+NPRAutoLayout.h */,
+				06EA1AD81B40AA89002346C8 /* UIView+NPRAutoLayout.m */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -243,7 +253,8 @@
 			children = (
 				06EAC5B31B2A2037000FC33A /* NPRPermissionViewController.h */,
 				06EAC5B41B2A2037000FC33A /* NPRPermissionViewController.m */,
-				06EAC5B51B2A2037000FC33A /* NPRPermissionViewController.xib */,
+				06EA1ACB1B3FB174002346C8 /* NPRPermissionView.h */,
+				06EA1ACC1B3FB174002346C8 /* NPRPermissionView.m */,
 			);
 			name = Permission;
 			sourceTree = "<group>";
@@ -302,6 +313,8 @@
 				06EAC5B01B2A1BB2000FC33A /* NPRPrivateConstants.m */,
 				06362F401B2A88E700CB30FA /* NPRNetworkConstants.h */,
 				06362F411B2A88E700CB30FA /* NPRNetworkConstants.m */,
+				06EA1AD11B40552A002346C8 /* NPRStyleConstants.h */,
+				06EA1AD21B40552A002346C8 /* NPRStyleConstants.m */,
 			);
 			name = Constants;
 			sourceTree = "<group>";
@@ -311,7 +324,8 @@
 			children = (
 				482D70361A5E43E40006315B /* NPRSearchViewController.h */,
 				482D70371A5E43E40006315B /* NPRSearchViewController.m */,
-				482D70391A5E43F20006315B /* NPRSearchViewController.xib */,
+				06EA1ADD1B40E3E4002346C8 /* NPRSearchView.h */,
+				06EA1ADE1B40E3E4002346C8 /* NPRSearchView.m */,
 			);
 			name = Search;
 			sourceTree = "<group>";
@@ -321,8 +335,6 @@
 			children = (
 				480088471A6F2C44004AB56C /* NPRSlideAnimationController.h */,
 				480088481A6F2C44004AB56C /* NPRSlideAnimationController.m */,
-				06EAC58D1B29518B000FC33A /* NPRExpandAnimationController.h */,
-				06EAC58E1B29518B000FC33A /* NPRExpandAnimationController.m */,
 			);
 			name = "Animation Controllers";
 			sourceTree = "<group>";
@@ -332,7 +344,8 @@
 			children = (
 				482D704C1A5F4B580006315B /* NPRSplashViewController.h */,
 				482D704D1A5F4B580006315B /* NPRSplashViewController.m */,
-				482D704F1A5F4B620006315B /* NPRSplashViewController.xib */,
+				06EA1AD41B405827002346C8 /* NPRSplashView.h */,
+				06EA1AD51B405827002346C8 /* NPRSplashView.m */,
 			);
 			name = Splash;
 			sourceTree = "<group>";
@@ -342,7 +355,8 @@
 			children = (
 				482D70591A60547D0006315B /* NPRStationViewController.h */,
 				482D705A1A60547D0006315B /* NPRStationViewController.m */,
-				482D705B1A60547D0006315B /* NPRStationViewController.xib */,
+				06EA1ADA1B40C9BF002346C8 /* NPRStationView.h */,
+				06EA1ADB1B40C9BF002346C8 /* NPRStationView.m */,
 			);
 			name = Station;
 			sourceTree = "<group>";
@@ -370,6 +384,8 @@
 		483C2D421A5C72FA007B9995 /* NPRFinder */ = {
 			isa = PBXGroup;
 			children = (
+				06EA1AE21B40F9D5002346C8 /* Empty List */,
+				06EA1ACA1B3F9A0E002346C8 /* Activity Indicator */,
 				482D704B1A5F4B440006315B /* Splash */,
 				06EAC5B21B2A2002000FC33A /* Permission */,
 				48E504AD1A5CB078005856D8 /* Home */,
@@ -388,8 +404,6 @@
 				483C2D521A5C72FA007B9995 /* LaunchScreen.xib */,
 				483C2D501A5C72FA007B9995 /* Images.xcassets */,
 				483C2D431A5C72FA007B9995 /* Supporting Files */,
-				48A744EA1A7B5066001B1401 /* NPRNavigationBar.h */,
-				48A744EB1A7B5066001B1401 /* NPRNavigationBar.m */,
 			);
 			path = NPRFinder;
 			sourceTree = "<group>";
@@ -444,10 +458,6 @@
 				48E504A51A5CAC52005856D8 /* NPRStation.m */,
 				06EAC5901B29EFBE000FC33A /* NPRStation+RZImport.h */,
 				06EAC5911B29EFBE000FC33A /* NPRStation+RZImport.m */,
-				480FA7ED1A650A4E00FC1C52 /* NPRProgram.h */,
-				480FA7EE1A650A4E00FC1C52 /* NPRProgram.m */,
-				06EAC5961B29F51B000FC33A /* NPRProgram+RZImport.h */,
-				06EAC5971B29F51B000FC33A /* NPRProgram+RZImport.m */,
 				06CBF3311B2C8905005F6210 /* NPRAudioStream.h */,
 				06CBF3321B2C8905005F6210 /* NPRAudioStream.m */,
 				06CBF3341B2C90E9005F6210 /* NPRAudioStream+RZImport.h */,
@@ -461,12 +471,10 @@
 			children = (
 				483C2D711A5C79FB007B9995 /* NPRHomeViewController.h */,
 				483C2D721A5C79FB007B9995 /* NPRHomeViewController.m */,
-				483C2D771A5C7A1E007B9995 /* NPRHomeViewController.xib */,
-				06EAC5851B29413E000FC33A /* NPRStationCollectionViewCell.h */,
-				06EAC5861B29413E000FC33A /* NPRStationCollectionViewCell.m */,
-				06EAC5871B29413E000FC33A /* NPRStationCollectionViewCell.xib */,
-				06CBF32B1B2C504C005F6210 /* NPRHomeCollectionViewFlowLayout.h */,
-				06CBF32C1B2C504C005F6210 /* NPRHomeCollectionViewFlowLayout.m */,
+				06EA1ACE1B3FBA68002346C8 /* NPRHomeView.h */,
+				06EA1ACF1B3FBA68002346C8 /* NPRHomeView.m */,
+				06EAC5851B29413E000FC33A /* NPRStationCell.h */,
+				06EAC5861B29413E000FC33A /* NPRStationCell.m */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -574,19 +582,13 @@
 				06CBF3291B2B7FDB005F6210 /* GothamRounded-Medium.otf in Resources */,
 				06CBF3261B2B7FD1005F6210 /* GothamRounded-BoldItalic.otf in Resources */,
 				06CBF3231B2B7F44005F6210 /* GothamRounded-Book.otf in Resources */,
-				06EAC5B71B2A2037000FC33A /* NPRPermissionViewController.xib in Resources */,
-				482D705D1A60547D0006315B /* NPRStationViewController.xib in Resources */,
 				483C2D541A5C72FA007B9995 /* LaunchScreen.xib in Resources */,
-				482D70501A5F4B620006315B /* NPRSplashViewController.xib in Resources */,
 				483C2D511A5C72FA007B9995 /* Images.xcassets in Resources */,
 				06CBF3271B2B7FD4005F6210 /* GothamRounded-Light.otf in Resources */,
 				06CBF3241B2B7FCB005F6210 /* GothamRounded-BookItalic.otf in Resources */,
 				06CBF32A1B2B7FDF005F6210 /* GothamRounded-MediumItalic.otf in Resources */,
-				482D703A1A5E43F20006315B /* NPRSearchViewController.xib in Resources */,
 				06CBF3281B2B7FD8005F6210 /* GothamRounded-LightItalic.otf in Resources */,
 				06CBF3251B2B7FCE005F6210 /* GothamRounded-Bold.otf in Resources */,
-				483C2D781A5C7A1E007B9995 /* NPRHomeViewController.xib in Resources */,
-				06EAC5891B29413E000FC33A /* NPRStationCollectionViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -650,27 +652,33 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				06EA1AD61B405827002346C8 /* NPRSplashView.m in Sources */,
+				06EA1AD01B3FBA68002346C8 /* NPRHomeView.m in Sources */,
 				06CBF3181B2B59DD005F6210 /* NPRAudioPlayerToolbar.m in Sources */,
 				06EAC5B61B2A2037000FC33A /* NPRPermissionViewController.m in Sources */,
+				0657BBC11B36691300ADAAC8 /* NPRActivityIndicatorView.m in Sources */,
 				06EAC5AB1B2A1B65000FC33A /* NPRSwitchConstants.m in Sources */,
-				48A744EC1A7B5066001B1401 /* NPRNavigationBar.m in Sources */,
 				48E504A91A5CAD3F005856D8 /* NPRBaseViewController.m in Sources */,
 				06EAC5921B29EFBE000FC33A /* NPRStation+RZImport.m in Sources */,
 				480FA7FF1A678B5D00FC1C52 /* NPRBaseNavigationController.m in Sources */,
 				48E504B51A5D22F1005856D8 /* NPRErrorManager.m in Sources */,
 				06EAC5B11B2A1BB2000FC33A /* NPRPrivateConstants.m in Sources */,
+				06EA1AD91B40AA89002346C8 /* UIView+NPRAutoLayout.m in Sources */,
 				06EAC5A51B2A1571000FC33A /* UITableViewCell+NPRUtil.m in Sources */,
 				06362F421B2A88E700CB30FA /* NPRNetworkConstants.m in Sources */,
 				482D704E1A5F4B580006315B /* NPRSplashViewController.m in Sources */,
 				483C2D491A5C72FA007B9995 /* NPRAppDelegate.m in Sources */,
 				48E504B11A5D1FE9005856D8 /* NPRLocationManager.m in Sources */,
 				06CBF3331B2C8905005F6210 /* NPRAudioStream.m in Sources */,
-				06CBF32D1B2C504C005F6210 /* NPRHomeCollectionViewFlowLayout.m in Sources */,
-				06EAC58F1B29518B000FC33A /* NPRExpandAnimationController.m in Sources */,
+				064401BD1B2FDFC1005D3E72 /* NPREmptyListView.m in Sources */,
 				48E504B91A5D2510005856D8 /* NPRNotificationManager.m in Sources */,
+				06EA1ACD1B3FB174002346C8 /* NPRPermissionView.m in Sources */,
+				06EA1ADC1B40C9BF002346C8 /* NPRStationView.m in Sources */,
 				483C2D461A5C72FA007B9995 /* main.m in Sources */,
 				482D70221A5D2FA60006315B /* NPRNetworkManager.m in Sources */,
-				06EAC5881B29413E000FC33A /* NPRStationCollectionViewCell.m in Sources */,
+				06EA1AD31B40552A002346C8 /* NPRStyleConstants.m in Sources */,
+				06EAC5881B29413E000FC33A /* NPRStationCell.m in Sources */,
+				06EA1ADF1B40E3E4002346C8 /* NPRSearchView.m in Sources */,
 				06EAC58C1B2943CC000FC33A /* UICollectionReusableView+NPRUtil.m in Sources */,
 				06CBF3361B2C90E9005F6210 /* NPRAudioStream+RZImport.m in Sources */,
 				06EAC5AE1B2A1B9D000FC33A /* NPRErrorConstants.m in Sources */,
@@ -681,13 +689,9 @@
 				482D705C1A60547D0006315B /* NPRStationViewController.m in Sources */,
 				483C2D731A5C79FB007B9995 /* NPRHomeViewController.m in Sources */,
 				48E504A61A5CAC52005856D8 /* NPRStation.m in Sources */,
-				482D70341A5E17270006315B /* UIImage+ImageEffects.m in Sources */,
 				06EAC5A21B2A106C000FC33A /* UIScreen+NPRUtil.m in Sources */,
 				4837D67A1A7EF972009F2A0F /* NPRAudioManager.m in Sources */,
-				06EAC5981B29F51B000FC33A /* NPRProgram+RZImport.m in Sources */,
-				480FA7EF1A650A4E00FC1C52 /* NPRProgram.m in Sources */,
 				06EAC59B1B2A0DF7000FC33A /* UIFont+NPRStyle.m in Sources */,
-				06CBF3121B2B27B3005F6210 /* UIImage+NPRStyle.m in Sources */,
 				480FA8031A678F0300FC1C52 /* NPRTransitionController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -822,6 +826,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = Discover;
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -843,6 +848,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = Discover;
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

@@ -6,17 +6,14 @@
 //  Copyright (c) 2015 Bradley Smith. All rights reserved.
 //
 
-#import "NPRExpandAnimationController.h"
-#import "NPRSlideAnimationController.h"
+@import UIKit;
 
-#import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
+#import "NPRSlideAnimationController.h"
 
 @interface NPRTransitionController : NSObject <UINavigationControllerDelegate, UIViewControllerTransitioningDelegate>
 
 @property (strong, nonatomic) UIPercentDrivenInteractiveTransition *interactionController;
 @property (strong, nonatomic) NPRSlideAnimationController *slideAnimationController;
-@property (strong, nonatomic) NPRExpandAnimationController *expandAnimationController;
 
 @property (assign, nonatomic, getter=isInteractive) BOOL interactive;
 

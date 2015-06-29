@@ -8,7 +8,12 @@
 
 #import "NPRSplashViewController.h"
 
+#import "NPRSplashView.h"
+#import "UIView+NPRAutoLayout.h"
+
 @interface NPRSplashViewController ()
+
+@property (strong, nonatomic) NPRSplashView *splashView;
 
 @end
 
@@ -18,7 +23,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
+    [self setupSplashView];
+}
+
+#pragma mark - Setup
+
+- (void)setupSplashView {
+    self.splashView = [[NPRSplashView alloc] init];
+    self.splashView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:self.splashView];
+
+    [self.splashView npr_fillSuperview];
 }
 
 @end

@@ -8,31 +8,22 @@
 
 #import "NPRHomeViewController.h"
 
-#import "UIColor+NPRStyle.h"
-#import "UIFont+NPRStyle.h"
 #import "NPRStation+RZImport.h"
 #import "NPRStationViewController.h"
 #import "NPRSwitchConstants.h"
 #import "NPRLocationManager.h"
-#import "NPRErrorManager.h"
-#import "NPRAudioManager.h"
-#import "NPRHomeCollectionViewFlowLayout.h"
-#import "UICollectionReusableView+NPRUtil.h"
-#import "NPRStationCollectionViewCell.h"
+#import "NPRStationCell.h"
+#import "NPRSearchViewController.h"
+#import "NPRActivityIndicatorView.h"
+#import "NPRPermissionViewController.h"
+#import "NPRHomeView.h"
 
-#import <TTTAttributedLabel/TTTAttributedLabel.h>
-#import <AsyncDisplayKit/AsyncDisplayKit.h>
+#import "UIView+NPRAutoLayout.h"
 
-static NSString * const kNPRHomeNoResultsText = @"No stations found\n\n\n\nTry again?";
-
-static const CGFloat kNPRHomeContentInsetAnimationDuration = 0.2f;
-
-@interface NPRHomeViewController () <UICollectionViewDelegate, UICollectionViewDataSource, NPRLocationManagerDelegate, TTTAttributedLabelDelegate>
+@interface NPRHomeViewController () <UICollectionViewDelegate, UICollectionViewDataSource, NPRLocationManagerDelegate>
 
 @property (strong, nonatomic) NSArray *stations;
-
-@property (weak, nonatomic) IBOutlet UICollectionView *feedCollectionView;
-@property (weak, nonatomic) IBOutlet TTTAttributedLabel *noResultsLabel;
+@property (strong, nonatomic) NPRHomeView *homeView;
 
 @end
 
@@ -42,102 +33,122 @@ static const CGFloat kNPRHomeContentInsetAnimationDuration = 0.2f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-        
+
+    [self setupHomeView];
+
     self.stations = [NSArray array];
-    
-    [self setupFeedCollectionView];
-    [self setupNoResultsLabel];
-    
+
     [NPRLocationManager sharedManager].delegate = self;
-    
+
     if (kNPRUseLocationServices) {
         [self findCurrentLocation];
     }
     else {
         [self didUpdateLocation:nil];
     }
+    
+    [self.homeView.emptyListView hideAnimated:NO completion:nil];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self.transitionCoordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        CGFloat delay = [context transitionDuration] / 3.0f;
+        [self.homeView showBrandLabelWithDelay:delay];
+        [self.homeView showSearchButtonWithDelay:delay];
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        self.homeView.homeCollectionView.hidden = NO;
+    }];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [self.transitionCoordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        [self.homeView hideBrandLabel];
+        [self.homeView hideSearchButton];
+    } completion:nil];
 }
 
 #pragma mark - Setup
 
-- (void)setupFeedCollectionView {
-    self.feedCollectionView.backgroundColor = [UIColor npr_redColor];
-    self.feedCollectionView.showsVerticalScrollIndicator = NO;
-    self.feedCollectionView.alwaysBounceVertical = YES;
-    self.feedCollectionView.delegate = self;
-    self.feedCollectionView.dataSource = self;
-    [self.feedCollectionView registerNib:[NPRStationCollectionViewCell npr_nib]
-              forCellWithReuseIdentifier:[NPRStationCollectionViewCell npr_reuseIdentifier]];
-    
-    NPRHomeCollectionViewFlowLayout *flowLayout = [[NPRHomeCollectionViewFlowLayout alloc] init];
-    self.feedCollectionView.collectionViewLayout = flowLayout;
-}
+- (void)setupHomeView {
+    self.homeView = [[NPRHomeView alloc] init];
+    [self.view addSubview:self.homeView];
 
-- (void)setupNoResultsLabel {
-    self.noResultsLabel.backgroundColor = [UIColor clearColor];
-    self.noResultsLabel.textColor = [UIColor npr_foregroundColor];
-    self.noResultsLabel.font = [UIFont npr_homeNoResultsFont];
-    self.noResultsLabel.numberOfLines = 0;
-    self.noResultsLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    self.noResultsLabel.textAlignment = NSTextAlignmentCenter;
-    self.noResultsLabel.text = kNPRHomeNoResultsText;
-    self.noResultsLabel.longPressGestureRecognizer.enabled = NO;
-    self.noResultsLabel.linkAttributes = @{NSForegroundColorAttributeName:self.noResultsLabel.textColor};
-    UIColor *activeLinkColor = [self.noResultsLabel.textColor colorWithAlphaComponent:0.1f];
-    self.noResultsLabel.activeLinkAttributes = @{(id)kCTForegroundColorAttributeName:activeLinkColor};
-    self.noResultsLabel.delegate = self;
-    
-    NSURL *retryURL = [NSURL URLWithString:@"NPRFinder://retry"];
-    NSRange range = [self.noResultsLabel.text rangeOfString:@"Try again?"];
-    [self.noResultsLabel addLinkToURL:retryURL withRange:range];
-    
-    self.noResultsLabel.hidden = YES;
+    [self.homeView npr_fillSuperview];
+
+    [self.homeView.searchButton addTarget:self action:@selector(searchButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+    self.homeView.homeCollectionView.dataSource = self;
+    self.homeView.homeCollectionView.delegate = self;
+
+    __weak typeof(self) weakSelf = self;
+    self.homeView.emptyListView.actionBlock = ^{
+        [weakSelf.homeView.emptyListView hideAnimated:NO completion:nil];
+        [weakSelf findCurrentLocation];
+    };
 }
 
 #pragma mark - Actions
 
-- (void)audioPlayerToolbarHeightWillChange:(CGFloat)height {
-    [super audioPlayerToolbarHeightWillChange:height];
+- (void)startActivityIndicator {
+    [self.homeView.activityIndicatorView startAnimating];
+}
+
+- (void)stopActivityIndicator {
+    [self.homeView.activityIndicatorView stopAnimating];
+}
+
+- (void)searchButtonTapped {
+//    if (self.activityIndicatorView.isAnimating) {
+//        [self stopActivityIndicator];
+//    }
+//    else {
+//        [self startActivityIndicator];
+//    }
+
+//    NPRPermissionViewController *vc = [[NPRPermissionViewController alloc] initWithType:NPRPermissionTypeLocationWhenInUse];
+//    
+//    [self.navigationController pushViewController:vc animated:NO];
+
+    NPRSearchViewController *searchViewController = [[NPRSearchViewController alloc] init];
     
-    UIEdgeInsets contentInset = UIEdgeInsetsZero;
-    contentInset.bottom = height;
+    self.npr_transitionController.slideAnimationController.collectionView = self.homeView.homeCollectionView;
+    self.npr_transitionController.slideAnimationController.selectedIndexPath = nil;
     
-    [UIView animateWithDuration:kNPRHomeContentInsetAnimationDuration animations:^{
-        self.feedCollectionView.contentInset = contentInset;
-    }];
+    [self.navigationController pushViewController:searchViewController animated:YES];
 }
 
 - (void)findCurrentLocation {
-    [self startProgressIndicator];
+    [self startActivityIndicator];
     [[NPRLocationManager sharedManager] start];
 }
 
 - (void)downloadStationsForLocation:(CLLocation *)location {
+    [self startActivityIndicator];
+
+    NSLog(@"Downloading stations for location: %@", location);
+    
     [NPRStation getStationsNearLocation:location completion:^(NSArray *stations, NSError *error) {
+        [self stopActivityIndicator];
+        
         if (error) {
-            [NPRErrorManager showAlertForNetworkError:error];
+            [self.homeView.emptyListView showAnimated:NO completion:nil];
         }
         else {
             self.stations = stations;
-            [self.feedCollectionView reloadData];
-//            NSMutableArray *indexPaths = [NSMutableArray array];
-//            for (NSInteger i = 0; i < [stations count]; i++) {
-//                [indexPaths addObject:[NSIndexPath indexPathForItem:i inSection:0]];
-//            }
-//            
-//            [self.feedCollectionView performBatchUpdates:^{
-//                [self.feedCollectionView insertItemsAtIndexPaths:indexPaths];
-//            } completion:nil];
+            
+            if ([self.stations count] > 0) {
+                [self.homeView.emptyListView hideAnimated:NO completion:nil];
+            }
+            else {
+                [self.homeView.emptyListView showAnimated:NO completion:nil];
+            }
+            
+            [self.homeView.homeCollectionView reloadData];
         }
     }];
-}
-
-- (void)startProgressIndicator {
-    
-}
-
-- (void)stopProgressIndicator {
-    
 }
 
 #pragma mark - Collection View Data Source
@@ -145,13 +156,11 @@ static const CGFloat kNPRHomeContentInsetAnimationDuration = 0.2f;
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     NSInteger count = [self.stations count];
     
-    self.noResultsLabel.hidden = (count > 0);
-    
     return count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    NPRStationCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[NPRStationCollectionViewCell npr_reuseIdentifier] forIndexPath:indexPath];
+    NPRStationCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[NPRStationCell npr_reuseIdentifier] forIndexPath:indexPath];
     NPRStation *station = self.stations[indexPath.item];
     
     [cell setupWithStation:station];
@@ -163,10 +172,9 @@ static const CGFloat kNPRHomeContentInsetAnimationDuration = 0.2f;
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     NPRStation *station = self.stations[indexPath.row];
-    NPRStationCollectionViewCell *cell = (NPRStationCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    NPRStationViewController *stationViewController = [[NPRStationViewController alloc] initWithStation:station color:cell.backgroundColor];
+    NPRStationViewController *stationViewController = [[NPRStationViewController alloc] initWithStation:station color:self.homeView.backgroundColor];
     
-    self.npr_transitionController.slideAnimationController.collectionView = collectionView;
+    self.npr_transitionController.slideAnimationController.collectionView = self.homeView.homeCollectionView;
     self.npr_transitionController.slideAnimationController.selectedIndexPath = indexPath;
     
     [self.navigationController pushViewController:stationViewController animated:YES];
@@ -179,14 +187,16 @@ static const CGFloat kNPRHomeContentInsetAnimationDuration = 0.2f;
 }
 
 - (void)didFailToFindLocationWithError:(NSError *)error {
-    [self stopProgressIndicator];
+    [self stopActivityIndicator];
 }
 
 - (void)didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
     switch (status) {
         case kCLAuthorizationStatusAuthorizedAlways:
         case kCLAuthorizationStatusAuthorizedWhenInUse:
-            [self findCurrentLocation];
+            if (kNPRUseLocationServices) {
+                [self findCurrentLocation];
+            }
             break;
             
         case kCLAuthorizationStatusDenied: {
@@ -205,14 +215,6 @@ static const CGFloat kNPRHomeContentInsetAnimationDuration = 0.2f;
             
         default:
             break;
-    }
-}
-
-#pragma mark - TTT Attributed Label Delegate
-
-- (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)URL {
-    if ([[URL absoluteString] isEqualToString:@"NPRFinder://retry"]) {
-        
     }
 }
 

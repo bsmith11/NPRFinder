@@ -6,24 +6,17 @@
 //  Copyright (c) 2015 Bradley Smith. All rights reserved.
 //
 
+@import UIKit;
+
 #import "NPRNotificationManager.h"
+
 #import "NPRSwitchConstants.h"
-#import "NPRStation+RZImport.h"
 
 #import <CocoaLumberjack/CocoaLumberjack.h>
-#import <UIKit/UIKit.h>
 
 @implementation NPRNotificationManager
 
 #pragma mark - Local Notifications
-
-+ (void)scheduleStationLocalNotificationWithStation:(NPRStation *)station {
-    NSString *alertBody = [NSString stringWithFormat:@"Try %@ %@", station.call, station.frequency];
-    NSDate *fireDate = [NSDate date];
-    
-    [NPRNotificationManager scheduleLocalNotificationWithAlertBody:alertBody
-                                                       fireDate:fireDate];
-}
 
 + (void)scheduleLocalNotificationWithText:(NSString *)text {
     NSString *alertBody = text;

@@ -10,8 +10,8 @@
 
 const BOOL kNPRShowNetworkErrorAlerts = NO;
 const BOOL kNPRShowLocationErrorAlerts = NO;
-const BOOL kNPRUseLocationServices = YES;
-const BOOL kNPRUseMockStationObjects = YES;
+const BOOL kNPRUseLocationServices = NO;
+const BOOL kNPRUseMockStationObjects = NO;
 const BOOL kNPRUseMockProgramObjects = NO;
 
 const BOOL kNPRSendLocationUpdatesStartLocalNotification = YES;
@@ -19,5 +19,5 @@ const BOOL kNPRSendLocationUpdatesStopLocalNotification = YES;
 const BOOL kNPRSendSignificantChangesStartLocalNotification = YES;
 const BOOL kNPRSendSignificantChangesStopLocalNotification = YES;
 
-const BOOL kNPRRequestLocationServicesRequestAlwaysAuthorization = YES;
-const BOOL kNPRMonitorSignificantLocationChanges = YES;
+const BOOL kNPRRequestLocationServicesRequestAlwaysAuthorization = NO;
+const BOOL kNPRMonitorSignificantLocationChanges = NO;

@@ -6,12 +6,13 @@
 //  Copyright (c) 2015 Bradley Smith. All rights reserved.
 //
 
-#import <CoreLocation/CoreLocation.h>
+@import CoreLocation;
 
 @class NPRStation;
 
 @protocol NPRLocationManagerDelegate <NSObject>
 
+@optional
 - (void)didUpdateLocation:(CLLocation *)location;
 - (void)didFailToFindLocationWithError:(NSError *)error;
 - (void)didChangeAuthorizationStatus:(CLAuthorizationStatus)status;
@@ -25,7 +26,6 @@
 + (BOOL)locationServicesEnabled;
 + (BOOL)locationServicesAlwaysAuthorized;
 + (BOOL)locationServicesWhenInUseAuthorized;
-+ (BOOL)backgroundAppRefreshEnabled;
 
 - (CLLocation *)location;
 

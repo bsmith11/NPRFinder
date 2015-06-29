@@ -153,9 +153,9 @@ typedef NS_ENUM(NSInteger, NPRStationURLType) {
 #pragma mark - Network Requests
 
 + (void)getStationsNearLocation:(CLLocation *)location completion:(NPRStationCompletionBlock)completion {
-    NSString *coordinates = [NSString npr_coordinatesFromLocation:location];
+    NSString *coordinates = location ? [NSString npr_coordinatesFromLocation:location] : @"";
     
-    [NPRStation getStationsWithSearchText:@"wamu" completion:completion];
+    [NPRStation getStationsWithSearchText:coordinates completion:completion];
 }
 
 + (void)getStationsWithSearchText:(NSString *)searchText completion:(NPRStationCompletionBlock)completion {

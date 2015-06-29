@@ -6,14 +6,16 @@
 //  Copyright (c) 2015 Bradley Smith. All rights reserved.
 //
 
-#import "NPRBaseViewController.h"
+@import UIKit;
 
-#import <UIKit/UIKit.h>
+#import "NPRBaseViewController.h"
 
 @class NPRStation;
 
 @interface NPRStationViewController : NPRBaseViewController
 
 - (instancetype)initWithStation:(NPRStation *)station color:(UIColor *)color;
+
+@property (assign, nonatomic) BOOL isFromSearch;
 
 @end

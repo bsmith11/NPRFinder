@@ -10,6 +10,7 @@
 
 #import "NPRAppDelegate.h"
 #import "NPRAudioManager.h"
+#import "NPRAudioPlayerToolbar.h"
 
 @interface NPRBaseViewController ()
 
@@ -23,9 +24,9 @@
     return UIStatusBarStyleLightContent;
 }
 
-//- (BOOL)prefersStatusBarHidden {
-//    return YES;
-//}
+- (BOOL)prefersStatusBarHidden {
+    return YES;
+}
 
 #pragma mark - Base Navigation Controller
 
@@ -54,28 +55,32 @@
     self.view.backgroundColor = [UIColor clearColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveAudioPlayerToolbarNotification:) name:kNPRNotificationWillShowAudioPlayerToolbar object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveAudioPlayerToolbarNotification:) name:kNPRNotificationWillHideAudioPlayerToolbar object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(audioPlayerWillShowNotification:) name:kNPRNotificationWillShowAudioPlayerToolbar object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(audioPlayerWillHideNotification:) name:kNPRNotificationWillHideAudioPlayerToolbar object:nil];
 }
 
 #pragma mark - Actions
 
-- (void)didReceiveAudioPlayerToolbarNotification:(NSNotification *)notification {
-    NSDictionary *userInfo = notification.userInfo;
-    CGFloat height;
+- (void)audioPlayerWillShowNotification:(NSNotification *)notification {
+    [self.navigationController setToolbarHidden:NO animated:YES];
     
-    if (userInfo) {
-        height = [userInfo[kNPRNotificationKeyAudioPlayerToolbarHeight] doubleValue];
+    for (UIView *view in self.navigationController.view.subviews) {
+        if ([view isKindOfClass:[NPRAudioPlayerToolbar class]]) {
+            [self.navigationController.view bringSubviewToFront:view];
+            break;
+        }
     }
-    else {
-        height = 0.0f;
-    }
-    
-    [self audioPlayerToolbarHeightWillChange:height];
 }
 
-- (void)audioPlayerToolbarHeightWillChange:(CGFloat)height {
-    //Should be overrided by subclasses
+- (void)audioPlayerWillHideNotification:(NSNotification *)notification {
+    [self.navigationController setToolbarHidden:YES animated:YES];
+    
+    for (UIView *view in self.navigationController.view.subviews) {
+        if ([view isKindOfClass:[NPRAudioPlayerToolbar class]]) {
+            [self.navigationController.view bringSubviewToFront:view];
+            break;
+        }
+    }
 }
 
 - (void)dealloc {

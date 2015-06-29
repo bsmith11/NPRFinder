@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Bradley Smith. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 OBJC_EXTERN NSString * const kCLErrorLocationUnknownTitle;
 OBJC_EXTERN NSString * const kCLErrorDeniedDisabledTitle;

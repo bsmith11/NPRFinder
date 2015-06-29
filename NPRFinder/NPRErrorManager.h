@@ -6,16 +6,11 @@
 //  Copyright (c) 2015 Bradley Smith. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-
-@class TTTAttributedLabel;
+@import Foundation;
 
 @interface NPRErrorManager : NSObject
 
 + (void)showAlertForNetworkError:(NSError *)error;
 + (void)showAlertForLocationErrorCode:(NSInteger)code;
-
-+ (void)setupLabel:(TTTAttributedLabel *)label locationError:(NSError *)error;
-+ (void)setupLabel:(TTTAttributedLabel *)label networkError:(NSError *)error;
 
 @end

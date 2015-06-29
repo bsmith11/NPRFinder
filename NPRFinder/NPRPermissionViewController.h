@@ -6,15 +6,16 @@
 //  Copyright (c) 2015 Bradley Smith. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
+
+#import "NPRBaseViewController.h"
 
 typedef NS_ENUM(NSInteger, NPRPermissionType) {
-    NPRPermissionTypeNotifications,
     NPRPermissionTypeLocationAlways,
     NPRPermissionTypeLocationWhenInUse
 };
 
-@interface NPRPermissionViewController : UIViewController
+@interface NPRPermissionViewController : NPRBaseViewController
 
 - (instancetype)initWithType:(NPRPermissionType)type;
 

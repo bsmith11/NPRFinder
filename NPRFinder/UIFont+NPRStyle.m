@@ -8,21 +8,39 @@
 
 #import "UIFont+NPRStyle.h"
 
+static NSString * const kNPRPermissionRequestFontName = @"GothamRounded-Bold";
+static NSString * const kNPRPermissionAcceptFontName = @"GothamRounded-Bold";
+static NSString * const kNPRPermissionDenyFontName = @"GothamRounded-Bold";
 static NSString * const kNPRAudioPlayerToolbarFontName = @"GothamRounded-Bold";
 static NSString * const kNPRHomeStationFrequencyFontName = @"GothamRounded-Bold";
-static NSString * const kNPRHomeStationNoResultsFontName = @"GothamRounded-Bold";
+static NSString * const kNPRHomeStationEmptyListFontName = @"GothamRounded-Bold";
 static NSString * const kNPRStationFrequencyFontName = @"GothamRounded-Bold";
 static NSString * const kNPRStationCallFontName = @"GothamRounded-Bold";
 static NSString * const kNPRStationMarketLocationFontName = @"GothamRounded-Bold";
 
+static const CGFloat kNPRPermissionRequestFontSize = 22.0f;
+static const CGFloat kNPRPermissionAcceptFontSize = 22.0f;
+static const CGFloat kNPRPermissionDenyFontSize = 18.0f;
 static const CGFloat kNPRAudioPlayerToolbarFontSize = 24.0f;
 static const CGFloat kNPRHomeStationFrequencyFontSize = 64.0f;
-static const CGFloat kNPRHomeStationNoResultsFontSize = 48.0f;
+static const CGFloat kNPRHomeStationEmptyListFontSize = 32.0f;
 static const CGFloat kNPRStationFrequencyFontSize = 64.0f;
 static const CGFloat kNPRStationCallFontSize = 32.0f;
 static const CGFloat kNPRStationMarketLocationFontSize = 24.0f;
 
 @implementation UIFont (NPRStyle)
+
++ (UIFont *)npr_permissionRequestFont {
+    return [UIFont fontWithName:kNPRPermissionRequestFontName size:kNPRPermissionRequestFontSize];
+}
+
++ (UIFont *)npr_permissionAcceptFont {
+    return [UIFont fontWithName:kNPRPermissionAcceptFontName size:kNPRPermissionAcceptFontSize];
+}
+
++ (UIFont *)npr_permissionDenyFont {
+    return [UIFont fontWithName:kNPRPermissionDenyFontName size:kNPRPermissionDenyFontSize];
+}
 
 + (UIFont *)npr_audioPlayerToolbarFont {
     return [UIFont fontWithName:kNPRAudioPlayerToolbarFontName size:kNPRAudioPlayerToolbarFontSize];
@@ -32,8 +50,8 @@ static const CGFloat kNPRStationMarketLocationFontSize = 24.0f;
     return [UIFont fontWithName:kNPRHomeStationFrequencyFontName size:kNPRHomeStationFrequencyFontSize];
 }
 
-+ (UIFont *)npr_homeNoResultsFont {
-    return [UIFont fontWithName:kNPRHomeStationNoResultsFontName size:kNPRHomeStationNoResultsFontSize];
++ (UIFont *)npr_homeEmptyListFont {
+    return [UIFont fontWithName:kNPRHomeStationEmptyListFontName size:kNPRHomeStationEmptyListFontSize];
 }
 
 + (UIFont *)npr_stationFrequencyFont {
