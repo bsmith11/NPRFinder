@@ -28,9 +28,21 @@
 	<string>We will use your location to find nearby NPR stations</string>
 	<key>NSMainNibFile</key>
 	<string>LaunchScreen</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>GothamRounded-Bold.otf</string>
+		<string>GothamRounded-BoldItalic.otf</string>
+		<string>GothamRounded-Book.otf</string>
+		<string>GothamRounded-BookItalic.otf</string>
+		<string>GothamRounded-Light.otf</string>
+		<string>GothamRounded-LightItalic.otf</string>
+		<string>GothamRounded-MediumItalic.otf</string>
+		<string>GothamRounded-Medium.otf</string>
+	</array>
 	<key>UIBackgroundModes</key>
 	<array>
-		<string>fetch</string>
+		<string>audio</string>
+		<string>bluetooth-peripheral</string>
 		<string>location</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
@@ -39,6 +51,8 @@
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>UIStatusBarHidden</key>
+	<true/>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleLightContent</string>
 	<key>UISupportedInterfaceOrientations</key>

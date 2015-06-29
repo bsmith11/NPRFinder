@@ -18,6 +18,6 @@ DerivedData
 *.xcuserstate
 Pods/
 *.mobileprovision
-NPRFinder/PrivateConstants.h
-NPRFinder/PrivateConstants.m
+NPRFinder/NPRPrivateConstants.h
+NPRFinder/NPRPrivateConstants.m
 Crashlytics.framework/
