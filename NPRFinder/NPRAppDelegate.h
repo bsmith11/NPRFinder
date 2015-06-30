@@ -8,12 +8,9 @@
 
 @import UIKit;
 
-@class NPRTransitionController;
-
 @interface NPRAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) NPRTransitionController *transitionController;
 
 @end
 

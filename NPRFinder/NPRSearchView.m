@@ -50,6 +50,7 @@ static const CGFloat kNPRAnimationScaleValue = 0.1f;
     [self setupTopBarContainerView];
     [self setupBackButton];
     [self setupSearchTextField];
+    [self setupActivityIndicatorView];
 
     self.animatingViews = [NSMutableArray arrayWithArray:@[self.backButton, self.searchTextField]];
 

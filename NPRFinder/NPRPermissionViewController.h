@@ -15,8 +15,19 @@ typedef NS_ENUM(NSInteger, NPRPermissionType) {
     NPRPermissionTypeLocationWhenInUse
 };
 
+@class NPRPermissionViewController;
+
+@protocol NPRPermissionDelegate <NSObject>
+
+- (void)didSelectAcceptForPermissionViewController:(NPRPermissionViewController *)permissionViewController;
+- (void)didSelectDenyForPermissionViewController:(NPRPermissionViewController *)permissionViewController;
+
+@end
+
 @interface NPRPermissionViewController : NPRBaseViewController
 
 - (instancetype)initWithType:(NPRPermissionType)type;
+
+@property (weak, nonatomic) id <NPRPermissionDelegate> delegate;
 
 @end

@@ -70,16 +70,25 @@ static char kNPRBackgroundColorAssocKey;
         mainView.backgroundColor = [UIColor clearColor];
         
         self.collectionView.hidden = YES;
-        
-        [snapshots pop_sequenceWithInterval:kNPRAnimationInterval animations:^(UIView *snapshot, NSInteger index) {
-            CGRect frame = snapshot.frame;
-            frame.origin.x = -CGRectGetWidth(frame);
-            snapshot.pop_spring.frame = frame;
-        } completion:^(BOOL finished) {
+
+        void (^completion)(BOOL finished) = ^(BOOL finished) {
             [containerView insertSubview:toViewController.view aboveSubview:fromViewController.view];
-            
             [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
-        }];
+        };
+
+        if ([snapshots count] > 0) {
+            [snapshots pop_sequenceWithInterval:kNPRAnimationInterval animations:^(UIView *snapshot, NSInteger index) {
+                CGRect frame = snapshot.frame;
+                frame.origin.x = -CGRectGetWidth(frame);
+                snapshot.pop_spring.frame = frame;
+            } completion:completion];
+        }
+        else {
+            dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, [self transitionDuration:transitionContext] * NSEC_PER_SEC);
+            dispatch_after(time, dispatch_get_main_queue(), ^ {
+                completion(YES);
+            });
+        }
     }
     else {
         [containerView insertSubview:toViewController.view aboveSubview:fromViewController.view];
@@ -87,20 +96,30 @@ static char kNPRBackgroundColorAssocKey;
         NSMutableArray *snapshots = objc_getAssociatedObject(fromViewController, &kNPRSnapshotsAssocKey);
         NSMutableArray *initialFrames = objc_getAssociatedObject(fromViewController, &kNPRInitialFramesAssocKey);
         UIColor *backgroundColor = objc_getAssociatedObject(fromViewController, &kNPRBackgroundColorAssocKey);
-        
-        [snapshots pop_sequenceWithInterval:kNPRAnimationInterval animations:^(UIView *snapshot, NSInteger index) {
-            snapshot.pop_springBounciness = kNPRSpringBounciness;
-            snapshot.pop_spring.frame = [initialFrames[index] CGRectValue];
-        } completion:^(BOOL finished) {
+
+        void (^completion)(BOOL finished) = ^(BOOL finished) {
             UIView *mainView = [toViewController.view.subviews firstObject];
             mainView.backgroundColor = backgroundColor;
-            
+
             for (UIView *snapshot in snapshots) {
                 [snapshot removeFromSuperview];
             }
-            
+
             [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
-        }];
+        };
+
+        if ([snapshots count] > 0) {
+            [snapshots pop_sequenceWithInterval:kNPRAnimationInterval animations:^(UIView *snapshot, NSInteger index) {
+                snapshot.pop_springBounciness = kNPRSpringBounciness;
+                snapshot.pop_spring.frame = [initialFrames[index] CGRectValue];
+            } completion:completion];
+        }
+        else {
+            dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, [self transitionDuration:transitionContext] * NSEC_PER_SEC);
+            dispatch_after(time, dispatch_get_main_queue(), ^ {
+                completion(YES);
+            });
+        }
     }
 }
 

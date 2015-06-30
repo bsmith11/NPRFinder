@@ -6,8 +6,12 @@
 //  Copyright (c) 2015 Bradley Smith. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
+
+@class NPRTransitionController;
 
 @interface NPRRootViewController : UIViewController
+
+@property (strong, nonatomic) NPRTransitionController *transitionController;
 
 @end

@@ -8,7 +8,7 @@
 
 #import "NPRBaseViewController.h"
 
-#import "NPRAppDelegate.h"
+#import "NPRRootViewController.h"
 #import "NPRAudioManager.h"
 #import "NPRAudioPlayerToolbar.h"
 
@@ -42,9 +42,9 @@
 #pragma mark - Transition Controller
 
 - (NPRTransitionController *)npr_transitionController {
-    NPRAppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    NPRRootViewController *rootViewController = (NPRRootViewController *)[self npr_baseNavigationController].parentViewController;
     
-    return appDelegate.transitionController;
+    return rootViewController.transitionController;
 }
 
 #pragma mark - Lifecycle

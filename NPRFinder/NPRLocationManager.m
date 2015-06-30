@@ -7,30 +7,19 @@
 //
 
 #import "NPRLocationManager.h"
-#import "NPRErrorManager.h"
-#import "NPRNotificationManager.h"
-#import "NPRSwitchConstants.h"
-#import "NPRStation+RZImport.h"
 
 #import <CocoaLumberjack/CocoaLumberjack.h>
 
-static NSString * const kIsUpdatingLocationKey = @"npr_is_updating_location";
-static NSString * const kIsMonitoringSignificantLocationChangesKey = @"npr_is_monitoring_significant_location_changes";
-static NSString * const kLastUpdateDateKey = @"npr_last_update_date";
+NSString * const kNPRLocationErrorDomain = @"com.NPRFinder.LocationError";
 
 @interface NPRLocationManager ()
 
 @property (strong, nonatomic) CLLocationManager *locationManager;
-@property (strong, nonatomic) NSMutableSet *stations;
 
-@property (copy, nonatomic) NSDate *lastUpdateDate;
+@property (copy, nonatomic) NPRLocationManagerAuthorizationCompletion authorizationCompletion;
+@property (copy, nonatomic) NPRLocationManagerCurrentLocationCompletion currentLocationCompletion;
 
-@property (assign, nonatomic) BOOL running;
-@property (assign, nonatomic) BOOL requestingAuthorization;
-@property (assign, nonatomic) BOOL updatingLocation;
-@property (assign, nonatomic) BOOL monitoringSignificantLocationChanges;
 @property (assign, nonatomic) CGFloat accuracyThreshold;
-@property (assign, nonatomic) CGFloat timePassedThreshold;
 
 @end
 
@@ -59,20 +48,14 @@ static NSString * const kLastUpdateDateKey = @"npr_last_update_date";
         _locationManager.desiredAccuracy = kCLLocationAccuracyKilometer;
         _locationManager.activityType = CLActivityTypeOther;
         _locationManager.pausesLocationUpdatesAutomatically = NO;
-        
-        _running = NO;
-        _requestingAuthorization = NO;
+
         _accuracyThreshold = 150.0f;
-        _timePassedThreshold = 5.0f;
-        
-        _stations = [NSMutableSet set];
-        
-        [self setIsUpdatingLocation:NO];
-        [self setIsMonitoringSignificantLocationChanges:NO];
     }
     
     return self;
 }
+
+#pragma mark - Location Services Status
 
 + (BOOL)locationServicesEnabled {
     return [CLLocationManager locationServicesEnabled];
@@ -90,6 +73,12 @@ static NSString * const kLastUpdateDateKey = @"npr_last_update_date";
     return (status == kCLAuthorizationStatusAuthorizedWhenInUse);
 }
 
++ (BOOL)locationServicesAuthorized {
+    CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
+
+    return (status == kCLAuthorizationStatusAuthorizedAlways || status == kCLAuthorizationStatusAuthorizedWhenInUse);
+}
+
 + (BOOL)locationServicesDetermined {
     CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
     
@@ -104,230 +93,91 @@ static NSString * const kLastUpdateDateKey = @"npr_last_update_date";
     return location;
 }
 
-- (NSDate *)lastUpdateDate {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    
-    return [userDefaults objectForKey:kLastUpdateDateKey];
+#pragma mark - Permission Requests
+
+- (void)requestAlwaysAuthorizationWithCompletion:(void (^)(CLAuthorizationStatus status))completion {
+    self.authorizationCompletion = completion;
+    [self.locationManager requestAlwaysAuthorization];
 }
 
-- (void)setLastUpdateDate:(NSDate *)lastUpdateDate {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setObject:lastUpdateDate forKey:kLastUpdateDateKey];
-    [userDefaults synchronize];
+- (void)requestWhenInUseAuthorizationWithCompletion:(void (^)(CLAuthorizationStatus status))completion {
+    self.authorizationCompletion = completion;
+    [self.locationManager requestWhenInUseAuthorization];
 }
 
-- (BOOL)isRunning {
-    return self.running;
-}
+#pragma mark - Current Location Request
 
-- (BOOL)isUpdatingLocation {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+- (void)requestCurrentLocationWithCompletion:(void (^)(CLLocation *location, NSError *error))completion {
+    self.currentLocationCompletion = completion;
 
-    return [userDefaults boolForKey:kIsUpdatingLocationKey];
-}
+    __block NSError *error = nil;
 
-- (void)setIsUpdatingLocation:(BOOL)isUpdatingLocation {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setBool:isUpdatingLocation forKey:kIsUpdatingLocationKey];
-    [userDefaults synchronize];
-}
-
-- (BOOL)isMonitoringSignificantLocationChanges {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-
-    return [userDefaults boolForKey:kIsMonitoringSignificantLocationChangesKey];
-}
-
-- (void)setIsMonitoringSignificantLocationChanges:(BOOL)isMonitoringSignificantLocationChanges {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setBool:isMonitoringSignificantLocationChanges forKey:kIsMonitoringSignificantLocationChangesKey];
-    [userDefaults synchronize];
-}
-
-#pragma mark - Permissions Requests
-
-- (void)requestAlwaysAuthorization {
-    if ([self.locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
-        self.requestingAuthorization = YES;
-        [self.locationManager requestAlwaysAuthorization];
-    }
-    else {
-        [self.locationManager startUpdatingLocation];
-    }
-}
-
-- (void)requestWhenInUseAuthorization {
-    if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
-        self.requestingAuthorization = YES;
-        [self.locationManager requestWhenInUseAuthorization];
-    }
-    else {
-        [self.locationManager startUpdatingLocation];
-    }
-}
-
-#pragma mark - Location Monitoring
-
-- (void)start {
-    if (!self.running) {
+    if ([NPRLocationManager locationServicesEnabled]) {
         if ([NPRLocationManager locationServicesDetermined]) {
-            if ([NPRLocationManager locationServicesEnabled] && ([NPRLocationManager locationServicesAlwaysAuthorized] || [NPRLocationManager locationServicesWhenInUseAuthorized])) {
-                self.running = YES;
-                
-                [self startUpdatingLocation];
+            if ([NPRLocationManager locationServicesAuthorized]) {
+                [self.locationManager startUpdatingLocation];
             }
             else {
-                NSError *error = [NSError errorWithDomain:@"npr_location_services_unable_to_start" code:kCLErrorDenied userInfo:nil];
-                [self locationManager:self.locationManager didFailWithError:error];
+                error = [NSError errorWithDomain:kNPRLocationErrorDomain code:NPRLocationErrorCodeDenied userInfo:nil];
             }
         }
         else {
-            if (kNPRRequestLocationServicesRequestAlwaysAuthorization) {
-                [self requestAlwaysAuthorization];
-            }
-            else {
-                [self requestWhenInUseAuthorization];
-            }
+            [self requestWhenInUseAuthorizationWithCompletion:^(CLAuthorizationStatus status) {
+                if (status == kCLAuthorizationStatusAuthorizedWhenInUse) {
+                    [self.locationManager startUpdatingLocation];
+                }
+                else {
+                    error = [NSError errorWithDomain:kNPRLocationErrorDomain code:NPRLocationErrorCodeDenied userInfo:nil];
+                    [self locationManager:self.locationManager didFailWithError:error];
+                }
+            }];
         }
     }
-}
-
-- (void)stop {
-    if (self.running) {
-        self.running = NO;
-        
-        [self stopUpdatingLocation];
-        [self stopMonitoringSignificantLocationChanges];
+    else {
+        error = [NSError errorWithDomain:kNPRLocationErrorDomain code:NPRLocationErrorCodeDisabled userInfo:nil];
     }
-}
 
-- (void)startUpdatingLocation {
-    if (!self.isUpdatingLocation) {
-        [NPRNotificationManager scheduleLocationUpdatesStartLocalNotification];
-        
-        [self stopMonitoringSignificantLocationChanges];
-        [self.locationManager startUpdatingLocation];
-        self.isUpdatingLocation = YES;
+    if (error) {
+        [self locationManager:self.locationManager didFailWithError:error];
     }
-}
-
-- (void)stopUpdatingLocation {
-    if (self.isUpdatingLocation) {
-        [NPRNotificationManager scheduleLocationUpdatesStopLocalNotification];
-        
-        [self.locationManager stopUpdatingLocation];
-        self.isUpdatingLocation = NO;
-    }
-}
-
-- (void)startMonitoringSignificantLocationChanges {
-    if (!self.isMonitoringSignificantLocationChanges && kNPRMonitorSignificantLocationChanges) {
-        [NPRNotificationManager scheduleSignificantLocationChangesStartLocalNotification];
-        
-        [self stopUpdatingLocation];
-        [self.locationManager startMonitoringSignificantLocationChanges];
-        self.isMonitoringSignificantLocationChanges = YES;
-    }
-}
-
-- (void)stopMonitoringSignificantLocationChanges {
-    if (self.isMonitoringSignificantLocationChanges && kNPRMonitorSignificantLocationChanges) {
-        [NPRNotificationManager scheduleSignificantLocationChangesStopLocalNotification];
-        
-        [self.locationManager stopMonitoringSignificantLocationChanges];
-        self.isMonitoringSignificantLocationChanges = NO;
-    }
-}
-
-- (void)allowDeferredLocationUpdatesUntilTraveled:(CLLocationDistance)distance timeout:(NSTimeInterval)timeout {
-    [self.locationManager allowDeferredLocationUpdatesUntilTraveled:distance timeout:timeout];
-}
-
-- (void)disallowDeferredLocationUpdates {
-    [self.locationManager disallowDeferredLocationUpdates];
-}
-
-#pragma mark - Station Monitoring
-
-- (NSArray *)followedStations {
-    return [self.stations allObjects];
-}
-
-- (void)followStation:(NPRStation *)station {
-    [self.stations addObject:station];
-}
-
-- (void)unfollowStation:(NPRStation *)station {
-    [self.stations removeObject:station];
-}
-
-- (BOOL)isFollowingStation:(NPRStation *)station {
-    return [self.stations containsObject:station];
 }
 
 #pragma mark - CLLocation Manager Delegate
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
-    DDLogInfo(@"didChangeAuthorizationStatus: %d", status);
-    
-    switch (status) {
-        case kCLAuthorizationStatusAuthorizedAlways:
-        case kCLAuthorizationStatusAuthorizedWhenInUse:
-            if (self.requestingAuthorization) {
-                self.requestingAuthorization = NO;
-                
-                [self start];
-            }
-            else {
-                if ([self.delegate respondsToSelector:@selector(didChangeAuthorizationStatus:)]) {
-                    [self.delegate didChangeAuthorizationStatus:status];
-                }
-            }
-            break;
-            
-        case kCLAuthorizationStatusDenied:
-        case kCLAuthorizationStatusRestricted:
-            if (self.requestingAuthorization) {
-                self.requestingAuthorization = NO;
-                
-                [self stop];
-            }
-            else {
-                if ([self.delegate respondsToSelector:@selector(didChangeAuthorizationStatus:)]) {
-                    [self.delegate didChangeAuthorizationStatus:status];
-                }
-            }
-            break;
-            
-        default:
-            break;
+    DDLogInfo(@"didChangeAuthorizationStatus: %@", @(status));
+
+    if (status != kCLAuthorizationStatusNotDetermined) {
+        if (self.authorizationCompletion) {
+            self.authorizationCompletion(status);
+            self.authorizationCompletion = nil;
+        }
     }
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
     DDLogInfo(@"didFailWithError: %@", error);
-    
-    if (error.code != kCLErrorLocationUnknown) {
-        [NPRErrorManager showAlertForLocationErrorCode:error.code];
+
+    if (self.currentLocationCompletion) {
+        self.currentLocationCompletion(nil, error);
+        self.currentLocationCompletion = nil;
     }
-    
-    if ([self.delegate respondsToSelector:@selector(didFailToFindLocationWithError:)]) {
-        [self.delegate didFailToFindLocationWithError:error];
-    }
+
+    [self.locationManager stopUpdatingLocation];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     DDLogInfo(@"didUpdateLocations: %@", locations);
     
     CLLocation *location = [locations lastObject];
-    self.lastUpdateDate = location.timestamp;
-    
+
     if (location.horizontalAccuracy < self.accuracyThreshold) {
-        if ([self.delegate respondsToSelector:@selector(didUpdateLocation:)]) {
-            [self.delegate didUpdateLocation:location];
+        if (self.currentLocationCompletion) {
+            self.currentLocationCompletion(location, nil);
+            self.currentLocationCompletion = nil;
         }
-        
-        [self stop];
+
+        [self.locationManager stopUpdatingLocation];
     }
 }
 

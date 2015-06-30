@@ -10,6 +10,8 @@
 		06362F421B2A88E700CB30FA /* NPRNetworkConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 06362F411B2A88E700CB30FA /* NPRNetworkConstants.m */; };
 		064401BD1B2FDFC1005D3E72 /* NPREmptyListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 064401BC1B2FDFC1005D3E72 /* NPREmptyListView.m */; };
 		0657BBC11B36691300ADAAC8 /* NPRActivityIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0657BBC01B36691300ADAAC8 /* NPRActivityIndicatorView.m */; };
+		066F06371B42331D00747CAD /* NPRUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 066F06361B42331D00747CAD /* NPRUserDefaults.m */; };
+		066F063B1B42396B00747CAD /* NPRRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 066F063A1B42396B00747CAD /* NPRRootViewController.m */; };
 		06CBF3181B2B59DD005F6210 /* NPRAudioPlayerToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CBF3171B2B59DD005F6210 /* NPRAudioPlayerToolbar.m */; };
 		06CBF3231B2B7F44005F6210 /* GothamRounded-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = 06CBF3221B2B7E37005F6210 /* GothamRounded-Book.otf */; };
 		06CBF3241B2B7FCB005F6210 /* GothamRounded-BookItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 06CBF31D1B2B7C51005F6210 /* GothamRounded-BookItalic.otf */; };
@@ -79,6 +81,10 @@
 		064401BC1B2FDFC1005D3E72 /* NPREmptyListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPREmptyListView.m; sourceTree = "<group>"; };
 		0657BBBF1B36691300ADAAC8 /* NPRActivityIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRActivityIndicatorView.h; sourceTree = "<group>"; };
 		0657BBC01B36691300ADAAC8 /* NPRActivityIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRActivityIndicatorView.m; sourceTree = "<group>"; };
+		066F06351B42331D00747CAD /* NPRUserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRUserDefaults.h; sourceTree = "<group>"; };
+		066F06361B42331D00747CAD /* NPRUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRUserDefaults.m; sourceTree = "<group>"; };
+		066F06391B42396B00747CAD /* NPRRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRRootViewController.h; sourceTree = "<group>"; };
+		066F063A1B42396B00747CAD /* NPRRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRRootViewController.m; sourceTree = "<group>"; };
 		06CBF3161B2B59DD005F6210 /* NPRAudioPlayerToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRAudioPlayerToolbar.h; sourceTree = "<group>"; };
 		06CBF3171B2B59DD005F6210 /* NPRAudioPlayerToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRAudioPlayerToolbar.m; sourceTree = "<group>"; };
 		06CBF31A1B2B7C51005F6210 /* GothamRounded-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GothamRounded-Bold.otf"; sourceTree = "<group>"; };
@@ -193,6 +199,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		066F06381B42393C00747CAD /* Root */ = {
+			isa = PBXGroup;
+			children = (
+				066F06391B42396B00747CAD /* NPRRootViewController.h */,
+				066F063A1B42396B00747CAD /* NPRRootViewController.m */,
+			);
+			name = Root;
+			sourceTree = "<group>";
+		};
 		06CBF3191B2B6CCB005F6210 /* Audio Player Toolbar */ = {
 			isa = PBXGroup;
 			children = (
@@ -384,14 +399,16 @@
 		483C2D421A5C72FA007B9995 /* NPRFinder */ = {
 			isa = PBXGroup;
 			children = (
-				06EA1AE21B40F9D5002346C8 /* Empty List */,
-				06EA1ACA1B3F9A0E002346C8 /* Activity Indicator */,
+				066F06381B42393C00747CAD /* Root */,
+				48E504AE1A5CB088005856D8 /* Base */,
 				482D704B1A5F4B440006315B /* Splash */,
 				06EAC5B21B2A2002000FC33A /* Permission */,
 				48E504AD1A5CB078005856D8 /* Home */,
 				482D705E1A6054840006315B /* Station */,
 				482D70351A5E43C30006315B /* Search */,
-				48E504AE1A5CB088005856D8 /* Base */,
+				06EA1AE21B40F9D5002346C8 /* Empty List */,
+				06EA1ACA1B3F9A0E002346C8 /* Activity Indicator */,
+				06CBF3191B2B6CCB005F6210 /* Audio Player Toolbar */,
 				482D701B1A5D2E170006315B /* Managers */,
 				480FA8001A678EED00FC1C52 /* Transition Controller */,
 				482D703E1A5E50110006315B /* Animation Controllers */,
@@ -399,7 +416,6 @@
 				06EAC59F1B2A0FB9000FC33A /* Util */,
 				06EAC5841B291139000FC33A /* Style */,
 				482D701C1A5D2E290006315B /* Constants */,
-				06CBF3191B2B6CCB005F6210 /* Audio Player Toolbar */,
 				48E504AA1A5CB063005856D8 /* App Delegate */,
 				483C2D521A5C72FA007B9995 /* LaunchScreen.xib */,
 				483C2D501A5C72FA007B9995 /* Images.xcassets */,
@@ -447,6 +463,8 @@
 			children = (
 				483C2D471A5C72FA007B9995 /* NPRAppDelegate.h */,
 				483C2D481A5C72FA007B9995 /* NPRAppDelegate.m */,
+				066F06351B42331D00747CAD /* NPRUserDefaults.h */,
+				066F06361B42331D00747CAD /* NPRUserDefaults.m */,
 			);
 			name = "App Delegate";
 			sourceTree = "<group>";
@@ -676,6 +694,7 @@
 				06EA1ADC1B40C9BF002346C8 /* NPRStationView.m in Sources */,
 				483C2D461A5C72FA007B9995 /* main.m in Sources */,
 				482D70221A5D2FA60006315B /* NPRNetworkManager.m in Sources */,
+				066F063B1B42396B00747CAD /* NPRRootViewController.m in Sources */,
 				06EA1AD31B40552A002346C8 /* NPRStyleConstants.m in Sources */,
 				06EAC5881B29413E000FC33A /* NPRStationCell.m in Sources */,
 				06EA1ADF1B40E3E4002346C8 /* NPRSearchView.m in Sources */,
@@ -691,6 +710,7 @@
 				48E504A61A5CAC52005856D8 /* NPRStation.m in Sources */,
 				06EAC5A21B2A106C000FC33A /* UIScreen+NPRUtil.m in Sources */,
 				4837D67A1A7EF972009F2A0F /* NPRAudioManager.m in Sources */,
+				066F06371B42331D00747CAD /* NPRUserDefaults.m in Sources */,
 				06EAC59B1B2A0DF7000FC33A /* UIFont+NPRStyle.m in Sources */,
 				480FA8031A678F0300FC1C52 /* NPRTransitionController.m in Sources */,
 			);

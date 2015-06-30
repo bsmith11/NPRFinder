@@ -8,30 +8,73 @@
 
 #import "NPRRootViewController.h"
 
-@interface NPRRootViewController ()
+#import "NPRSplashViewController.h"
+#import "NPRPermissionViewController.h"
+#import "NPRHomeViewController.h"
+#import "NPRTransitionController.h"
+
+#import "UIView+NPRAutoLayout.h"
+
+@interface NPRRootViewController () <NPRPermissionDelegate>
+
+@property (strong, nonatomic) UIViewController *primaryViewController;
 
 @end
 
 @implementation NPRRootViewController
 
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
+
+- (BOOL)prefersStatusBarHidden {
+    return YES;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+
+    NPRPermissionViewController *permissionViewController = [[NPRPermissionViewController alloc] initWithType:NPRPermissionTypeLocationWhenInUse];
+    permissionViewController.delegate = self;
+    NPRSplashViewController *splashViewController = [[NPRSplashViewController alloc] initWithDismissBlock:^{
+        [self showViewController:permissionViewController animated:YES];
+    }];
+    [self showViewController:splashViewController animated:YES];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)showViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    if (self.primaryViewController) {
+        [self.primaryViewController willMoveToParentViewController:nil];
+        [self.primaryViewController.view removeFromSuperview];
+        [self.primaryViewController removeFromParentViewController];
+    }
+
+    self.primaryViewController = viewController;
+
+    viewController.modalPresentationStyle = UIModalPresentationCustom;
+    [self addChildViewController:viewController];
+    [self.view addSubview:viewController.view];
+    viewController.view.translatesAutoresizingMaskIntoConstraints = NO;
+    [viewController didMoveToParentViewController:self];
+    [viewController.view npr_fillSuperview];
 }
 
-/*
-#pragma mark - Navigation
+- (void)showHomeViewControllerAnimated:(BOOL)animated {
+    NPRHomeViewController *homeViewController = [[NPRHomeViewController alloc] init];
+    NPRBaseNavigationController *navigationController = [[NPRBaseNavigationController alloc] initWithRootViewController:homeViewController];
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    self.transitionController = [[NPRTransitionController alloc] init];
+    navigationController.delegate = self.transitionController;
+
+    [self showViewController:navigationController animated:animated];
 }
-*/
+
+- (void)didSelectAcceptForPermissionViewController:(NPRPermissionViewController *)permissionViewController {
+    [self showHomeViewControllerAnimated:YES];
+}
+
+- (void)didSelectDenyForPermissionViewController:(NPRPermissionViewController *)permissionViewController {
+    [self showHomeViewControllerAnimated:YES];
+}
 
 @end

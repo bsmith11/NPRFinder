@@ -8,15 +8,13 @@
 
 #import "NPRAppDelegate.h"
 
-#import "NPRBaseNavigationController.h"
-#import "NPRTransitionController.h"
-#import "NPRHomeViewController.h"
+#import "NPRRootViewController.h"
 
 #import <CocoaLumberjack/CocoaLumberjack.h>
 
 @interface NPRAppDelegate ()
 
-@property (strong, nonatomic) NPRBaseNavigationController *navigationController;
+@property (strong, nonatomic) NPRRootViewController *rootViewController;
 
 @end
 
@@ -25,17 +23,12 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
     [DDLog addLogger:[DDASLLogger sharedInstance]];
     [DDLog addLogger:[DDTTYLogger sharedInstance]];
-    
-    NPRHomeViewController *homeViewController = [[NPRHomeViewController alloc] init];
-    
-    self.navigationController = [[NPRBaseNavigationController alloc] initWithRootViewController:homeViewController];
-    
-    self.transitionController = [[NPRTransitionController alloc] init];
-    self.navigationController.delegate = self.transitionController;
-    
+
+    NPRRootViewController *rootViewController = [[NPRRootViewController alloc] init];
+
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
-    self.window.rootViewController = self.navigationController;
+    self.window.rootViewController = rootViewController;
     [self.window makeKeyAndVisible];
         
     return YES;

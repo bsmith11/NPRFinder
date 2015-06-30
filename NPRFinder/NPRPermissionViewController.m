@@ -11,8 +11,9 @@
 #import "NPRPermissionView.h"
 #import "NPRLocationManager.h"
 #import "UIView+NPRAutoLayout.h"
+#import "NPRUserDefaults.h"
 
-@interface NPRPermissionViewController () <NPRLocationManagerDelegate>
+@interface NPRPermissionViewController ()
 
 @property (strong, nonatomic) NPRPermissionView *permissionView;
 
@@ -38,8 +39,6 @@
     [super viewDidLoad];
 
     [self setupPermissionView];
-
-    [NPRLocationManager sharedManager].delegate = self;
 }
 
 #pragma mark - Setup
@@ -57,47 +56,31 @@
 #pragma mark - Actions
 
 - (void)acceptButtonTapped {
+    NPRLocationManagerAuthorizationCompletion completion = ^(CLAuthorizationStatus status) {
+        [NPRUserDefaults setLocationServicesPermissionResponse:YES];
+
+        if ([self.delegate respondsToSelector:@selector(didSelectAcceptForPermissionViewController:)]) {
+            [self.delegate didSelectAcceptForPermissionViewController:self];
+        }
+    };
+
     switch (self.type) {
         case NPRPermissionTypeLocationAlways:
-            [[NPRLocationManager sharedManager] requestAlwaysAuthorization];
+            [[NPRLocationManager sharedManager] requestAlwaysAuthorizationWithCompletion:completion];
             break;
 
         case NPRPermissionTypeLocationWhenInUse:
-            [[NPRLocationManager sharedManager] requestWhenInUseAuthorization];
+            [[NPRLocationManager sharedManager] requestWhenInUseAuthorizationWithCompletion:completion];
             break;
     }
 }
 
 - (void)denyButtonTapped {
-    [self dismiss];
-}
+    [NPRUserDefaults setLocationServicesPermissionResponse:NO];
 
-- (void)dismiss {
-    [self.navigationController popViewControllerAnimated:NO];
-}
-
-#pragma mark - Location Manager Delegate
-
-- (void)didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
-    switch (status) {
-        case kCLAuthorizationStatusAuthorizedAlways:
-        case kCLAuthorizationStatusAuthorizedWhenInUse:
-
-            break;
-            
-        case kCLAuthorizationStatusDenied:
-
-            break;
-            
-        case kCLAuthorizationStatusRestricted:
-            
-            break;
-            
-        default:
-            break;
+    if ([self.delegate respondsToSelector:@selector(didSelectDenyForPermissionViewController:)]) {
+        [self.delegate didSelectDenyForPermissionViewController:self];
     }
-
-    [self dismiss];
 }
 
 @end

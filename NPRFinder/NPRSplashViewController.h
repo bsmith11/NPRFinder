@@ -12,4 +12,6 @@
 
 @interface NPRSplashViewController : NPRBaseViewController
 
+- (instancetype)initWithDismissBlock:(void (^)())dismissBlock;
+
 @end

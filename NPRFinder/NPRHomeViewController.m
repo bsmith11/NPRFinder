@@ -17,10 +17,11 @@
 #import "NPRActivityIndicatorView.h"
 #import "NPRPermissionViewController.h"
 #import "NPRHomeView.h"
+#import "NPRUserDefaults.h"
 
 #import "UIView+NPRAutoLayout.h"
 
-@interface NPRHomeViewController () <UICollectionViewDelegate, UICollectionViewDataSource, NPRLocationManagerDelegate>
+@interface NPRHomeViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
 
 @property (strong, nonatomic) NSArray *stations;
 @property (strong, nonatomic) NPRHomeView *homeView;
@@ -38,13 +39,16 @@
 
     self.stations = [NSArray array];
 
-    [NPRLocationManager sharedManager].delegate = self;
-
-    if (kNPRUseLocationServices) {
-        [self findCurrentLocation];
+    if ([NPRUserDefaults locationServicesPermissionResponse]) {
+        if (kNPRUseLocationServices) {
+            [self findCurrentLocation];
+        }
+        else {
+            [self downloadStationsForLocation:nil];
+        }
     }
     else {
-        [self didUpdateLocation:nil];
+
     }
     
     [self.homeView.emptyListView hideAnimated:NO completion:nil];
@@ -83,11 +87,11 @@
     self.homeView.homeCollectionView.dataSource = self;
     self.homeView.homeCollectionView.delegate = self;
 
-    __weak typeof(self) weakSelf = self;
-    self.homeView.emptyListView.actionBlock = ^{
-        [weakSelf.homeView.emptyListView hideAnimated:NO completion:nil];
-        [weakSelf findCurrentLocation];
-    };
+//    __weak typeof(self) weakSelf = self;
+//    self.homeView.emptyListView.actionBlock = ^{
+//        [weakSelf.homeView.emptyListView hideAnimated:NO completion:nil];
+//        [weakSelf findCurrentLocation];
+//    };
 }
 
 #pragma mark - Actions
@@ -122,7 +126,15 @@
 
 - (void)findCurrentLocation {
     [self startActivityIndicator];
-    [[NPRLocationManager sharedManager] start];
+
+    [[NPRLocationManager sharedManager] requestCurrentLocationWithCompletion:^(CLLocation *location, NSError *error) {
+        if (error) {
+            [self stopActivityIndicator];
+        }
+        else {
+            [self downloadStationsForLocation:location];
+        }
+    }];
 }
 
 - (void)downloadStationsForLocation:(CLLocation *)location {
@@ -178,44 +190,6 @@
     self.npr_transitionController.slideAnimationController.selectedIndexPath = indexPath;
     
     [self.navigationController pushViewController:stationViewController animated:YES];
-}
-
-#pragma mark - Location Manager Delegate
-
-- (void)didUpdateLocation:(CLLocation *)location {
-    [self downloadStationsForLocation:location];
-}
-
-- (void)didFailToFindLocationWithError:(NSError *)error {
-    [self stopActivityIndicator];
-}
-
-- (void)didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
-    switch (status) {
-        case kCLAuthorizationStatusAuthorizedAlways:
-        case kCLAuthorizationStatusAuthorizedWhenInUse:
-            if (kNPRUseLocationServices) {
-                [self findCurrentLocation];
-            }
-            break;
-            
-        case kCLAuthorizationStatusDenied: {
-            NSError *error = [NSError errorWithDomain:@"npr_location_authorization_denied" code:kCLErrorDenied userInfo:nil];
-            
-            [self didFailToFindLocationWithError:error];
-        }
-            break;
-            
-        case kCLAuthorizationStatusRestricted: {
-            NSError *error = [NSError errorWithDomain:@"npr_location_authorization_restricted" code:kCLErrorDenied userInfo:nil];
-            
-            [self didFailToFindLocationWithError:error];
-        }
-            break;
-            
-        default:
-            break;
-    }
 }
 
 @end

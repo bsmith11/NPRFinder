@@ -6,8 +6,11 @@
 //  Copyright (c) 2015 Bradley Smith. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 @interface NPRUserDefaults : NSObject
+
++ (BOOL)locationServicesPermissionResponse;
++ (void)setLocationServicesPermissionResponse:(BOOL)response;
 
 @end

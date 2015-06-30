@@ -8,16 +8,15 @@
 
 @import CoreLocation;
 
-@class NPRStation;
+OBJC_EXTERN NSString * const kNPRLocationErrorDomain;
 
-@protocol NPRLocationManagerDelegate <NSObject>
+typedef NS_ENUM(NSInteger, NPRLocationErrorCode) {
+    NPRLocationErrorCodeDisabled,
+    NPRLocationErrorCodeDenied
+};
 
-@optional
-- (void)didUpdateLocation:(CLLocation *)location;
-- (void)didFailToFindLocationWithError:(NSError *)error;
-- (void)didChangeAuthorizationStatus:(CLAuthorizationStatus)status;
-
-@end
+typedef void (^NPRLocationManagerAuthorizationCompletion)(CLAuthorizationStatus status);
+typedef void (^NPRLocationManagerCurrentLocationCompletion)(CLLocation *location, NSError *error);
 
 @interface NPRLocationManager : NSObject <CLLocationManagerDelegate>
 
@@ -29,27 +28,8 @@
 
 - (CLLocation *)location;
 
-- (void)requestAlwaysAuthorization;
-- (void)requestWhenInUseAuthorization;
-
-- (void)startUpdatingLocation;
-- (void)stopUpdatingLocation;
-
-- (void)startMonitoringSignificantLocationChanges;
-- (void)stopMonitoringSignificantLocationChanges;
-
-- (BOOL)isRunning;
-- (BOOL)isUpdatingLocation;
-- (BOOL)isMonitoringSignificantLocationChanges;
-
-- (void)start;
-- (void)stop;
-
-- (NSArray *)followedStations;
-- (void)followStation:(NPRStation *)station;
-- (void)unfollowStation:(NPRStation *)station;
-- (BOOL)isFollowingStation:(NPRStation *)station;
-
-@property (weak, nonatomic) id <NPRLocationManagerDelegate> delegate;
+- (void)requestAlwaysAuthorizationWithCompletion:(NPRLocationManagerAuthorizationCompletion)completion;
+- (void)requestWhenInUseAuthorizationWithCompletion:(NPRLocationManagerAuthorizationCompletion)completion;
+- (void)requestCurrentLocationWithCompletion:(NPRLocationManagerCurrentLocationCompletion)completion;
 
 @end
