@@ -13,15 +13,18 @@
 #import "NPRHomeViewController.h"
 #import "NPRTransitionController.h"
 
+#import "NPRUserDefaults.h"
 #import "UIView+NPRAutoLayout.h"
 
-@interface NPRRootViewController () <NPRPermissionDelegate>
+@interface NPRRootViewController () <NPRSplashDelegate, NPRPermissionDelegate>
 
 @property (strong, nonatomic) UIViewController *primaryViewController;
 
 @end
 
 @implementation NPRRootViewController
+
+#pragma mark - Lifecycle
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
@@ -33,14 +36,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    NPRPermissionViewController *permissionViewController = [[NPRPermissionViewController alloc] initWithType:NPRPermissionTypeLocationWhenInUse];
-    permissionViewController.delegate = self;
-    NPRSplashViewController *splashViewController = [[NPRSplashViewController alloc] initWithDismissBlock:^{
-        [self showViewController:permissionViewController animated:YES];
-    }];
-    [self showViewController:splashViewController animated:YES];
+    
+    [self showSplashViewControllerAnimated:YES];
 }
+
+#pragma mark - Actions
 
 - (void)showViewController:(UIViewController *)viewController animated:(BOOL)animated {
     if (self.primaryViewController) {
@@ -59,6 +59,20 @@
     [viewController.view npr_fillSuperview];
 }
 
+- (void)showSplashViewControllerAnimated:(BOOL)animated {
+    NPRSplashViewController *splashViewController = [[NPRSplashViewController alloc] init];
+    splashViewController.delegate = self;
+
+    [self showViewController:splashViewController animated:animated];
+}
+
+- (void)showPermissionViewControllerAnimated:(BOOL)animated {
+    NPRPermissionViewController *permissionViewController = [[NPRPermissionViewController alloc] initWithType:NPRPermissionTypeLocationWhenInUse];
+    permissionViewController.delegate = self;
+
+    [self showViewController:permissionViewController animated:animated];
+}
+
 - (void)showHomeViewControllerAnimated:(BOOL)animated {
     NPRHomeViewController *homeViewController = [[NPRHomeViewController alloc] init];
     NPRBaseNavigationController *navigationController = [[NPRBaseNavigationController alloc] initWithRootViewController:homeViewController];
@@ -68,6 +82,21 @@
 
     [self showViewController:navigationController animated:animated];
 }
+
+#pragma mark - Splash Delegate
+
+- (void)didFinishAnimatingSplashViewController:(NPRSplashViewController *)splashViewController {
+    if (![NPRUserDefaults locationServicesPermissionPrompt]) {
+        [NPRUserDefaults setLocationServicesPermissionPrompt:YES];
+
+        [self showPermissionViewControllerAnimated:YES];
+    }
+    else {
+        [self showHomeViewControllerAnimated:YES];
+    }
+}
+
+#pragma mark - Permission Delegate
 
 - (void)didSelectAcceptForPermissionViewController:(NPRPermissionViewController *)permissionViewController {
     [self showHomeViewControllerAnimated:YES];

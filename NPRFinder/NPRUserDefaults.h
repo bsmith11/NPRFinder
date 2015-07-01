@@ -13,4 +13,7 @@
 + (BOOL)locationServicesPermissionResponse;
 + (void)setLocationServicesPermissionResponse:(BOOL)response;
 
++ (BOOL)locationServicesPermissionPrompt;
++ (void)setLocationServicesPermissionPrompt:(BOOL)prompt;
+
 @end

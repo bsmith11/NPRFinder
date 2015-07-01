@@ -61,7 +61,7 @@
                           failure:(void (^)(NSURLSessionDataTask *task, NSError *error))failure {
     NSDictionary *parameters = @{kNPRRequestKeyAPIKey:kNPRStationFinderAPIKey};
     NSString *path = [NSString stringWithFormat:@"%@%@", kNPRRouteStations, text];
-    
+
     for (NSURLSessionDataTask *task in self.outstandingSearchTasks) {
         [task cancel];
     }
@@ -84,6 +84,9 @@
                                    }];
     
     [self.outstandingSearchTasks addObject:task];
+
+    NSLog(@"Original URL: %@", task.originalRequest.URL);
+    NSLog(@"Current URL: %@", task.currentRequest.URL);
 }
 
 - (void)getProgramsForStation:(NPRStation *)station

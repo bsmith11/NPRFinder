@@ -14,7 +14,7 @@ NSString * const kNPRBaseURL = @"http://api.npr.org/";
 
 #pragma mark - Routes
 
-NSString * const kNPRRouteStations = @"v2/stations/";
+NSString * const kNPRRouteStations = @"v2/stations/search/";
 NSString * const kNPRRouteProgramsList = @"/list/";
 
 #pragma mark - Request

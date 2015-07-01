@@ -15,23 +15,11 @@
 
 @property (strong, nonatomic) NPRSplashView *splashView;
 
-@property (copy, nonatomic) void (^dismissBlock)();
-
 @end
 
 @implementation NPRSplashViewController
 
 #pragma mark - Lifecycle
-
-- (instancetype)initWithDismissBlock:(void (^)())dismissBlock {
-    self = [super init];
-
-    if (self) {
-        _dismissBlock = dismissBlock;
-    }
-
-    return self;
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -40,7 +28,11 @@
 
     CGFloat delay = 1.0f;
     dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, delay * NSEC_PER_SEC);
-    dispatch_after(time, dispatch_get_main_queue(), self.dismissBlock);
+    dispatch_after(time, dispatch_get_main_queue(), ^{
+        if ([self.delegate respondsToSelector:@selector(didFinishAnimatingSplashViewController:)]) {
+            [self.delegate didFinishAnimatingSplashViewController:self];
+        }
+    });
 }
 
 #pragma mark - Setup

@@ -10,8 +10,16 @@
 
 #import "NPRBaseViewController.h"
 
+@class NPRSplashViewController;
+
+@protocol NPRSplashDelegate <NSObject>
+
+- (void)didFinishAnimatingSplashViewController:(NPRSplashViewController *)splashViewController;
+
+@end
+
 @interface NPRSplashViewController : NPRBaseViewController
 
-- (instancetype)initWithDismissBlock:(void (^)())dismissBlock;
+@property (weak, nonatomic) id <NPRSplashDelegate> delegate;
 
 @end
