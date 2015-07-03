@@ -14,12 +14,13 @@
 #import "NPRStationCell.h"
 #import "UIScreen+NPRUtil.h"
 #import "NPRStyleConstants.h"
+#import "NPRCollectionViewLayout.h"
+#import "NPRAnimationConstants.h"
 
 #import <POP+MCAnimate/POP+MCAnimate.h>
+#import <RZUtils/RZCommonUtils.h>
 
-static NSString * const kSearchTextFieldPlaceholderText = @"Find stations";
-
-static const CGFloat kNPRAnimationScaleValue = 0.1f;
+static NSString * const kNPRSearchTextFieldPlaceholderText = @"Find stations";
 
 @interface NPRSearchView ()
 
@@ -50,6 +51,7 @@ static const CGFloat kNPRAnimationScaleValue = 0.1f;
     [self setupTopBarContainerView];
     [self setupBackButton];
     [self setupSearchTextField];
+    [self setupEmptyListView];
     [self setupActivityIndicatorView];
 
     self.animatingViews = [NSMutableArray arrayWithArray:@[self.backButton, self.searchTextField]];
@@ -58,6 +60,8 @@ static const CGFloat kNPRAnimationScaleValue = 0.1f;
         view.transform = CGAffineTransformMakeScale(kNPRAnimationScaleValue, kNPRAnimationScaleValue);
         view.alpha = 0.0f;
     }
+
+    [self hideEmptyListViewAnimated:NO];
 
     self.backgroundViewBottom.constant = [UIScreen npr_screenHeight];
 }
@@ -77,13 +81,7 @@ static const CGFloat kNPRAnimationScaleValue = 0.1f;
 }
 
 - (void)setupSearchCollectionView {
-    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.scrollDirection = UICollectionViewScrollDirectionVertical;
-    layout.sectionInset = UIEdgeInsetsZero;
-    layout.minimumInteritemSpacing = 0.0f;
-    layout.minimumLineSpacing = 0.0f;
-    layout.itemSize = [NPRStationCell sizeWithWidth:[UIScreen npr_screenWidth]];
-
+    NPRCollectionViewLayout *layout = [[NPRCollectionViewLayout alloc] init];
     self.searchCollectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
     self.searchCollectionView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.backgroundView addSubview:self.searchCollectionView];
@@ -93,7 +91,7 @@ static const CGFloat kNPRAnimationScaleValue = 0.1f;
     self.searchCollectionView.backgroundColor = [UIColor clearColor];
     CGFloat topInset = kNPRPadding + [UIScreen npr_navigationBarHeight];
     self.searchCollectionView.contentInset = UIEdgeInsetsMake(topInset, 0.0f, 0.0f, 0.0f);
-    self.searchCollectionView.showsVerticalScrollIndicator = NO;
+    self.searchCollectionView.indicatorStyle = UIScrollViewIndicatorStyleWhite;
     self.searchCollectionView.alwaysBounceVertical = YES;
     self.searchCollectionView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
     [self.searchCollectionView registerClass:[NPRStationCell class]
@@ -146,7 +144,7 @@ static const CGFloat kNPRAnimationScaleValue = 0.1f;
 
     NSDictionary *attributes = @{NSFontAttributeName:self.searchTextField.font,
                                  NSForegroundColorAttributeName:[UIColor darkGrayColor]};
-    NSAttributedString *attributedPlaceholder = [[NSAttributedString alloc] initWithString:kSearchTextFieldPlaceholderText attributes:attributes];
+    NSAttributedString *attributedPlaceholder = [[NSAttributedString alloc] initWithString:kNPRSearchTextFieldPlaceholderText attributes:attributes];
     self.searchTextField.attributedPlaceholder = attributedPlaceholder;
 
     CGRect frame = CGRectMake(0.0f, 0.0f, kNPRPadding, image.size.height);
@@ -166,6 +164,14 @@ static const CGFloat kNPRAnimationScaleValue = 0.1f;
     self.searchTextField.clipsToBounds = YES;
 }
 
+- (void)setupEmptyListView {
+    self.emptyListView = [[NPREmptyListView alloc] init];
+    [self addSubview:self.emptyListView];
+
+    [self.emptyListView npr_fillSuperviewHorizontallyWithPadding:kNPRPadding];
+    [self.emptyListView npr_centerVerticallyInSuperview];
+}
+
 - (void)setupActivityIndicatorView {
     self.activityIndicatorView = [[NPRActivityIndicatorView alloc] init];
     self.activityIndicatorView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -179,15 +185,26 @@ static const CGFloat kNPRAnimationScaleValue = 0.1f;
 
 #pragma mark - Animations
 
+- (void)adjustTopBarContainerViewForContentOffset:(CGPoint)contentOffset {
+    CGFloat minValue = -CGRectGetHeight(self.topBarContainerView.frame) - self.searchCollectionView.contentInset.top;
+    CGFloat maxValue = 20.0f;
+    CGFloat adjustedValue = -(contentOffset.y + self.searchCollectionView.contentInset.top) + maxValue;
+    adjustedValue = RZClampFloat(adjustedValue, minValue, maxValue);
+
+    if (self.topBarContainerViewTop.constant != adjustedValue) {
+        self.topBarContainerViewTop.constant = adjustedValue;
+    }
+}
+
 - (void)showViews {
-    [self.animatingViews pop_sequenceWithInterval:0.05f animations:^(UIView *view, NSInteger index) {
+    [self.animatingViews pop_sequenceWithInterval:kNPRAnimationInterval animations:^(UIView *view, NSInteger index) {
         view.pop_spring.pop_scaleXY = CGPointMake(1.0f, 1.0f);
         view.pop_spring.alpha = 1.0f;
     } completion:nil];
 }
 
 - (void)hideViews {
-    [self.animatingViews pop_sequenceWithInterval:0.05f animations:^(UIView *view, NSInteger index) {
+    [self.animatingViews pop_sequenceWithInterval:kNPRAnimationInterval animations:^(UIView *view, NSInteger index) {
         view.pop_spring.pop_scaleXY = CGPointMake(kNPRAnimationScaleValue, kNPRAnimationScaleValue);
         view.pop_spring.alpha = 0.0f;
     } completion:nil];
@@ -200,6 +217,26 @@ static const CGFloat kNPRAnimationScaleValue = 0.1f;
 
 - (void)hideBackgroundView {
     self.backgroundViewBottom.pop_spring.constant = [UIScreen npr_screenHeight];
+}
+
+- (void)showEmptyListView {
+    self.emptyListView.pop_spring.pop_scaleXY = CGPointMake(1.0f, 1.0f);
+    self.emptyListView.pop_spring.alpha = 1.0f;
+}
+
+- (void)hideEmptyListView {
+    [self hideEmptyListViewAnimated:YES];
+}
+
+- (void)hideEmptyListViewAnimated:(BOOL)animated {
+    if (animated) {
+        self.emptyListView.pop_spring.pop_scaleXY = CGPointMake(kNPREmptyListAnimationScaleValue, kNPREmptyListAnimationScaleValue);
+        self.emptyListView.pop_spring.alpha = 0.0f;
+    }
+    else {
+        self.emptyListView.transform = CGAffineTransformMakeScale(kNPREmptyListAnimationScaleValue, kNPREmptyListAnimationScaleValue);
+        self.emptyListView.alpha = 0.0f;
+    }
 }
 
 @end

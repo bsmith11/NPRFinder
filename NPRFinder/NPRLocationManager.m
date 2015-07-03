@@ -8,9 +8,9 @@
 
 #import "NPRLocationManager.h"
 
-#import <CocoaLumberjack/CocoaLumberjack.h>
+#import "NSError+NPRUtil.h"
 
-NSString * const kNPRLocationErrorDomain = @"com.NPRFinder.LocationError";
+#import <CocoaLumberjack/CocoaLumberjack.h>
 
 @interface NPRLocationManager ()
 
@@ -118,7 +118,7 @@ NSString * const kNPRLocationErrorDomain = @"com.NPRFinder.LocationError";
                 [self.locationManager startUpdatingLocation];
             }
             else {
-                error = [NSError errorWithDomain:kNPRLocationErrorDomain code:NPRLocationErrorCodeDenied userInfo:nil];
+                error = [NSError npr_locationErrorFromCode:kCLErrorDenied];
             }
         }
         else {
@@ -127,14 +127,14 @@ NSString * const kNPRLocationErrorDomain = @"com.NPRFinder.LocationError";
                     [self.locationManager startUpdatingLocation];
                 }
                 else {
-                    error = [NSError errorWithDomain:kNPRLocationErrorDomain code:NPRLocationErrorCodeDenied userInfo:nil];
+                    error = [NSError npr_locationErrorFromCode:kCLErrorDenied];
                     [self locationManager:self.locationManager didFailWithError:error];
                 }
             }];
         }
     }
     else {
-        error = [NSError errorWithDomain:kNPRLocationErrorDomain code:NPRLocationErrorCodeDisabled userInfo:nil];
+        error = [NSError npr_locationErrorFromCode:kCLErrorDenied];
     }
 
     if (error) {
@@ -158,8 +158,10 @@ NSString * const kNPRLocationErrorDomain = @"com.NPRFinder.LocationError";
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
     DDLogInfo(@"didFailWithError: %@", error);
 
+    NSError *locationError = [NSError npr_locationErrorFromCode:error.code];
+
     if (self.currentLocationCompletion) {
-        self.currentLocationCompletion(nil, error);
+        self.currentLocationCompletion(nil, locationError);
         self.currentLocationCompletion = nil;
     }
 

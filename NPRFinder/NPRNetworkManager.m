@@ -84,9 +84,6 @@
                                    }];
     
     [self.outstandingSearchTasks addObject:task];
-
-    NSLog(@"Original URL: %@", task.originalRequest.URL);
-    NSLog(@"Current URL: %@", task.currentRequest.URL);
 }
 
 - (void)getProgramsForStation:(NPRStation *)station

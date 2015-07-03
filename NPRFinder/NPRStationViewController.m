@@ -9,11 +9,9 @@
 #import "NPRStationViewController.h"
 
 #import "NPRStation+RZImport.h"
-#import "NPRNetworkManager.h"
-#import "NPRErrorManager.h"
-#import "NPRSwitchConstants.h"
 #import "NPRAudioManager.h"
 #import "NPRStationView.h"
+#import "NPRSearchViewController.h"
 
 #import "UIView+NPRAutoLayout.h"
 
@@ -32,14 +30,13 @@ typedef NS_ENUM(NSInteger, NPRAudioActionButtonState) {
 
 @interface NPRStationViewController () <MFMailComposeViewControllerDelegate>
 
-@property (strong, nonatomic) NPRStation *station;
+@property (strong, nonatomic) NPRStationViewModel *stationViewModel;
 @property (strong, nonatomic) UIColor *backgroundColor;
 @property (strong, nonatomic) NPRStationView *stationView;
 
 @property (assign, nonatomic) NPRAudioActionButtonState state;
 @property (assign, nonatomic, getter=areOverflowButtonsShown) BOOL overflowButtonsShown;
-@property (assign, nonatomic, getter=isPresentingMail) BOOL presentingMail;
-@property (assign, nonatomic, getter=shouldDisplayAudioActionButton) BOOL displayAudioActionButton;
+@property (assign, nonatomic, getter=isFromSearch) BOOL fromSearch;
 
 @end
 
@@ -47,17 +44,16 @@ typedef NS_ENUM(NSInteger, NPRAudioActionButtonState) {
 
 #pragma mark - Lifecycle
 
-- (instancetype)initWithStation:(NPRStation *)station color:(UIColor *)color {
+- (instancetype)initWithStationViewModel:(NPRStationViewModel *)stationViewModel
+                         backgroundColor:(UIColor *)backgroundColor {
     self = [super init];
-    
+
     if (self) {
-        _station = station;
-        _backgroundColor = color;
-        _isFromSearch = NO;
-        _displayAudioActionButton = YES;
+        _stationViewModel = stationViewModel;
+        _backgroundColor = backgroundColor;
     }
-    
-    return self;    
+
+    return self;
 }
 
 - (void)viewDidLoad {
@@ -65,25 +61,17 @@ typedef NS_ENUM(NSInteger, NPRAudioActionButtonState) {
 
     [self setupStationView];
 
-    self.displayAudioActionButton = [self.station preferredAudioStream];
-    self.stationView.audioActionButton.hidden = !self.shouldDisplayAudioActionButton;
-
-    self.stationView.backgroundColor = self.backgroundColor;
     self.overflowButtonsShown = NO;
-    self.presentingMail = NO;
 
-    if (self.shouldDisplayAudioActionButton) {
+    BOOL shouldDisplayAudioActionButton = [self.stationViewModel.station preferredAudioStream];
+    self.stationView.audioActionButton.hidden = !shouldDisplayAudioActionButton;
+
+    if (shouldDisplayAudioActionButton) {
         self.state = NPRAudioActionButtonStatePaused;
         [[NPRAudioManager sharedManager] rz_addTarget:self
                                                action:@selector(audioManagerStateDidChange:)
-                                     forKeyPathChange:@"state"
+                                     forKeyPathChange:RZDB_KP(NPRAudioManager, state)
                                       callImmediately:YES];
-    }
-
-    if (self.isFromSearch) {
-        self.stationView.backButton.transform = CGAffineTransformIdentity;
-        self.stationView.backButton.alpha = 1.0f;
-        [self.stationView.animatingViews removeObject:self.stationView.backButton];
     }
 }
 
@@ -91,19 +79,27 @@ typedef NS_ENUM(NSInteger, NPRAudioActionButtonState) {
     [super viewWillAppear:animated];
     
     [self.transitionCoordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        if (!self.isPresentingMail) {
+        UIViewController *fromViewController = [context viewControllerForKey:UITransitionContextFromViewControllerKey];
+
+        if ([fromViewController isKindOfClass:[NPRSearchViewController class]]) {
+            self.stationView.backButton.transform = CGAffineTransformIdentity;
+            self.stationView.backButton.alpha = 1.0f;
+            [self.stationView.animatingViews removeObject:self.stationView.backButton];
+        }
+
+        if (![fromViewController isKindOfClass:[MFMailComposeViewController class]]) {
             [self.stationView showViews];
         }
-    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        self.presentingMail = NO;
-    }];
+    } completion:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
     [self.transitionCoordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        if (!self.isPresentingMail) {
+        UIViewController *toViewController = [context viewControllerForKey:UITransitionContextToViewControllerKey];
+
+        if (![toViewController isKindOfClass:[MFMailComposeViewController class]]) {
             if (self.areOverflowButtonsShown) {
                 [self closeButtonTapped];
             }
@@ -146,9 +142,9 @@ typedef NS_ENUM(NSInteger, NPRAudioActionButtonState) {
 
     [self.stationView npr_fillSuperview];
 
+    self.stationView.backgroundColor = self.backgroundColor;
+
     [self.stationView.backButton addTarget:self action:@selector(backButtonTapped) forControlEvents:UIControlEventTouchUpInside];
-    self.stationView.frequencyLabel.text = self.station.frequency;
-    self.stationView.callLabel.text = self.station.call;
     [self.stationView.emailButton addTarget:self action:@selector(emailButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     [self.stationView.webButton addTarget:self action:@selector(webButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     [self.stationView.facebookButton addTarget:self action:@selector(facebookButtonTapped) forControlEvents:UIControlEventTouchUpInside];
@@ -157,8 +153,9 @@ typedef NS_ENUM(NSInteger, NPRAudioActionButtonState) {
     [self.stationView.closeButton addTarget:self action:@selector(closeButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     [self.stationView.audioActionButton addTarget:self action:@selector(audioActionButtonTapped) forControlEvents:UIControlEventTouchUpInside];
 
-    NSString *marketLocation = [NSString stringWithFormat:@"%@, %@", self.station.marketCity, self.station.marketState];
-    self.stationView.marketLocationLabel.text = marketLocation;
+    self.stationView.frequencyLabel.text = self.stationViewModel.station.frequency;
+    self.stationView.callLabel.text = self.stationViewModel.station.call;
+    self.stationView.marketLocationLabel.text = self.stationViewModel.station.marketLocation;
 }
 
 #pragma mark - Actions
@@ -167,7 +164,7 @@ typedef NS_ENUM(NSInteger, NPRAudioActionButtonState) {
     NSNumber *stateObject = change[kRZDBChangeKeyNew];
     NPRAudioManagerState state = [stateObject integerValue];
     
-    if ([[NPRAudioManager sharedManager].station isEqual:self.station]) {
+    if ([[NPRAudioManager sharedManager].station isEqual:self.stationViewModel.station]) {
         switch (state) {
             case NPRAudioManagerStatePlaying:
                 self.state = NPRAudioActionButtonStatePlaying;
@@ -190,15 +187,13 @@ typedef NS_ENUM(NSInteger, NPRAudioActionButtonState) {
 }
 
 - (void)emailButtonTapped {
-    if ([MFMailComposeViewController canSendMail] && self.station.email) {
+    if ([MFMailComposeViewController canSendMail] && self.stationViewModel.station.email) {
         MFMailComposeViewController *mailViewController = [[MFMailComposeViewController alloc] init];
         mailViewController.mailComposeDelegate = self;
         
-        NSArray *toRecipients = @[self.station.email];
+        NSArray *toRecipients = @[self.stationViewModel.station.email];
         [mailViewController setToRecipients:toRecipients];
-        
-        self.presentingMail = YES;
-        
+
         dispatch_async(dispatch_get_main_queue(), ^{
             [self presentViewController:mailViewController animated:YES completion:nil];
         });
@@ -209,27 +204,27 @@ typedef NS_ENUM(NSInteger, NPRAudioActionButtonState) {
 }
 
 - (void)webButtonTapped {
-    if ([[UIApplication sharedApplication] canOpenURL:self.station.homepageURL]) {
-        [[UIApplication sharedApplication] openURL:self.station.homepageURL];
+    if ([[UIApplication sharedApplication] canOpenURL:self.stationViewModel.station.homepageURL]) {
+        [[UIApplication sharedApplication] openURL:self.stationViewModel.station.homepageURL];
     }
 }
 
 - (void)facebookButtonTapped {
-    if ([[UIApplication sharedApplication] canOpenURL:self.station.facebookURL]) {
-        [[UIApplication sharedApplication] openURL:self.station.facebookURL];
+    if ([[UIApplication sharedApplication] canOpenURL:self.stationViewModel.station.facebookURL]) {
+        [[UIApplication sharedApplication] openURL:self.stationViewModel.station.facebookURL];
     }
 }
 
 - (void)twitterButtonTapped {
-    NSString *lastPathComponent = [self.station.twitterURL lastPathComponent];
+    NSString *lastPathComponent = [self.stationViewModel.station.twitterURL lastPathComponent];
     NSString *twitterProfileString = [NSString stringWithFormat:kNPRTwitterProfileURL, lastPathComponent];
     NSURL *twitterProfileURL = [NSURL URLWithString:twitterProfileString];
 
     if ([[UIApplication sharedApplication] canOpenURL:twitterProfileURL]) {
         [[UIApplication sharedApplication] openURL:twitterProfileURL];
     }
-    else if ([[UIApplication sharedApplication] canOpenURL:self.station.twitterURL]) {
-        [[UIApplication sharedApplication] openURL:self.station.twitterURL];
+    else if ([[UIApplication sharedApplication] canOpenURL:self.stationViewModel.station.twitterURL]) {
+        [[UIApplication sharedApplication] openURL:self.stationViewModel.station.twitterURL];
     }
 }
 
@@ -252,7 +247,7 @@ typedef NS_ENUM(NSInteger, NPRAudioActionButtonState) {
                 break;
                 
             case NPRAudioActionButtonStatePaused:
-                [[NPRAudioManager sharedManager] startPlayingStation:self.station];
+                [[NPRAudioManager sharedManager] startPlayingStation:self.stationViewModel.station];
                 break;
                 
             case NPRAudioActionButtonStateLoading:

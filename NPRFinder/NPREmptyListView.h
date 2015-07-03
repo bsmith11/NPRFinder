@@ -8,15 +8,18 @@
 
 @import UIKit;
 
+@class NPREmptyListView;
+
+@protocol NPREmptyListViewDelegate <NSObject>
+
+- (void)didSelectActionInEmptyListView:(NPREmptyListView *)emptyListView;
+
+@end
+
 @interface NPREmptyListView : UIView
 
-- (instancetype)initWithEmptyListText:(NSString *)emptyListText
-                           actionText:(NSString *)actionText
-                          actionBlock:(void (^)())actionBlock;
+- (void)setupWithError:(NSError *)error;
 
-- (void)showAnimated:(BOOL)animated completion:(void (^)(BOOL finished))completion;
-- (void)hideAnimated:(BOOL)animated completion:(void (^)(BOOL finished))completion;
-
-@property (copy, nonatomic) void (^actionBlock)();
+@property (weak, nonatomic) id <NPREmptyListViewDelegate> delegate;
 
 @end

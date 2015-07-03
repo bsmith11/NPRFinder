@@ -9,13 +9,13 @@
 @import UIKit;
 
 #import "NPRBaseViewController.h"
+#import "NPRStationViewModel.h"
 
 @class NPRStation;
 
 @interface NPRStationViewController : NPRBaseViewController
 
-- (instancetype)initWithStation:(NPRStation *)station color:(UIColor *)color;
-
-@property (assign, nonatomic) BOOL isFromSearch;
+- (instancetype)initWithStationViewModel:(NPRStationViewModel *)stationViewModel
+                         backgroundColor:(UIColor *)backgroundColor;
 
 @end

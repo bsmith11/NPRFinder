@@ -79,4 +79,24 @@
     return primaryPredicate;
 }
 
+- (NSString *)marketLocation {
+    NSMutableString *marketLocation = [NSMutableString string];
+    BOOL hasCity = (self.marketCity && ![self.marketCity isEqualToString:@""]);
+    BOOL hasState = (self.marketState && ![self.marketState isEqualToString:@""]);
+
+    if (hasCity) {
+        [marketLocation appendString:self.marketCity];
+
+        if (hasState) {
+            [marketLocation appendString:@", "];
+            [marketLocation appendString:self.marketState];
+        }
+    }
+    else if (hasState) {
+        [marketLocation appendString:self.marketState];
+    }
+
+    return marketLocation;
+}
+
 @end

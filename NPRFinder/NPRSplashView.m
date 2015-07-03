@@ -8,6 +8,18 @@
 
 #import "NPRSplashView.h"
 
+#import "UIColor+NPRStyle.h"
+
 @implementation NPRSplashView
+
+- (instancetype)init {
+    self = [super init];
+
+    if (self) {
+        self.backgroundColor = [UIColor npr_redColor];
+    }
+
+    return self;
+}
 
 @end

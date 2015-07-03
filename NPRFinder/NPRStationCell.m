@@ -89,10 +89,11 @@ static const CGFloat kNPRStationCellBottomPadding = 13.0f;
 }
 
 + (CGSize)sizeWithWidth:(CGFloat)width {
-    NPRStation *station = [[NPRStation alloc] init];
-    station.frequency = @"89.4";
-    
-    return [NPRStationCell sizeWithStation:station width:width];
+    CGFloat verticalPadding = kNPRPadding + kNPRStationCellBottomPadding;
+    CGFloat height = [UIFont npr_homeStationFrequencyFont].lineHeight + verticalPadding;
+    CGSize size = CGSizeMake(width, height);
+
+    return size;
 }
 
 @end

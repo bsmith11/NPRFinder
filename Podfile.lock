@@ -51,6 +51,7 @@ PODS:
   - POP+MCAnimate/Velocity (2.0.1):
     - pop (~> 1.0)
     - POP+MCAnimate/Internal
+  - RZCollectionList (0.7.2)
   - RZDataBinding (2.0.0)
   - RZImport (1.2.2)
   - RZUtils (2.5.1):
@@ -128,6 +129,7 @@ DEPENDENCIES:
   - CocoaLumberjack (~> 2.0)
   - pop (~> 1.0)
   - POP+MCAnimate (~> 2.0)
+  - RZCollectionList (~> 0.7)
   - RZDataBinding (~> 2.0)
   - RZImport (~> 1.2)
   - RZUtils (~> 2.5)
@@ -137,6 +139,7 @@ SPEC CHECKSUMS:
   CocoaLumberjack: a6f77d987d65dc7ba86b0f84db7d0b9084f77bcb
   pop: 628ffc631644601567ee8bfaaaea493ebd7d0923
   POP+MCAnimate: a99e209148c602512de487f1160a44bf78572024
+  RZCollectionList: 0a68ff56f07fc56212ab0a8258fa103b90e91e11
   RZDataBinding: 32857fd99029a3ed2e9f4545506b350f7e04b4e7
   RZImport: 49854bbe281928b71aad0d04999849690ac214e7
   RZUtils: cd28b216417433030583aaffe98ecfc761a22978

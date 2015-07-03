@@ -13,10 +13,9 @@
 #import "UIView+NPRAutoLayout.h"
 #import "UIScreen+NPRUtil.h"
 #import "NPRStyleConstants.h"
+#import "NPRAnimationConstants.h"
 
 #import <POP+MCAnimate/POP+MCAnimate.h>
-
-static const CGFloat kNPRAnimationScaleValue = 0.1f;
 
 @interface NPRStationView ()
 
@@ -253,14 +252,14 @@ static const CGFloat kNPRAnimationScaleValue = 0.1f;
 #pragma mark - Animations
 
 - (void)showViews {
-    [self.animatingViews pop_sequenceWithInterval:0.05f animations:^(UIView *view, NSInteger index) {
+    [self.animatingViews pop_sequenceWithInterval:kNPRAnimationInterval animations:^(UIView *view, NSInteger index) {
         view.pop_spring.pop_scaleXY = CGPointMake(1.0f, 1.0f);
         view.pop_spring.alpha = 1.0f;
     } completion:nil];
 }
 
 - (void)hideViews {
-    [self.animatingViews pop_sequenceWithInterval:0.05f animations:^(UIView *view, NSInteger index) {
+    [self.animatingViews pop_sequenceWithInterval:kNPRAnimationInterval animations:^(UIView *view, NSInteger index) {
         view.pop_spring.pop_scaleXY = CGPointMake(kNPRAnimationScaleValue, kNPRAnimationScaleValue);
         view.pop_spring.alpha = 0.0f;
     } completion:nil];
@@ -272,7 +271,7 @@ static const CGFloat kNPRAnimationScaleValue = 0.1f;
 
     [self.overflowButtons addObject:self.closeButton];
 
-    [self.overflowButtons pop_sequenceWithInterval:0.05f animations:^(UIView *view, NSInteger index) {
+    [self.overflowButtons pop_sequenceWithInterval:kNPRAnimationInterval animations:^(UIView *view, NSInteger index) {
         view.pop_spring.pop_scaleXY = CGPointMake(1.0f, 1.0f);
         view.pop_spring.alpha = 1.0f;
     } completion:^(BOOL finished) {
@@ -286,7 +285,7 @@ static const CGFloat kNPRAnimationScaleValue = 0.1f;
 
     NSMutableArray *reverseOverflowButtons = [[[self.overflowButtons reverseObjectEnumerator] allObjects] mutableCopy];
     [reverseOverflowButtons addObject:self.overflowButton];
-    [reverseOverflowButtons pop_sequenceWithInterval:0.05f animations:^(UIView *view, NSInteger index) {
+    [reverseOverflowButtons pop_sequenceWithInterval:kNPRAnimationInterval animations:^(UIView *view, NSInteger index) {
         if (view == self.overflowButton) {
             self.overflowButton.pop_spring.pop_scaleXY = CGPointMake(1.0f, 1.0f);
             self.overflowButton.pop_spring.alpha = 1.0f;

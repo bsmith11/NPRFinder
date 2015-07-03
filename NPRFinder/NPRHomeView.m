@@ -13,7 +13,8 @@
 #import "UIScreen+NPRUtil.h"
 #import "NPRStyleConstants.h"
 #import "UIView+NPRAutoLayout.h"
-
+#import "NPRCollectionViewLayout.h"
+#import "NPRAnimationConstants.h"
 #import "NPRStationCell.h"
 
 #import <POP+MCAnimate/POP+MCAnimate.h>
@@ -53,19 +54,13 @@ static const CGFloat kNPRBrandLabelTextKerning = 5.0f;
     [self setupEmptyListView];
     [self setupActivityIndicatorView];
 
-    [self.emptyListView hideAnimated:NO completion:nil];
+    [self hideEmptyListViewAnimated:NO];
 }
 
 #pragma mark - Setup
 
 - (void)setupHomeCollectionView {
-    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.scrollDirection = UICollectionViewScrollDirectionVertical;
-    layout.sectionInset = UIEdgeInsetsZero;
-    layout.minimumInteritemSpacing = 0.0f;
-    layout.minimumLineSpacing = 0.0f;
-    layout.itemSize = [NPRStationCell sizeWithWidth:[UIScreen npr_screenWidth]];
-
+    NPRCollectionViewLayout *layout = [[NPRCollectionViewLayout alloc] init];
     self.homeCollectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
     self.homeCollectionView.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview:self.homeCollectionView];
@@ -73,7 +68,7 @@ static const CGFloat kNPRBrandLabelTextKerning = 5.0f;
     [self.homeCollectionView npr_fillSuperview];
 
     self.homeCollectionView.backgroundColor = [UIColor clearColor];
-    self.homeCollectionView.showsVerticalScrollIndicator = NO;
+    self.homeCollectionView.indicatorStyle = UIScrollViewIndicatorStyleWhite;
     self.homeCollectionView.alwaysBounceVertical = YES;
     [self.homeCollectionView registerClass:[NPRStationCell class]
                 forCellWithReuseIdentifier:[NPRStationCell npr_reuseIdentifier]];
@@ -88,6 +83,7 @@ static const CGFloat kNPRBrandLabelTextKerning = 5.0f;
     self.brandLabelTrailing = [self.brandLabel npr_pinTrailingToSuperviewWithPadding:kNPRPadding];
 
     self.brandLabel.backgroundColor = [UIColor clearColor];
+    self.brandLabel.hidden = YES;
 
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     paragraphStyle.lineBreakMode = NSLineBreakByClipping;
@@ -121,9 +117,7 @@ static const CGFloat kNPRBrandLabelTextKerning = 5.0f;
 }
 
 - (void)setupEmptyListView {
-    self.emptyListView = [[NPREmptyListView alloc] initWithEmptyListText:kNPRHomeEmptyListText
-                                                              actionText:kNPRHomeEmptyListActionText
-                                                             actionBlock:nil];
+    self.emptyListView = [[NPREmptyListView alloc] init];
     [self addSubview:self.emptyListView];
 
     [self.emptyListView npr_fillSuperviewHorizontallyWithPadding:kNPRPadding];
@@ -159,6 +153,27 @@ static const CGFloat kNPRBrandLabelTextKerning = 5.0f;
 
 - (void)hideSearchButton {
     self.searchButtonTrailing.pop_spring.constant = -CGRectGetWidth(self.searchButton.frame);
+}
+
+- (void)showEmptyListViewWithDelay:(CGFloat)delay {
+    self.emptyListView.pop_beginTime = CACurrentMediaTime() + delay;
+    self.emptyListView.pop_spring.pop_scaleXY = CGPointMake(1.0f, 1.0f);
+    self.emptyListView.pop_spring.alpha = 1.0f;
+}
+
+- (void)hideEmptyListView {
+    [self hideEmptyListViewAnimated:YES];
+}
+
+- (void)hideEmptyListViewAnimated:(BOOL)animated {
+    if (animated) {
+        self.emptyListView.pop_spring.pop_scaleXY = CGPointMake(kNPREmptyListAnimationScaleValue, kNPREmptyListAnimationScaleValue);
+        self.emptyListView.pop_spring.alpha = 0.0f;
+    }
+    else {
+        self.emptyListView.transform = CGAffineTransformMakeScale(kNPREmptyListAnimationScaleValue, kNPREmptyListAnimationScaleValue);
+        self.emptyListView.alpha = 0.0f;
+    }
 }
 
 @end

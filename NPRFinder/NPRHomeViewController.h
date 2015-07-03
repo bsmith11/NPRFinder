@@ -9,7 +9,10 @@
 @import UIKit;
 
 #import "NPRBaseViewController.h"
+#import "NPRHomeViewModel.h"
 
 @interface NPRHomeViewController : NPRBaseViewController
+
+- (instancetype)initWithHomeViewModel:(NPRHomeViewModel *)homeViewModel;
 
 @end

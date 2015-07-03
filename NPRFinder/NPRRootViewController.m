@@ -74,7 +74,8 @@
 }
 
 - (void)showHomeViewControllerAnimated:(BOOL)animated {
-    NPRHomeViewController *homeViewController = [[NPRHomeViewController alloc] init];
+    NPRHomeViewModel *homeViewModel = [[NPRHomeViewModel alloc] init];
+    NPRHomeViewController *homeViewController = [[NPRHomeViewController alloc] initWithHomeViewModel:homeViewModel];
     NPRBaseNavigationController *navigationController = [[NPRBaseNavigationController alloc] initWithRootViewController:homeViewController];
 
     self.transitionController = [[NPRTransitionController alloc] init];

@@ -9,7 +9,10 @@
 @import UIKit;
 
 #import "NPRBaseViewController.h"
+#import "NPRSearchViewModel.h"
 
 @interface NPRSearchViewController : NPRBaseViewController
+
+- (instancetype)initWithSearchViewModel:(NPRSearchViewModel *)searchViewModel;
 
 @end

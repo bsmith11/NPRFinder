@@ -7,25 +7,25 @@
 //
 
 #import "NPRSearchViewController.h"
+#import "NPRSearchView.h"
 
-#import "NPRStation+RZImport.h"
-#import "NPRErrorManager.h"
+#import "NPRStation.h"
 #import "NPRStationCell.h"
 #import "NPRStationViewController.h"
-#import "NPRSearchView.h"
 
 #import "UIView+NPRAutoLayout.h"
 #import "UIColor+NPRStyle.h"
 
 #import <RZUtils/RZCommonUtils.h>
-#import <CocoaLumberjack/CocoaLumberjack.h>
+#import <RZDataBinding/RZDataBinding.h>
 
-@interface NPRSearchViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface NPRSearchViewController () <UICollectionViewDataSource, UICollectionViewDelegate, NPREmptyListViewDelegate>
 
-@property (strong, nonatomic) NSArray *stations;
 @property (strong, nonatomic) NPRSearchView *searchView;
+@property (strong, nonatomic) NPRSearchViewModel *searchViewModel;
 
 @property (assign, nonatomic) BOOL shouldAnimateBackgroundView;
+@property (assign, nonatomic) BOOL emptyListViewShown;
 
 @end
 
@@ -33,14 +33,24 @@
 
 #pragma mark - Lifecycle
 
+- (instancetype)initWithSearchViewModel:(NPRSearchViewModel *)searchViewModel {
+    self = [super init];
+
+    if (self) {
+        _searchViewModel = searchViewModel;
+    }
+
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
     [self setupSearchView];
+    [self setupObservers];
 
     self.shouldAnimateBackgroundView = YES;
-    
-    self.stations = [NSArray array];
+    [self.searchView.searchTextField becomeFirstResponder];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -51,6 +61,10 @@
 
         if (self.shouldAnimateBackgroundView) {
             [self.searchView showBackgroundView];
+        }
+
+        if (self.emptyListViewShown) {
+            [self.searchView showEmptyListView];
         }
     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         self.searchView.backgroundColor = [UIColor npr_blueColor];
@@ -67,14 +81,12 @@
             [self.searchView hideBackgroundView];
         }
 
+        if (self.emptyListViewShown) {
+            [self.searchView hideEmptyListView];
+        }
+
         [self.searchView hideViews];
     } completion:nil];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-
-    [self.searchView.searchTextField becomeFirstResponder];
 }
 
 #pragma mark - Setup
@@ -89,16 +101,68 @@
     [self.searchView.searchTextField addTarget:self action:@selector(searchTextFieldValueChanged:) forControlEvents:UIControlEventEditingChanged];
     self.searchView.searchCollectionView.delegate = self;
     self.searchView.searchCollectionView.dataSource = self;
+    self.searchView.emptyListView.delegate = self;
+}
+
+- (void)setupObservers {
+    [self.searchViewModel rz_addTarget:self
+                                action:@selector(updateActivityIndicatorWithChange:)
+                      forKeyPathChange:RZDB_KP(NPRSearchViewModel, searching)
+                       callImmediately:YES];
+    [self.searchViewModel rz_addTarget:self
+                                action:@selector(searchErrorDidChange:)
+                      forKeyPathChange:RZDB_KP(NPRSearchViewModel, error)
+                       callImmediately:YES];
+    [self.searchViewModel rz_addTarget:self
+                                action:@selector(stationsDidChange:)
+                      forKeyPathChange:RZDB_KP(NPRSearchViewModel, stations)
+                       callImmediately:YES];
 }
 
 #pragma mark - Actions
 
+- (void)updateActivityIndicatorWithChange:(NSDictionary *)change {
+    BOOL searching = [change[kRZDBChangeKeyNew] boolValue];
+
+    if (searching) {
+        [self startActivityIndicator];
+    }
+    else {
+        [self stopActivityIndicator];
+    }
+}
+
 - (void)startActivityIndicator {
     [self.searchView.activityIndicatorView startAnimating];
+
+    if (self.emptyListViewShown) {
+        self.emptyListViewShown = NO;
+        [self.searchView hideEmptyListView];
+    }
 }
 
 - (void)stopActivityIndicator {
     [self.searchView.activityIndicatorView stopAnimating];
+}
+
+- (void)searchErrorDidChange:(NSDictionary *)change {
+    NSError *error = change[kRZDBChangeKeyNew];
+
+    if (error) {
+        self.emptyListViewShown = YES;
+        [self.searchView.emptyListView setupWithError:error];
+        [self.searchView showEmptyListView];
+    }
+    else {
+        if (self.emptyListViewShown) {
+            self.emptyListViewShown = NO;
+            [self.searchView hideEmptyListView];
+        }
+    }
+}
+
+- (void)stationsDidChange:(NSDictionary *)change {
+    [self.searchView.searchCollectionView reloadData];
 }
 
 - (void)backButtonTapped {
@@ -118,48 +182,20 @@
 - (void)searchTextFieldValueChanged:(UITextField *)textField {
     NSString *text = textField.text;
 
-    self.stations = [NSArray array];
-    [self.searchView.searchCollectionView reloadData];
-
-    if ([text length] > 0) {
-        [self searchForStationsWithText:text];
-    }
-}
-
-- (void)searchForStationsWithText:(NSString *)text {
-    [self startActivityIndicator];
-
-    [NPRStation getStationsWithSearchText:text completion:^(NSArray *stations, NSError *error) {
-        [self stopActivityIndicator];
-
-        if (error) {
-            if (error.code == NSURLErrorCancelled) {
-                DDLogInfo(@"Search request cancelled");
-            }
-            else {
-                DDLogInfo(@"Failed to find stations with error: %@", error);
-                self.stations = [NSArray array];
-                [self.searchView.searchCollectionView reloadData];
-            }
-        }
-        else {
-            self.stations = stations;
-            [self.searchView.searchCollectionView reloadData];
-        }
-    }];
+    [self.searchViewModel searchForStationsWithText:text];
 }
 
 #pragma mark - Collection View Data Source
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    NSInteger count = [self.stations count];
+    NSInteger count = [self.searchViewModel.stations count];
     
     return count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     NPRStationCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[NPRStationCell npr_reuseIdentifier] forIndexPath:indexPath];
-    NPRStation *station = self.stations[indexPath.item];
+    NPRStation *station = self.searchViewModel.stations[indexPath.item];
     
     [cell setupWithStation:station];
     
@@ -171,9 +207,10 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     [self.searchView.searchTextField resignFirstResponder];
 
-    NPRStation *station = self.stations[indexPath.row];
-    NPRStationViewController *stationViewController = [[NPRStationViewController alloc] initWithStation:station color:self.searchView.backgroundView.backgroundColor];
-    stationViewController.isFromSearch = YES;
+    NPRStation *station = self.searchViewModel.stations[indexPath.row];
+    NPRStationViewModel *stationViewModel = [[NPRStationViewModel alloc] initWithStation:station];
+    NPRStationViewController *stationViewController = [[NPRStationViewController alloc] initWithStationViewModel:stationViewModel
+                                                                                                 backgroundColor:self.searchView.backgroundColor];
 
     self.npr_transitionController.slideAnimationController.collectionView = collectionView;
     self.npr_transitionController.slideAnimationController.selectedIndexPath = indexPath;
@@ -188,18 +225,13 @@
 #pragma mark - Scroll View Delegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    [self adjustTopBarContainerViewForContentOffset:scrollView.contentOffset];
+    [self.searchView adjustTopBarContainerViewForContentOffset:scrollView.contentOffset];
 }
 
-- (void)adjustTopBarContainerViewForContentOffset:(CGPoint)contentOffset {
-    CGFloat minValue = -CGRectGetHeight(self.searchView.topBarContainerView.frame) - self.searchView.searchCollectionView.contentInset.top;
-    CGFloat maxValue = 20.0f;
-    CGFloat adjustedValue = -(contentOffset.y + self.searchView.searchCollectionView.contentInset.top) + maxValue;
-    adjustedValue = RZClampFloat(adjustedValue, minValue, maxValue);
+#pragma mark - Empty List View Delegate
 
-    if (self.searchView.topBarContainerViewTop.constant != adjustedValue) {
-        self.searchView.topBarContainerViewTop.constant = adjustedValue;
-    }
+- (void)didSelectActionInEmptyListView:(NPREmptyListView *)emptyListView {
+    
 }
 
 @end

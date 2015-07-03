@@ -13,7 +13,7 @@
 #import <POP+MCAnimate/POP+MCAnimate.h>
 
 static const CGFloat kNPRSlideAnimationDuration = 0.75f;
-static const CGFloat kNPRAnimationInterval = 0.03f;
+static const CGFloat kNPRSlideAnimationInterval = 0.03f;
 static const CGFloat kNPRSpringBounciness = 0.0f;
 
 static char kNPRSnapshotsAssocKey;
@@ -77,7 +77,7 @@ static char kNPRBackgroundColorAssocKey;
         };
 
         if ([snapshots count] > 0) {
-            [snapshots pop_sequenceWithInterval:kNPRAnimationInterval animations:^(UIView *snapshot, NSInteger index) {
+            [snapshots pop_sequenceWithInterval:kNPRSlideAnimationInterval animations:^(UIView *snapshot, NSInteger index) {
                 CGRect frame = snapshot.frame;
                 frame.origin.x = -CGRectGetWidth(frame);
                 snapshot.pop_spring.frame = frame;
@@ -109,7 +109,7 @@ static char kNPRBackgroundColorAssocKey;
         };
 
         if ([snapshots count] > 0) {
-            [snapshots pop_sequenceWithInterval:kNPRAnimationInterval animations:^(UIView *snapshot, NSInteger index) {
+            [snapshots pop_sequenceWithInterval:kNPRSlideAnimationInterval animations:^(UIView *snapshot, NSInteger index) {
                 snapshot.pop_springBounciness = kNPRSpringBounciness;
                 snapshot.pop_spring.frame = [initialFrames[index] CGRectValue];
             } completion:completion];

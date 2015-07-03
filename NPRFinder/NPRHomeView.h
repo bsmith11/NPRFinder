@@ -15,8 +15,12 @@
 
 - (void)showBrandLabelWithDelay:(CGFloat)delay;
 - (void)hideBrandLabel;
+
 - (void)showSearchButtonWithDelay:(CGFloat)delay;
 - (void)hideSearchButton;
+
+- (void)showEmptyListViewWithDelay:(CGFloat)delay;
+- (void)hideEmptyListView;
 
 @property (strong, nonatomic) UICollectionView *homeCollectionView;
 @property (strong, nonatomic) UILabel *brandLabel;

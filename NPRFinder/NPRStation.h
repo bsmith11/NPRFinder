@@ -37,5 +37,6 @@ typedef NS_ENUM(NSInteger, NPRSignalStrength) {
 @property (assign, nonatomic, getter=isMusicOnly) BOOL musicOnly;
 
 - (NPRAudioStream *)preferredAudioStream;
+- (NSString *)marketLocation;
 
 @end
