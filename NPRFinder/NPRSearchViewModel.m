@@ -28,17 +28,8 @@
 
 - (void)searchForStationsWithText:(NSString *)text {
     self.stations = [NSArray array];
-
-    if ([text length] > 0) {
-        [self searchForText:text];
-    }
-    else {
-        self.error = nil;
-    }
-}
-
-- (void)searchForText:(NSString *)text {
     self.searching = YES;
+    self.error = nil;
 
     __weak typeof(self) weakSelf = self;
     [NPRStation getStationsWithSearchText:text completion:^(NSArray *stations, NSError *error) {

@@ -10,12 +10,8 @@
 
 #import "NPRStation+RZImport.h"
 #import "NPRStationViewController.h"
-#import "NPRSwitchConstants.h"
-#import "NPRLocationManager.h"
 #import "NPRStationCell.h"
 #import "NPRSearchViewController.h"
-#import "NPRActivityIndicatorView.h"
-#import "NPRPermissionViewController.h"
 #import "NPRHomeView.h"
 #import "NPRUserDefaults.h"
 
@@ -55,12 +51,7 @@
     self.emptyListViewShown = NO;
 
     if ([NPRUserDefaults locationServicesPermissionResponse]) {
-        if (kNPRUseLocationServices) {
-            [self findCurrentLocation];
-        }
-        else {
-            [self.homeViewModel searchForStationsNearLocation:nil];
-        }
+        [NPRLocationManager sharedManager].delegate = self.homeViewModel;
     }
 }
 
@@ -71,6 +62,7 @@
         CGFloat delay = [context transitionDuration] / 3.0f;
         [self.homeView showBrandLabelWithDelay:delay];
         [self.homeView showSearchButtonWithDelay:delay];
+        [self.homeView showActivityIndicator];
 
         if (self.emptyListViewShown) {
             [self.homeView showEmptyListViewWithDelay:delay];
@@ -87,6 +79,7 @@
     [self.transitionCoordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         [self.homeView hideBrandLabel];
         [self.homeView hideSearchButton];
+        [self.homeView hideActivityIndicator];
 
         if (self.emptyListViewShown) {
             [self.homeView hideEmptyListView];
@@ -172,20 +165,6 @@
     self.npr_transitionController.slideAnimationController.selectedIndexPath = nil;
     
     [self.navigationController pushViewController:searchViewController animated:YES];
-}
-
-- (void)findCurrentLocation {
-    [self startActivityIndicator];
-
-    [[NPRLocationManager sharedManager] requestCurrentLocationWithCompletion:^(CLLocation *location, NSError *error) {
-        if (error) {
-            [self stopActivityIndicator];
-            [self searchErrorDidChange:@{kRZDBChangeKeyNew:error}];
-        }
-        else {
-            [self.homeViewModel searchForStationsNearLocation:location];
-        }
-    }];
 }
 
 #pragma mark - Collection View Data Source

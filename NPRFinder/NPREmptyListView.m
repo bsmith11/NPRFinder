@@ -100,4 +100,12 @@
     }
 }
 
+- (NSString *)errorText {
+    return self.emptyListLabel.text;
+}
+
+- (NSString *)actionText {
+    return [self.actionButton titleForState:UIControlStateNormal];
+}
+
 @end

@@ -152,20 +152,27 @@
             self.authorizationCompletion(status);
             self.authorizationCompletion = nil;
         }
+        else {
+            if ([self.delegate respondsToSelector:@selector(locationManager:didChangeAuthorizationStatus:)]) {
+                [self.delegate locationManager:self didChangeAuthorizationStatus:status];
+            }
+        }
     }
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
     DDLogInfo(@"didFailWithError: %@", error);
 
-    NSError *locationError = [NSError npr_locationErrorFromCode:error.code];
+    if (error.code != kCLErrorLocationUnknown) {
+        NSError *locationError = [NSError npr_locationErrorFromCode:error.code];
 
-    if (self.currentLocationCompletion) {
-        self.currentLocationCompletion(nil, locationError);
-        self.currentLocationCompletion = nil;
+        if (self.currentLocationCompletion) {
+            self.currentLocationCompletion(nil, locationError);
+            self.currentLocationCompletion = nil;
+        }
+
+        [self.locationManager stopUpdatingLocation];
     }
-
-    [self.locationManager stopUpdatingLocation];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {

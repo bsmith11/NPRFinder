@@ -9,13 +9,16 @@
 @import Foundation;
 @import CoreLocation;
 
-@interface NPRHomeViewModel : NSObject
+#import "NPRLocationManager.h"
+
+@interface NPRHomeViewModel : NSObject <NPRLocationManagerDelegate>
 
 @property (strong, nonatomic, readonly) NSArray *stations;
 @property (strong, nonatomic, readonly) NSError *error;
 
 @property (assign, nonatomic, readonly, getter=isSearching) BOOL searching;
 
+- (void)searchForStationsNearCurrentLocation;
 - (void)searchForStationsNearLocation:(CLLocation *)location;
 
 @end

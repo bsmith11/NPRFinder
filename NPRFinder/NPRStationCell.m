@@ -40,6 +40,14 @@ static const CGFloat kNPRStationCellBottomPadding = 13.0f;
     [self setupFrequencyLabel];
 }
 
+//- (void)setHighlighted:(BOOL)highlighted {
+//    [super setHighlighted:highlighted];
+//
+//    CGFloat alpha = highlighted ? 0.5f : 1.0f;
+//    self.alpha = alpha;
+//    NSLog(@"Highlighted: %@", @(highlighted));
+//}
+
 #pragma mark - Setup
 
 - (void)setupFrequencyLabel {

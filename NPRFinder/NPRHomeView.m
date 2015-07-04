@@ -70,6 +70,7 @@ static const CGFloat kNPRBrandLabelTextKerning = 5.0f;
     self.homeCollectionView.backgroundColor = [UIColor clearColor];
     self.homeCollectionView.indicatorStyle = UIScrollViewIndicatorStyleWhite;
     self.homeCollectionView.alwaysBounceVertical = YES;
+    self.homeCollectionView.delaysContentTouches = NO;
     [self.homeCollectionView registerClass:[NPRStationCell class]
                 forCellWithReuseIdentifier:[NPRStationCell npr_reuseIdentifier]];
 }
@@ -98,22 +99,18 @@ static const CGFloat kNPRBrandLabelTextKerning = 5.0f;
 }
 
 - (void)setupSearchButton {
-    self.searchButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    self.searchButton = [[NPRButton alloc] init];
     self.searchButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview:self.searchButton];
 
-    UIImage *image = [[UIImage imageNamed:@"Search Icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-
-    CGFloat width = kNPRPadding + image.size.width;
-    CGFloat height = kNPRPadding + image.size.height;
-    [self.searchButton npr_pinWidth:width];
-    [self.searchButton npr_pinHeight:height];
-    self.searchButtonTrailing = [self.searchButton npr_pinTrailingToSuperviewWithPadding:kNPRPadding / 2.0f];
-    [self.searchButton npr_pinBottomToSuperviewWithPadding:kNPRPadding / 2.0f];
+    self.searchButtonTrailing = [self.searchButton npr_pinTrailingToSuperviewWithPadding:kNPRPadding];
+    [self.searchButton npr_pinBottomToSuperviewWithPadding:kNPRPadding];
 
     self.searchButton.backgroundColor = [UIColor clearColor];
+    UIImage *image = [[UIImage imageNamed:@"Search Icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     [self.searchButton setImage:image forState:UIControlStateNormal];
     self.searchButton.tintColor = [UIColor npr_foregroundColor];
+    self.searchButton.slopInset = UIEdgeInsetsMake(kNPRPadding, kNPRPadding, kNPRPadding, kNPRPadding);
 }
 
 - (void)setupEmptyListView {
@@ -148,7 +145,7 @@ static const CGFloat kNPRBrandLabelTextKerning = 5.0f;
 
 - (void)showSearchButtonWithDelay:(CGFloat)delay {
     self.searchButtonTrailing.pop_beginTime = CACurrentMediaTime() + delay;
-    self.searchButtonTrailing.pop_spring.constant = kNPRPadding / 2.0f;
+    self.searchButtonTrailing.pop_spring.constant = kNPRPadding;
 }
 
 - (void)hideSearchButton {
@@ -174,6 +171,16 @@ static const CGFloat kNPRBrandLabelTextKerning = 5.0f;
         self.emptyListView.transform = CGAffineTransformMakeScale(kNPREmptyListAnimationScaleValue, kNPREmptyListAnimationScaleValue);
         self.emptyListView.alpha = 0.0f;
     }
+}
+
+- (void)showActivityIndicator {
+    self.activityIndicatorView.pop_spring.pop_scaleXY = CGPointMake(1.0f, 1.0f);
+    self.activityIndicatorView.pop_spring.alpha = 1.0f;
+}
+
+- (void)hideActivityIndicator {
+    self.activityIndicatorView.pop_spring.pop_scaleXY = CGPointMake(kNPREmptyListAnimationScaleValue, kNPREmptyListAnimationScaleValue);
+    self.activityIndicatorView.pop_spring.alpha = 0.0f;
 }
 
 @end

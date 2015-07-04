@@ -25,6 +25,8 @@ static NSString * const kNPRSearchTextFieldPlaceholderText = @"Find stations";
 @interface NPRSearchView ()
 
 @property (strong, nonatomic) NSLayoutConstraint *backgroundViewBottom;
+@property (strong, nonatomic) NSLayoutConstraint *backButtonTop;
+@property (strong, nonatomic) NSLayoutConstraint *searchTextFieldTop;
 
 @end
 
@@ -48,7 +50,6 @@ static NSString * const kNPRSearchTextFieldPlaceholderText = @"Find stations";
 
     [self setupBackgroundView];
     [self setupSearchCollectionView];
-    [self setupTopBarContainerView];
     [self setupBackButton];
     [self setupSearchTextField];
     [self setupEmptyListView];
@@ -93,47 +94,38 @@ static NSString * const kNPRSearchTextFieldPlaceholderText = @"Find stations";
     self.searchCollectionView.contentInset = UIEdgeInsetsMake(topInset, 0.0f, 0.0f, 0.0f);
     self.searchCollectionView.indicatorStyle = UIScrollViewIndicatorStyleWhite;
     self.searchCollectionView.alwaysBounceVertical = YES;
+    self.searchCollectionView.delaysContentTouches = NO;
     self.searchCollectionView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
     [self.searchCollectionView registerClass:[NPRStationCell class]
                   forCellWithReuseIdentifier:[NPRStationCell npr_reuseIdentifier]];
 }
 
-- (void)setupTopBarContainerView {
-    self.topBarContainerView = [[UIView alloc] init];
-    self.topBarContainerView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self addSubview:self.topBarContainerView];
-
-    [self.topBarContainerView npr_fillSuperviewHorizontally];
-    self.topBarContainerViewTop = [self.topBarContainerView npr_pinTopToSuperviewWithPadding:kNPRPadding];
-    [self.topBarContainerView npr_pinHeight:[UIScreen npr_navigationBarHeight]];
-
-    self.topBarContainerView.backgroundColor = [UIColor clearColor];
-}
-
 - (void)setupBackButton {
-    self.backButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    self.backButton = [[NPRButton alloc] init];
     self.backButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.topBarContainerView addSubview:self.backButton];
+    [self addSubview:self.backButton];
 
-    [self.backButton npr_centerVerticallyInSuperview];
+    self.backButtonTop = [self.backButton npr_pinTopToSuperviewWithPadding:kNPRPadding];
     [self.backButton npr_pinLeadingToSuperviewWithPadding:kNPRPadding];
     [self.backButton setContentHuggingPriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];
 
     self.backButton.backgroundColor = [UIColor clearColor];
-    [self.backButton setImage:[UIImage imageNamed:@"Back Icon"] forState:UIControlStateNormal];
+    UIImage *image = [[UIImage imageNamed:@"Back Icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [self.backButton setImage:image forState:UIControlStateNormal];
     self.backButton.tintColor = [UIColor npr_foregroundColor];
+    self.backButton.slopInset = UIEdgeInsetsMake(kNPRPadding, kNPRPadding, kNPRPadding, kNPRPadding);
 }
 
 - (void)setupSearchTextField {
     self.searchTextField = [[UITextField alloc] init];
     self.searchTextField.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.topBarContainerView addSubview:self.searchTextField];
+    [self addSubview:self.searchTextField];
 
     UIImage *image = [self.backButton imageForState:UIControlStateNormal];
 
+    self.searchTextFieldTop = [self.searchTextField npr_pinTopToSuperviewWithPadding:kNPRPadding];
     [self.searchTextField npr_pinLeadingToView:self.backButton padding:kNPRPadding];
     [self.searchTextField npr_pinTrailingToSuperviewWithPadding:kNPRPadding];
-    [self.searchTextField npr_centerVerticallyWithView:self.backButton];
     [self.searchTextField npr_pinHeight:image.size.height];
 
     self.searchTextField.backgroundColor = [UIColor whiteColor];
@@ -185,14 +177,15 @@ static NSString * const kNPRSearchTextFieldPlaceholderText = @"Find stations";
 
 #pragma mark - Animations
 
-- (void)adjustTopBarContainerViewForContentOffset:(CGPoint)contentOffset {
-    CGFloat minValue = -CGRectGetHeight(self.topBarContainerView.frame) - self.searchCollectionView.contentInset.top;
-    CGFloat maxValue = 20.0f;
+- (void)adjustTopItemsForContentOffset:(CGPoint)contentOffset {
+    CGFloat minValue = -CGRectGetHeight(self.backButton.frame) - self.searchCollectionView.contentInset.top;
+    CGFloat maxValue = kNPRPadding;
     CGFloat adjustedValue = -(contentOffset.y + self.searchCollectionView.contentInset.top) + maxValue;
     adjustedValue = RZClampFloat(adjustedValue, minValue, maxValue);
 
-    if (self.topBarContainerViewTop.constant != adjustedValue) {
-        self.topBarContainerViewTop.constant = adjustedValue;
+    if (self.backButtonTop.constant != adjustedValue) {
+        self.backButtonTop.constant = adjustedValue;
+        self.searchTextFieldTop.constant = adjustedValue;
     }
 }
 
@@ -237,6 +230,16 @@ static NSString * const kNPRSearchTextFieldPlaceholderText = @"Find stations";
         self.emptyListView.transform = CGAffineTransformMakeScale(kNPREmptyListAnimationScaleValue, kNPREmptyListAnimationScaleValue);
         self.emptyListView.alpha = 0.0f;
     }
+}
+
+- (void)showActivityIndicator {
+    self.activityIndicatorView.pop_spring.pop_scaleXY = CGPointMake(1.0f, 1.0f);
+    self.activityIndicatorView.pop_spring.alpha = 1.0f;
+}
+
+- (void)hideActivityIndicator {
+    self.activityIndicatorView.pop_spring.pop_scaleXY = CGPointMake(kNPREmptyListAnimationScaleValue, kNPREmptyListAnimationScaleValue);
+    self.activityIndicatorView.pop_spring.alpha = 0.0f;
 }
 
 @end

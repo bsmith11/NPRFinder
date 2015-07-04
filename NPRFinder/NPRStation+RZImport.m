@@ -169,12 +169,12 @@ typedef NS_ENUM(NSInteger, NPRStationURLType) {
     }
     else {
         [[NPRNetworkManager sharedManager] searchForStationsWithText:searchText
-                                                          success:^(NSURLSessionDataTask *task, id responseObject) {
-                                                              [NPRStation handleSuccessfulStationRequestWithResponseObject:responseObject completion:completion];
-                                                          }
-                                                          failure:^(NSURLSessionDataTask *task, NSError *error) {
-                                                              [NPRStation handleFailedStationRequestWithError:error completion:completion];
-                                                          }];
+                                                             success:^(NSURLSessionDataTask *task, id responseObject) {
+                                                                 [NPRStation handleSuccessfulStationRequestWithResponseObject:responseObject completion:completion];
+                                                             }
+                                                             failure:^(NSURLSessionDataTask *task, NSError *error) {
+                                                                 [NPRStation handleFailedStationRequestWithError:error completion:completion];
+                                                             }];
     }
 }
 

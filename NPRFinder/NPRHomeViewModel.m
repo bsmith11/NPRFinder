@@ -24,6 +24,23 @@
 
 @implementation NPRHomeViewModel
 
+- (void)searchForStationsNearCurrentLocation {
+    self.searching = YES;
+
+    __weak typeof(self) weakSelf = self;
+    [[NPRLocationManager sharedManager] requestCurrentLocationWithCompletion:^(CLLocation *location, NSError *error) {
+        if (error) {
+            weakSelf.searching = NO;
+
+            weakSelf.error = error;
+            weakSelf.stations = [NSArray array];
+        }
+        else {
+            [weakSelf searchForStationsNearLocation:location];
+        }
+    }];
+}
+
 - (void)searchForStationsNearLocation:(CLLocation *)location {
     self.searching = YES;
 
@@ -40,18 +57,25 @@
             else {
                 DDLogInfo(@"Failed to find stations with error: %@", error);
 
-                self.error = [NSError npr_networkErrorFromError:error];
-                self.stations = [NSArray array];
+                weakSelf.error = [NSError npr_networkErrorFromError:error];
+                weakSelf.stations = [NSArray array];
             }
         }
         else {
-            self.stations = stations;
+            weakSelf.stations = stations;
 
-            if ([self.stations count] == 0) {
-                self.error = [NSError npr_noResultsError];
+            if ([weakSelf.stations count] == 0) {
+                weakSelf.error = [NSError npr_noResultsError];
             }
         }
     }];
+}
+
+#pragma mark - Location Manager Delegate
+
+- (void)locationManager:(NPRLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
+    self.error = nil;
+    [self searchForStationsNearCurrentLocation];
 }
 
 @end

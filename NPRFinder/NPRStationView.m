@@ -41,7 +41,6 @@
     self.translatesAutoresizingMaskIntoConstraints = NO;
     self.backgroundColor = [UIColor npr_redColor];
 
-    [self setupTopBarContainerView];
     [self setupBackButton];
     [self setupFrequencyLabel];
     [self setupCallLabel];
@@ -75,29 +74,19 @@
 
 #pragma mark - Setup
 
-- (void)setupTopBarContainerView {
-    self.topBarContainerView = [[UIView alloc] init];
-    self.topBarContainerView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self addSubview:self.topBarContainerView];
-
-    [self.topBarContainerView npr_fillSuperviewHorizontally];
-    [self.topBarContainerView npr_pinTopToSuperviewWithPadding:kNPRPadding];
-    [self.topBarContainerView npr_pinHeight:[UIScreen npr_navigationBarHeight]];
-
-    self.topBarContainerView.backgroundColor = [UIColor clearColor];
-}
-
 - (void)setupBackButton {
-    self.backButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    self.backButton = [[NPRButton alloc] init];
     self.backButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.topBarContainerView addSubview:self.backButton];
+    [self addSubview:self.backButton];
 
-    [self.backButton npr_centerVerticallyInSuperview];
+    [self.backButton npr_pinTopToSuperviewWithPadding:kNPRPadding];
     [self.backButton npr_pinLeadingToSuperviewWithPadding:kNPRPadding];
 
     self.backButton.backgroundColor = [UIColor clearColor];
-    [self.backButton setImage:[UIImage imageNamed:@"Back Icon"] forState:UIControlStateNormal];
+    UIImage *image = [[UIImage imageNamed:@"Back Icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [self.backButton setImage:image forState:UIControlStateNormal];
     self.backButton.tintColor = [UIColor npr_foregroundColor];
+    self.backButton.slopInset = UIEdgeInsetsMake(kNPRPadding, kNPRPadding, kNPRPadding, kNPRPadding);
 }
 
 - (void)setupFrequencyLabel {
@@ -106,7 +95,7 @@
     [self addSubview:self.frequencyLabel];
 
     [self.frequencyLabel npr_centerHorizontallyInSuperview];
-    [self.frequencyLabel npr_pinTopToView:self.topBarContainerView];
+    [self.frequencyLabel npr_pinTopToView:self.backButton padding:kNPRPadding];
 
     self.frequencyLabel.backgroundColor = [UIColor clearColor];
     self.frequencyLabel.textColor = [UIColor npr_foregroundColor];
@@ -172,7 +161,7 @@
 }
 
 - (void)setupOverflowButton {
-    self.overflowButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    self.overflowButton = [[NPRButton alloc] init];
     self.overflowButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview:self.overflowButton];
 
@@ -180,12 +169,14 @@
     [self.overflowButton npr_centerVerticallyWithView:self.marketLocationLabel];
 
     self.overflowButton.backgroundColor = [UIColor clearColor];
-    [self.overflowButton setImage:[UIImage imageNamed:@"Overflow Icon"] forState:UIControlStateNormal];
+    UIImage *image = [[UIImage imageNamed:@"Overflow Icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [self.overflowButton setImage:image forState:UIControlStateNormal];
     self.overflowButton.tintColor = [UIColor npr_foregroundColor];
+    self.overflowButton.slopInset = UIEdgeInsetsMake(kNPRPadding, kNPRPadding, kNPRPadding, kNPRPadding);
 }
 
 - (void)setupCloseButton {
-    self.closeButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    self.closeButton = [[NPRButton alloc] init];
     self.closeButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview:self.closeButton];
 
@@ -193,12 +184,14 @@
     [self.closeButton npr_centerVerticallyWithView:self.overflowButton];
 
     self.closeButton.backgroundColor = [UIColor clearColor];
-    [self.closeButton setImage:[UIImage imageNamed:@"Close Icon"] forState:UIControlStateNormal];
+    UIImage *image = [[UIImage imageNamed:@"Close Icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [self.closeButton setImage:image forState:UIControlStateNormal];
     self.closeButton.tintColor = [UIColor npr_foregroundColor];
+    self.closeButton.slopInset = UIEdgeInsetsMake(kNPRPadding / 2.0f, kNPRPadding, kNPRPadding, kNPRPadding);
 }
 
 - (void)setupTwitterButton {
-    self.twitterButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    self.twitterButton = [[NPRButton alloc] init];
     self.twitterButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview:self.twitterButton];
 
@@ -206,12 +199,14 @@
     [self.twitterButton npr_pinBottomToView:self.overflowButton padding:kNPRPadding];
 
     self.twitterButton.backgroundColor = [UIColor clearColor];
-    [self.twitterButton setImage:[UIImage imageNamed:@"Twitter Icon"] forState:UIControlStateNormal];
+    UIImage *image = [[UIImage imageNamed:@"Twitter Icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [self.twitterButton setImage:image forState:UIControlStateNormal];
     self.twitterButton.tintColor = [UIColor npr_foregroundColor];
+    self.twitterButton.slopInset = UIEdgeInsetsMake(kNPRPadding / 2.0f, kNPRPadding, kNPRPadding / 2.0f, kNPRPadding);
 }
 
 - (void)setupFacebookButton {
-    self.facebookButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    self.facebookButton = [[NPRButton alloc] init];
     self.facebookButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview:self.facebookButton];
 
@@ -219,12 +214,14 @@
     [self.facebookButton npr_pinBottomToView:self.twitterButton padding:kNPRPadding];
 
     self.facebookButton.backgroundColor = [UIColor clearColor];
-    [self.facebookButton setImage:[UIImage imageNamed:@"Facebook Icon"] forState:UIControlStateNormal];
+    UIImage *image = [[UIImage imageNamed:@"Facebook Icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [self.facebookButton setImage:image forState:UIControlStateNormal];
     self.facebookButton.tintColor = [UIColor npr_foregroundColor];
+    self.facebookButton.slopInset = UIEdgeInsetsMake(kNPRPadding / 2.0f, kNPRPadding, kNPRPadding / 2.0f, kNPRPadding);
 }
 
 - (void)setupWebButton {
-    self.webButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    self.webButton = [[NPRButton alloc] init];
     self.webButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview:self.webButton];
 
@@ -232,12 +229,14 @@
     [self.webButton npr_pinBottomToView:self.facebookButton padding:kNPRPadding];
 
     self.webButton.backgroundColor = [UIColor clearColor];
-    [self.webButton setImage:[UIImage imageNamed:@"Web Icon"] forState:UIControlStateNormal];
+    UIImage *image = [[UIImage imageNamed:@"Web Icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [self.webButton setImage:image forState:UIControlStateNormal];
     self.webButton.tintColor = [UIColor npr_foregroundColor];
+    self.webButton.slopInset = UIEdgeInsetsMake(kNPRPadding / 2.0f, kNPRPadding, kNPRPadding / 2.0f, kNPRPadding);
 }
 
 - (void)setupEmailButton {
-    self.emailButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    self.emailButton = [[NPRButton alloc] init];
     self.emailButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview:self.emailButton];
 
@@ -245,8 +244,10 @@
     [self.emailButton npr_pinBottomToView:self.webButton padding:kNPRPadding];
 
     self.emailButton.backgroundColor = [UIColor clearColor];
-    [self.emailButton setImage:[UIImage imageNamed:@"Email Icon"] forState:UIControlStateNormal];
+    UIImage *image = [[UIImage imageNamed:@"Email Icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [self.emailButton setImage:image forState:UIControlStateNormal];
     self.emailButton.tintColor = [UIColor npr_foregroundColor];
+    self.emailButton.slopInset = UIEdgeInsetsMake(kNPRPadding / 2.0f, kNPRPadding, kNPRPadding / 2.0f, kNPRPadding);
 }
 
 #pragma mark - Animations

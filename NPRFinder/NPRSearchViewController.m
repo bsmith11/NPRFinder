@@ -19,7 +19,7 @@
 #import <RZUtils/RZCommonUtils.h>
 #import <RZDataBinding/RZDataBinding.h>
 
-@interface NPRSearchViewController () <UICollectionViewDataSource, UICollectionViewDelegate, NPREmptyListViewDelegate>
+@interface NPRSearchViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (strong, nonatomic) NPRSearchView *searchView;
 @property (strong, nonatomic) NPRSearchViewModel *searchViewModel;
@@ -101,7 +101,6 @@
     [self.searchView.searchTextField addTarget:self action:@selector(searchTextFieldValueChanged:) forControlEvents:UIControlEventEditingChanged];
     self.searchView.searchCollectionView.delegate = self;
     self.searchView.searchCollectionView.dataSource = self;
-    self.searchView.emptyListView.delegate = self;
 }
 
 - (void)setupObservers {
@@ -134,11 +133,6 @@
 
 - (void)startActivityIndicator {
     [self.searchView.activityIndicatorView startAnimating];
-
-    if (self.emptyListViewShown) {
-        self.emptyListViewShown = NO;
-        [self.searchView hideEmptyListView];
-    }
 }
 
 - (void)stopActivityIndicator {
@@ -225,13 +219,7 @@
 #pragma mark - Scroll View Delegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    [self.searchView adjustTopBarContainerViewForContentOffset:scrollView.contentOffset];
-}
-
-#pragma mark - Empty List View Delegate
-
-- (void)didSelectActionInEmptyListView:(NPREmptyListView *)emptyListView {
-    
+    [self.searchView adjustTopItemsForContentOffset:scrollView.contentOffset];
 }
 
 @end

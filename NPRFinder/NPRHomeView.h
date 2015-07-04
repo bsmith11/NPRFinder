@@ -10,6 +10,7 @@
 
 #import "NPREmptyListView.h"
 #import "NPRActivityIndicatorView.h"
+#import "NPRButton.h"
 
 @interface NPRHomeView : UIView
 
@@ -22,9 +23,12 @@
 - (void)showEmptyListViewWithDelay:(CGFloat)delay;
 - (void)hideEmptyListView;
 
+- (void)showActivityIndicator;
+- (void)hideActivityIndicator;
+
 @property (strong, nonatomic) UICollectionView *homeCollectionView;
 @property (strong, nonatomic) UILabel *brandLabel;
-@property (strong, nonatomic) UIButton *searchButton;
+@property (strong, nonatomic) NPRButton *searchButton;
 @property (strong, nonatomic) NPREmptyListView *emptyListView;
 @property (strong, nonatomic) NPRActivityIndicatorView *activityIndicatorView;
 

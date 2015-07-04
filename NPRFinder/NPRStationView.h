@@ -9,6 +9,7 @@
 @import UIKit;
 
 #import "NPRActivityIndicatorView.h"
+#import "NPRButton.h"
 
 @interface NPRStationView : UIView
 
@@ -18,19 +19,18 @@
 - (void)showOverflowButtons;
 - (void)hideOverflowButtons;
 
-@property (strong, nonatomic) UIView *topBarContainerView;
-@property (strong, nonatomic) UIButton *backButton;
+@property (strong, nonatomic) NPRButton *backButton;
 @property (strong, nonatomic) UILabel *frequencyLabel;
 @property (strong, nonatomic) UILabel *callLabel;
 @property (strong, nonatomic) UIButton *audioActionButton;
 @property (strong, nonatomic) NPRActivityIndicatorView *audioActivityIndicatorView;
 @property (strong, nonatomic) UILabel *marketLocationLabel;
-@property (strong, nonatomic) UIButton *overflowButton;
-@property (strong, nonatomic) UIButton *closeButton;
-@property (strong, nonatomic) UIButton *twitterButton;
-@property (strong, nonatomic) UIButton *facebookButton;
-@property (strong, nonatomic) UIButton *webButton;
-@property (strong, nonatomic) UIButton *emailButton;
+@property (strong, nonatomic) NPRButton *overflowButton;
+@property (strong, nonatomic) NPRButton *closeButton;
+@property (strong, nonatomic) NPRButton *twitterButton;
+@property (strong, nonatomic) NPRButton *facebookButton;
+@property (strong, nonatomic) NPRButton *webButton;
+@property (strong, nonatomic) NPRButton *emailButton;
 
 @property (strong, nonatomic) NSMutableArray *animatingViews;
 

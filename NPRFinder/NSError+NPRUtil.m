@@ -22,7 +22,6 @@ static NSString * const kNPRErrorLocationDeniedText = @"You have denied us permi
 static NSString * const kNPRErrorLocationAction = @"Settings";
 
 static NSString * const kNPRErrorNetworkText = @"The server just exploded...";
-static NSString * const kNPRErrorNetworkAction = @"Try again";
 
 static NSString * const kNPRErrorNoResultsText = @"No stations found";
 
@@ -38,8 +37,7 @@ static NSString * const kNPRErrorNoResultsText = @"No stations found";
 }
 
 + (NSError *)npr_networkErrorFromError:(NSError *)error {
-    NSDictionary *userInfo = @{kNPRErrorTextKey:kNPRErrorNetworkText,
-                               kNPRErrorActionKey:kNPRErrorNetworkAction};
+    NSDictionary *userInfo = @{kNPRErrorTextKey:kNPRErrorNetworkText};
     NSError *networkError = [NSError errorWithDomain:kNPRErrorDomain code:error.code userInfo:userInfo];
 
     return networkError;

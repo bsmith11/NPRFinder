@@ -10,13 +10,16 @@
 
 OBJC_EXTERN NSString * const kNPRLocationErrorDomain;
 
-typedef NS_ENUM(NSInteger, NPRLocationErrorCode) {
-    NPRLocationErrorCodeDisabled,
-    NPRLocationErrorCodeDenied
-};
-
 typedef void (^NPRLocationManagerAuthorizationCompletion)(CLAuthorizationStatus status);
 typedef void (^NPRLocationManagerCurrentLocationCompletion)(CLLocation *location, NSError *error);
+
+@class NPRLocationManager;
+
+@protocol NPRLocationManagerDelegate <NSObject>
+
+- (void)locationManager:(NPRLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status;
+
+@end
 
 @interface NPRLocationManager : NSObject <CLLocationManagerDelegate>
 
@@ -31,5 +34,7 @@ typedef void (^NPRLocationManagerCurrentLocationCompletion)(CLLocation *location
 - (void)requestAlwaysAuthorizationWithCompletion:(NPRLocationManagerAuthorizationCompletion)completion;
 - (void)requestWhenInUseAuthorizationWithCompletion:(NPRLocationManagerAuthorizationCompletion)completion;
 - (void)requestCurrentLocationWithCompletion:(NPRLocationManagerCurrentLocationCompletion)completion;
+
+@property (weak, nonatomic) id <NPRLocationManagerDelegate> delegate;
 
 @end

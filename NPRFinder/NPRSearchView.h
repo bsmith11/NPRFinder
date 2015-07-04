@@ -10,10 +10,11 @@
 
 #import "NPREmptyListView.h"
 #import "NPRActivityIndicatorView.h"
+#import "NPRButton.h"
 
 @interface NPRSearchView : UIView
 
-- (void)adjustTopBarContainerViewForContentOffset:(CGPoint)contentOffset;
+- (void)adjustTopItemsForContentOffset:(CGPoint)contentOffset;
 
 - (void)showViews;
 - (void)hideViews;
@@ -24,11 +25,12 @@
 - (void)showEmptyListView;
 - (void)hideEmptyListView;
 
+- (void)showActivityIndicator;
+- (void)hideActivityIndicator;
+
 @property (strong, nonatomic) UIView *backgroundView;
 @property (strong, nonatomic) UICollectionView *searchCollectionView;
-@property (strong, nonatomic) UIView *topBarContainerView;
-@property (strong, nonatomic) NSLayoutConstraint *topBarContainerViewTop;
-@property (strong, nonatomic) UIButton *backButton;
+@property (strong, nonatomic) NPRButton *backButton;
 @property (strong, nonatomic) UITextField *searchTextField;
 @property (strong, nonatomic) NPREmptyListView *emptyListView;
 @property (strong, nonatomic) NPRActivityIndicatorView *activityIndicatorView;

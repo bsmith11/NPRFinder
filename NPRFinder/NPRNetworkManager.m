@@ -59,31 +59,41 @@
 - (void)searchForStationsWithText:(NSString *)text
                           success:(void (^)(NSURLSessionDataTask *task, id responseObject))success
                           failure:(void (^)(NSURLSessionDataTask *task, NSError *error))failure {
-    NSDictionary *parameters = @{kNPRRequestKeyAPIKey:kNPRStationFinderAPIKey};
-    NSString *path = [NSString stringWithFormat:@"%@%@", kNPRRouteStations, text];
-
     for (NSURLSessionDataTask *task in self.outstandingSearchTasks) {
         [task cancel];
     }
-    
-    NSURLSessionDataTask *task = [self GET:path
-                                parameters:parameters
-                                   success:^(NSURLSessionDataTask *task, id responseObject) {
-                                       [self.outstandingSearchTasks removeObject:task];
-                                       
-                                       if (success) {
-                                           success(task, responseObject);
+
+    BOOL isValidUrl = ([NSURL URLWithString:text] && ![text isEqualToString:@""]);
+
+    if (isValidUrl) {
+        NSDictionary *parameters = @{kNPRRequestKeyAPIKey:kNPRStationFinderAPIKey};
+        NSString *path = [NSString stringWithFormat:@"%@%@", kNPRRouteStations, text];
+
+        NSURLSessionDataTask *task = [self GET:path
+                                    parameters:parameters
+                                       success:^(NSURLSessionDataTask *task, id responseObject) {
+                                           [self.outstandingSearchTasks removeObject:task];
+
+                                           if (success) {
+                                               success(task, responseObject);
+                                           }
                                        }
-                                   }
-                                   failure:^(NSURLSessionDataTask *task, NSError *error) {
-                                       [self.outstandingSearchTasks removeObject:task];
-                                       
-                                       if (failure) {
-                                           failure(task, error);
-                                       }
-                                   }];
-    
-    [self.outstandingSearchTasks addObject:task];
+                                       failure:^(NSURLSessionDataTask *task, NSError *error) {
+                                           [self.outstandingSearchTasks removeObject:task];
+
+                                           if (failure) {
+                                               failure(task, error);
+                                           }
+                                       }];
+        
+        [self.outstandingSearchTasks addObject:task];
+    }
+    else {
+        if (failure) {
+            NSError *error = [NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorCancelled userInfo:nil];
+            failure(nil, error);
+        }
+    }
 }
 
 - (void)getProgramsForStation:(NPRStation *)station

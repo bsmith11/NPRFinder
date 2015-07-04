@@ -19,6 +19,8 @@
 @interface NPREmptyListView : UIView
 
 - (void)setupWithError:(NSError *)error;
+- (NSString *)errorText;
+- (NSString *)actionText;
 
 @property (weak, nonatomic) id <NPREmptyListViewDelegate> delegate;
 

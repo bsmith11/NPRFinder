@@ -11,6 +11,7 @@
 		0626CF0D1B464ACC00EB4070 /* NPRCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 0626CF0C1B464ACC00EB4070 /* NPRCollectionViewLayout.m */; };
 		0626CF101B46595B00EB4070 /* NPRAnimationConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 0626CF0F1B46595B00EB4070 /* NPRAnimationConstants.m */; };
 		0626CF131B465C5100EB4070 /* NSError+NPRUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 0626CF121B465C5100EB4070 /* NSError+NPRUtil.m */; };
+		0626CF191B4777C800EB4070 /* NPRButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0626CF181B4777C800EB4070 /* NPRButton.m */; };
 		06362F421B2A88E700CB30FA /* NPRNetworkConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 06362F411B2A88E700CB30FA /* NPRNetworkConstants.m */; };
 		064401BD1B2FDFC1005D3E72 /* NPREmptyListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 064401BC1B2FDFC1005D3E72 /* NPREmptyListView.m */; };
 		0657BBC11B36691300ADAAC8 /* NPRActivityIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0657BBC01B36691300ADAAC8 /* NPRActivityIndicatorView.m */; };
@@ -87,6 +88,8 @@
 		0626CF0F1B46595B00EB4070 /* NPRAnimationConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRAnimationConstants.m; sourceTree = "<group>"; };
 		0626CF111B465C5100EB4070 /* NSError+NPRUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+NPRUtil.h"; sourceTree = "<group>"; };
 		0626CF121B465C5100EB4070 /* NSError+NPRUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+NPRUtil.m"; sourceTree = "<group>"; };
+		0626CF171B4777C800EB4070 /* NPRButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRButton.h; sourceTree = "<group>"; };
+		0626CF181B4777C800EB4070 /* NPRButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRButton.m; sourceTree = "<group>"; };
 		06362F401B2A88E700CB30FA /* NPRNetworkConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRNetworkConstants.h; sourceTree = "<group>"; };
 		06362F411B2A88E700CB30FA /* NPRNetworkConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRNetworkConstants.m; sourceTree = "<group>"; };
 		064401BB1B2FDFC1005D3E72 /* NPREmptyListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPREmptyListView.h; sourceTree = "<group>"; };
@@ -211,6 +214,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0626CF1A1B478B0600EB4070 /* UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				06CBF3161B2B59DD005F6210 /* NPRAudioPlayerToolbar.h */,
+				06CBF3171B2B59DD005F6210 /* NPRAudioPlayerToolbar.m */,
+				0657BBBF1B36691300ADAAC8 /* NPRActivityIndicatorView.h */,
+				0657BBC01B36691300ADAAC8 /* NPRActivityIndicatorView.m */,
+				064401BB1B2FDFC1005D3E72 /* NPREmptyListView.h */,
+				064401BC1B2FDFC1005D3E72 /* NPREmptyListView.m */,
+				0626CF0B1B464ACC00EB4070 /* NPRCollectionViewLayout.h */,
+				0626CF0C1B464ACC00EB4070 /* NPRCollectionViewLayout.m */,
+				0626CF171B4777C800EB4070 /* NPRButton.h */,
+				0626CF181B4777C800EB4070 /* NPRButton.m */,
+			);
+			name = UIKit;
+			sourceTree = "<group>";
+		};
 		066F06381B42393C00747CAD /* Root */ = {
 			isa = PBXGroup;
 			children = (
@@ -218,33 +238,6 @@
 				066F063A1B42396B00747CAD /* NPRRootViewController.m */,
 			);
 			name = Root;
-			sourceTree = "<group>";
-		};
-		06CBF3191B2B6CCB005F6210 /* Audio Player Toolbar */ = {
-			isa = PBXGroup;
-			children = (
-				06CBF3161B2B59DD005F6210 /* NPRAudioPlayerToolbar.h */,
-				06CBF3171B2B59DD005F6210 /* NPRAudioPlayerToolbar.m */,
-			);
-			name = "Audio Player Toolbar";
-			sourceTree = "<group>";
-		};
-		06EA1ACA1B3F9A0E002346C8 /* Activity Indicator */ = {
-			isa = PBXGroup;
-			children = (
-				0657BBBF1B36691300ADAAC8 /* NPRActivityIndicatorView.h */,
-				0657BBC01B36691300ADAAC8 /* NPRActivityIndicatorView.m */,
-			);
-			name = "Activity Indicator";
-			sourceTree = "<group>";
-		};
-		06EA1AE21B40F9D5002346C8 /* Empty List */ = {
-			isa = PBXGroup;
-			children = (
-				064401BB1B2FDFC1005D3E72 /* NPREmptyListView.h */,
-				064401BC1B2FDFC1005D3E72 /* NPREmptyListView.m */,
-			);
-			name = "Empty List";
 			sourceTree = "<group>";
 		};
 		06EAC5841B291139000FC33A /* Style */ = {
@@ -422,12 +415,10 @@
 				48E504AD1A5CB078005856D8 /* Home */,
 				482D705E1A6054840006315B /* Station */,
 				482D70351A5E43C30006315B /* Search */,
-				06EA1AE21B40F9D5002346C8 /* Empty List */,
-				06EA1ACA1B3F9A0E002346C8 /* Activity Indicator */,
-				06CBF3191B2B6CCB005F6210 /* Audio Player Toolbar */,
 				482D701B1A5D2E170006315B /* Managers */,
 				480FA8001A678EED00FC1C52 /* Transition Controller */,
 				482D703E1A5E50110006315B /* Animation Controllers */,
+				0626CF1A1B478B0600EB4070 /* UIKit */,
 				48E504AB1A5CB06A005856D8 /* Models */,
 				06EAC59F1B2A0FB9000FC33A /* Util */,
 				06EAC5841B291139000FC33A /* Style */,
@@ -511,8 +502,6 @@
 				0626CF091B45DEA100EB4070 /* NPRHomeViewModel.m */,
 				06EAC5851B29413E000FC33A /* NPRStationCell.h */,
 				06EAC5861B29413E000FC33A /* NPRStationCell.m */,
-				0626CF0B1B464ACC00EB4070 /* NPRCollectionViewLayout.h */,
-				0626CF0C1B464ACC00EB4070 /* NPRCollectionViewLayout.m */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -724,6 +713,7 @@
 				06EAC58C1B2943CC000FC33A /* UICollectionReusableView+NPRUtil.m in Sources */,
 				066201A91B44CFDF00B54463 /* NPRSearchViewModel.m in Sources */,
 				06CBF3361B2C90E9005F6210 /* NPRAudioStream+RZImport.m in Sources */,
+				0626CF191B4777C800EB4070 /* NPRButton.m in Sources */,
 				06EAC59E1B2A0E39000FC33A /* UIColor+NPRStyle.m in Sources */,
 				06EAC5A81B2A15D0000FC33A /* NSString+NPRUtil.m in Sources */,
 				480088491A6F2C44004AB56C /* NPRSlideAnimationController.m in Sources */,
