@@ -25,14 +25,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.view setBackgroundColor:[UIColor darkGrayColor]];
-    [self.toolbar setTranslucent:NO];
+    self.view.backgroundColor = [UIColor clearColor];
+    self.toolbar.translucent = NO;
     [self.toolbar setShadowImage:[[UIImage alloc] init] forToolbarPosition:UIBarPositionAny];
     
     [self setNavigationBarHidden:YES animated:NO];
-    [self.navigationBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
-    [self.navigationBar setShadowImage:[[UIImage alloc] init]];
-    [self.navigationBar setTranslucent:YES];    
 }
 
 @end

@@ -10,9 +10,16 @@
 
 @interface NPRPermissionView : UIView
 
+@property (strong, nonatomic) UIView *backgroundView;
 @property (strong, nonatomic) UIImageView *locationServicesImageView;
 @property (strong, nonatomic) UILabel *requestLabel;
 @property (strong, nonatomic) UIButton *acceptButton;
 @property (strong, nonatomic) UIButton *denyButton;
+
+- (void)showViews;
+- (void)hideViews;
+
+- (void)showBackgroundView;
+- (void)hideBackgroundView;
 
 @end

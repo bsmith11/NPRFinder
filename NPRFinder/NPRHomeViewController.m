@@ -25,6 +25,7 @@
 @property (strong, nonatomic) NPRHomeView *homeView;
 
 @property (assign, nonatomic) BOOL emptyListViewShown;
+@property (assign, nonatomic) BOOL shouldInitiallyClearBackground;
 
 @end
 
@@ -32,11 +33,12 @@
 
 #pragma mark - Lifecycle
 
-- (instancetype)initWithHomeViewModel:(NPRHomeViewModel *)homeViewModel {
+- (instancetype)initWithHomeViewModel:(NPRHomeViewModel *)homeViewModel clearBackground:(BOOL)clearBackground {
     self = [super init];
 
     if (self) {
         _homeViewModel = homeViewModel;
+        _shouldInitiallyClearBackground = clearBackground;
     }
 
     return self;
@@ -52,25 +54,36 @@
 
     if ([NPRUserDefaults locationServicesPermissionResponse]) {
         [NPRLocationManager sharedManager].delegate = self.homeViewModel;
+//        [self.homeViewModel searchForStationsNearCurrentLocation];
+    }
+
+    if (self.shouldInitiallyClearBackground) {
+        [self.homeView clearBackgroundColor];
     }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
-    [self.transitionCoordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        CGFloat delay = [context transitionDuration] / 3.0f;
-        [self.homeView showBrandLabelWithDelay:delay];
-        [self.homeView showSearchButtonWithDelay:delay];
+
+    if (self.transitionCoordinator) {
+        [self.transitionCoordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+            CGFloat delay = [context transitionDuration] / 3.0f;
+            [self.homeView showBrandLabelWithDelay:delay];
+            [self.homeView showSearchButtonWithDelay:delay];
+            [self.homeView showActivityIndicator];
+
+            if (self.emptyListViewShown) {
+                [self.homeView showEmptyListViewWithDelay:delay];
+            }
+
+        } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+            self.homeView.homeCollectionView.hidden = NO;
+        }];
+    }
+    else {
+        [self.homeView showSearchButtonWithDelay:0.3f];
         [self.homeView showActivityIndicator];
-
-        if (self.emptyListViewShown) {
-            [self.homeView showEmptyListViewWithDelay:delay];
-        }
-
-    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        self.homeView.homeCollectionView.hidden = NO;
-    }];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

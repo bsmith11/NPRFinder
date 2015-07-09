@@ -55,6 +55,7 @@ static const CGFloat kNPRBrandLabelTextKerning = 5.0f;
     [self setupActivityIndicatorView];
 
     [self hideEmptyListViewAnimated:NO];
+    self.searchButtonTrailing.constant = -[self.searchButton imageForState:UIControlStateNormal].size.width;
 }
 
 #pragma mark - Setup
@@ -181,6 +182,14 @@ static const CGFloat kNPRBrandLabelTextKerning = 5.0f;
 - (void)hideActivityIndicator {
     self.activityIndicatorView.pop_spring.pop_scaleXY = CGPointMake(kNPREmptyListAnimationScaleValue, kNPREmptyListAnimationScaleValue);
     self.activityIndicatorView.pop_spring.alpha = 0.0f;
+}
+
+- (void)clearBackgroundColor {
+    self.backgroundColor = [UIColor clearColor];
+}
+
+- (void)resetBackgroundColor {
+    self.backgroundColor = [UIColor npr_redColor];
 }
 
 @end

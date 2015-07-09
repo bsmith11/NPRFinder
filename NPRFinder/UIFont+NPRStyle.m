@@ -8,6 +8,8 @@
 
 #import "UIFont+NPRStyle.h"
 
+static NSString * const kNPRSplashFontName = @"GothamRounded-Bold";
+static NSString * const kNPRSplashDiscoverFontName = @"GothamRounded-Bold";
 static NSString * const kNPRPermissionRequestFontName = @"GothamRounded-Bold";
 static NSString * const kNPRPermissionAcceptFontName = @"GothamRounded-Bold";
 static NSString * const kNPRPermissionDenyFontName = @"GothamRounded-Bold";
@@ -29,6 +31,16 @@ static const CGFloat kNPRStationCallFontSize = 32.0f;
 static const CGFloat kNPRStationMarketLocationFontSize = 24.0f;
 
 @implementation UIFont (NPRStyle)
+
++ (UIFont *)npr_splashFont {
+    CGFloat size = (CGRectGetWidth([UIScreen mainScreen].bounds) / 3.0f) * 0.832f;
+    return [UIFont fontWithName:kNPRSplashFontName size:size];
+}
+
++ (UIFont *)npr_splashDiscoverFont {
+    CGFloat size = (CGRectGetWidth([UIScreen mainScreen].bounds) / 3.0f) * 0.432f;
+    return [UIFont fontWithName:kNPRSplashDiscoverFontName size:size];
+}
 
 + (UIFont *)npr_permissionRequestFont {
     return [UIFont fontWithName:kNPRPermissionRequestFontName size:kNPRPermissionRequestFontSize];

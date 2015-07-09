@@ -12,6 +12,9 @@
 #import "NPRPermissionViewController.h"
 #import "NPRHomeViewController.h"
 #import "NPRTransitionController.h"
+#import "NPRTransitionContext.h"
+#import "NPRPermissionAnimationController.h"
+#import "NPRSplashAnimationController.h"
 
 #import "NPRUserDefaults.h"
 #import "UIView+NPRAutoLayout.h"
@@ -19,6 +22,9 @@
 @interface NPRRootViewController () <NPRSplashDelegate, NPRPermissionDelegate>
 
 @property (strong, nonatomic) UIViewController *primaryViewController;
+@property (strong, nonatomic) NPRSplashViewController *splashViewController;
+@property (strong, nonatomic) NPRPermissionViewController *permissionViewController;
+@property (strong, nonatomic) NPRHomeViewController *homeViewController;
 
 @end
 
@@ -42,46 +48,68 @@
 
 #pragma mark - Actions
 
-- (void)showViewController:(UIViewController *)viewController animated:(BOOL)animated {
-    if (self.primaryViewController) {
-        [self.primaryViewController willMoveToParentViewController:nil];
-        [self.primaryViewController.view removeFromSuperview];
-        [self.primaryViewController removeFromParentViewController];
-    }
-
-    self.primaryViewController = viewController;
-
-    viewController.modalPresentationStyle = UIModalPresentationCustom;
-    [self addChildViewController:viewController];
-    [self.view addSubview:viewController.view];
-    viewController.view.translatesAutoresizingMaskIntoConstraints = NO;
-    [viewController didMoveToParentViewController:self];
-    [viewController.view npr_fillSuperview];
-}
-
 - (void)showSplashViewControllerAnimated:(BOOL)animated {
-    NPRSplashViewController *splashViewController = [[NPRSplashViewController alloc] init];
-    splashViewController.delegate = self;
+    self.splashViewController = [[NPRSplashViewController alloc] init];
+    self.splashViewController.delegate = self;
 
-    [self showViewController:splashViewController animated:animated];
+    self.splashViewController.modalPresentationStyle = UIModalPresentationCustom;
+    [self addChildViewController:self.splashViewController];
+    [self.view addSubview:self.splashViewController.view];
+    self.splashViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.splashViewController didMoveToParentViewController:self];
+    [self.splashViewController.view npr_fillSuperview];
 }
 
 - (void)showPermissionViewControllerAnimated:(BOOL)animated {
-    NPRPermissionViewController *permissionViewController = [[NPRPermissionViewController alloc] initWithType:NPRPermissionTypeLocationWhenInUse];
-    permissionViewController.delegate = self;
+    self.permissionViewController = [[NPRPermissionViewController alloc] initWithType:NPRPermissionTypeLocationWhenInUse];
+    self.permissionViewController.delegate = self;
 
-    [self showViewController:permissionViewController animated:animated];
+    [self.splashViewController willMoveToParentViewController:nil];
+    [self addChildViewController:self.permissionViewController];
+
+    NPRSplashAnimationController *animator = [[NPRSplashAnimationController alloc] init];
+
+    NPRTransitionContext *transitionContext = [[NPRTransitionContext alloc] initWithFromViewController:self.splashViewController toViewController:self.permissionViewController];
+
+    transitionContext.completion = ^(BOOL finished) {
+        [self.splashViewController.view removeFromSuperview];
+        [self.splashViewController removeFromParentViewController];
+        [self.permissionViewController didMoveToParentViewController:self];
+    };
+
+    [animator animateTransition:transitionContext];
 }
 
-- (void)showHomeViewControllerAnimated:(BOOL)animated {
-    NPRHomeViewModel *homeViewModel = [[NPRHomeViewModel alloc] init];
-    NPRHomeViewController *homeViewController = [[NPRHomeViewController alloc] initWithHomeViewModel:homeViewModel];
-    NPRBaseNavigationController *navigationController = [[NPRBaseNavigationController alloc] initWithRootViewController:homeViewController];
+- (void)showHomeViewControllerAnimated:(BOOL)animated fromViewController:(UIViewController *)fromViewController {
+    id <UIViewControllerAnimatedTransitioning> animator;
+    BOOL clearBackground;
+    if ([fromViewController isKindOfClass:[NPRSplashViewController class]]) {
+        clearBackground = YES;
+        animator = [[NPRSplashAnimationController alloc] init];
+    }
+    else {
+        clearBackground = NO;
+        animator = [[NPRPermissionAnimationController alloc] init];
+    }
 
+    NPRHomeViewModel *homeViewModel = [[NPRHomeViewModel alloc] init];
+    self.homeViewController = [[NPRHomeViewController alloc] initWithHomeViewModel:homeViewModel clearBackground:clearBackground];
+    NPRBaseNavigationController *navigationController = [[NPRBaseNavigationController alloc] initWithRootViewController:self.homeViewController];
     self.transitionController = [[NPRTransitionController alloc] init];
     navigationController.delegate = self.transitionController;
 
-    [self showViewController:navigationController animated:animated];
+    [fromViewController willMoveToParentViewController:nil];
+    [self addChildViewController:navigationController];
+
+    NPRTransitionContext *transitionContext = [[NPRTransitionContext alloc] initWithFromViewController:fromViewController toViewController:navigationController];
+
+    transitionContext.completion = ^(BOOL finished) {
+        [fromViewController.view removeFromSuperview];
+        [fromViewController removeFromParentViewController];
+        [navigationController didMoveToParentViewController:self];
+    };
+
+    [animator animateTransition:transitionContext];
 }
 
 #pragma mark - Splash Delegate
@@ -93,18 +121,18 @@
         [self showPermissionViewControllerAnimated:YES];
     }
     else {
-        [self showHomeViewControllerAnimated:YES];
+        [self showHomeViewControllerAnimated:YES fromViewController:self.splashViewController];
     }
 }
 
 #pragma mark - Permission Delegate
 
 - (void)didSelectAcceptForPermissionViewController:(NPRPermissionViewController *)permissionViewController {
-    [self showHomeViewControllerAnimated:YES];
+    [self showHomeViewControllerAnimated:YES fromViewController:permissionViewController];
 }
 
 - (void)didSelectDenyForPermissionViewController:(NPRPermissionViewController *)permissionViewController {
-    [self showHomeViewControllerAnimated:YES];
+    [self showHomeViewControllerAnimated:YES fromViewController:permissionViewController];
 }
 
 @end

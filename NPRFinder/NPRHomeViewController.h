@@ -13,6 +13,6 @@
 
 @interface NPRHomeViewController : NPRBaseViewController
 
-- (instancetype)initWithHomeViewModel:(NPRHomeViewModel *)homeViewModel;
+- (instancetype)initWithHomeViewModel:(NPRHomeViewModel *)homeViewModel clearBackground:(BOOL)clearBackground;
 
 @end

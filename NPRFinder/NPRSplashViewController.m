@@ -39,7 +39,6 @@
 
 - (void)setupSplashView {
     self.splashView = [[NPRSplashView alloc] init];
-    self.splashView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.splashView];
 
     [self.splashView npr_fillSuperview];

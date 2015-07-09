@@ -10,6 +10,8 @@
 
 @interface UIFont (NPRStyle)
 
++ (UIFont *)npr_splashFont;
++ (UIFont *)npr_splashDiscoverFont;
 + (UIFont *)npr_permissionRequestFont;
 + (UIFont *)npr_permissionAcceptFont;
 + (UIFont *)npr_permissionDenyFont;

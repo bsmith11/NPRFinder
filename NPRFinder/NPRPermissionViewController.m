@@ -39,6 +39,8 @@
     [super viewDidLoad];
 
     [self setupPermissionView];
+
+    self.permissionView.backgroundView.hidden = YES;
 }
 
 #pragma mark - Setup

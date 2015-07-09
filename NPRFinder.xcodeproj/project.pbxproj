@@ -12,6 +12,12 @@
 		0626CF101B46595B00EB4070 /* NPRAnimationConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 0626CF0F1B46595B00EB4070 /* NPRAnimationConstants.m */; };
 		0626CF131B465C5100EB4070 /* NSError+NPRUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 0626CF121B465C5100EB4070 /* NSError+NPRUtil.m */; };
 		0626CF191B4777C800EB4070 /* NPRButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0626CF181B4777C800EB4070 /* NPRButton.m */; };
+		0626CF1D1B49A76000EB4070 /* NPRPermissionAnimationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0626CF1C1B49A76000EB4070 /* NPRPermissionAnimationController.m */; };
+		0626CF201B49B5D400EB4070 /* NPRTransitionContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 0626CF1F1B49B5D400EB4070 /* NPRTransitionContext.m */; };
+		0626CF231B4A1DB800EB4070 /* NPRSplashAnimationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0626CF221B4A1DB800EB4070 /* NPRSplashAnimationController.m */; };
+		0626CF2A1B4AF2EC00EB4070 /* npr_blue_r.png in Resources */ = {isa = PBXBuildFile; fileRef = 0626CF271B4AF2EC00EB4070 /* npr_blue_r.png */; };
+		0626CF2B1B4AF2EC00EB4070 /* npr_black_p.png in Resources */ = {isa = PBXBuildFile; fileRef = 0626CF281B4AF2EC00EB4070 /* npr_black_p.png */; };
+		0626CF2C1B4AF2EC00EB4070 /* npr_red_n.png in Resources */ = {isa = PBXBuildFile; fileRef = 0626CF291B4AF2EC00EB4070 /* npr_red_n.png */; };
 		06362F421B2A88E700CB30FA /* NPRNetworkConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 06362F411B2A88E700CB30FA /* NPRNetworkConstants.m */; };
 		064401BD1B2FDFC1005D3E72 /* NPREmptyListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 064401BC1B2FDFC1005D3E72 /* NPREmptyListView.m */; };
 		0657BBC11B36691300ADAAC8 /* NPRActivityIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0657BBC01B36691300ADAAC8 /* NPRActivityIndicatorView.m */; };
@@ -19,6 +25,8 @@
 		066201AC1B44E6CB00B54463 /* NPRStationViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 066201AB1B44E6CB00B54463 /* NPRStationViewModel.m */; };
 		066F06371B42331D00747CAD /* NPRUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 066F06361B42331D00747CAD /* NPRUserDefaults.m */; };
 		066F063B1B42396B00747CAD /* NPRRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 066F063A1B42396B00747CAD /* NPRRootViewController.m */; };
+		068214321B4B749F00DA69D6 /* npr_gray_discover.png in Resources */ = {isa = PBXBuildFile; fileRef = 068214311B4B749F00DA69D6 /* npr_gray_discover.png */; };
+		068214341B4B77E200DA69D6 /* npr_launch_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 068214331B4B77E200DA69D6 /* npr_launch_image.png */; };
 		06CBF3181B2B59DD005F6210 /* NPRAudioPlayerToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CBF3171B2B59DD005F6210 /* NPRAudioPlayerToolbar.m */; };
 		06CBF3231B2B7F44005F6210 /* GothamRounded-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = 06CBF3221B2B7E37005F6210 /* GothamRounded-Book.otf */; };
 		06CBF3241B2B7FCB005F6210 /* GothamRounded-BookItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 06CBF31D1B2B7C51005F6210 /* GothamRounded-BookItalic.otf */; };
@@ -90,6 +98,15 @@
 		0626CF121B465C5100EB4070 /* NSError+NPRUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+NPRUtil.m"; sourceTree = "<group>"; };
 		0626CF171B4777C800EB4070 /* NPRButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRButton.h; sourceTree = "<group>"; };
 		0626CF181B4777C800EB4070 /* NPRButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRButton.m; sourceTree = "<group>"; };
+		0626CF1B1B49A76000EB4070 /* NPRPermissionAnimationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRPermissionAnimationController.h; sourceTree = "<group>"; };
+		0626CF1C1B49A76000EB4070 /* NPRPermissionAnimationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRPermissionAnimationController.m; sourceTree = "<group>"; };
+		0626CF1E1B49B5D400EB4070 /* NPRTransitionContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRTransitionContext.h; sourceTree = "<group>"; };
+		0626CF1F1B49B5D400EB4070 /* NPRTransitionContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRTransitionContext.m; sourceTree = "<group>"; };
+		0626CF211B4A1DB800EB4070 /* NPRSplashAnimationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRSplashAnimationController.h; sourceTree = "<group>"; };
+		0626CF221B4A1DB800EB4070 /* NPRSplashAnimationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRSplashAnimationController.m; sourceTree = "<group>"; };
+		0626CF271B4AF2EC00EB4070 /* npr_blue_r.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = npr_blue_r.png; sourceTree = "<group>"; };
+		0626CF281B4AF2EC00EB4070 /* npr_black_p.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = npr_black_p.png; sourceTree = "<group>"; };
+		0626CF291B4AF2EC00EB4070 /* npr_red_n.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = npr_red_n.png; sourceTree = "<group>"; };
 		06362F401B2A88E700CB30FA /* NPRNetworkConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRNetworkConstants.h; sourceTree = "<group>"; };
 		06362F411B2A88E700CB30FA /* NPRNetworkConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRNetworkConstants.m; sourceTree = "<group>"; };
 		064401BB1B2FDFC1005D3E72 /* NPREmptyListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPREmptyListView.h; sourceTree = "<group>"; };
@@ -104,6 +121,8 @@
 		066F06361B42331D00747CAD /* NPRUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRUserDefaults.m; sourceTree = "<group>"; };
 		066F06391B42396B00747CAD /* NPRRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRRootViewController.h; sourceTree = "<group>"; };
 		066F063A1B42396B00747CAD /* NPRRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRRootViewController.m; sourceTree = "<group>"; };
+		068214311B4B749F00DA69D6 /* npr_gray_discover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = npr_gray_discover.png; sourceTree = "<group>"; };
+		068214331B4B77E200DA69D6 /* npr_launch_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = npr_launch_image.png; sourceTree = "<group>"; };
 		06CBF3161B2B59DD005F6210 /* NPRAudioPlayerToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRAudioPlayerToolbar.h; sourceTree = "<group>"; };
 		06CBF3171B2B59DD005F6210 /* NPRAudioPlayerToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRAudioPlayerToolbar.m; sourceTree = "<group>"; };
 		06CBF31A1B2B7C51005F6210 /* GothamRounded-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GothamRounded-Bold.otf"; sourceTree = "<group>"; };
@@ -357,6 +376,12 @@
 			children = (
 				480088471A6F2C44004AB56C /* NPRSlideAnimationController.h */,
 				480088481A6F2C44004AB56C /* NPRSlideAnimationController.m */,
+				0626CF1B1B49A76000EB4070 /* NPRPermissionAnimationController.h */,
+				0626CF1C1B49A76000EB4070 /* NPRPermissionAnimationController.m */,
+				0626CF211B4A1DB800EB4070 /* NPRSplashAnimationController.h */,
+				0626CF221B4A1DB800EB4070 /* NPRSplashAnimationController.m */,
+				0626CF1E1B49B5D400EB4070 /* NPRTransitionContext.h */,
+				0626CF1F1B49B5D400EB4070 /* NPRTransitionContext.m */,
 			);
 			name = "Animation Controllers";
 			sourceTree = "<group>";
@@ -426,6 +451,11 @@
 				48E504AA1A5CB063005856D8 /* App Delegate */,
 				483C2D521A5C72FA007B9995 /* LaunchScreen.xib */,
 				483C2D501A5C72FA007B9995 /* Images.xcassets */,
+				068214331B4B77E200DA69D6 /* npr_launch_image.png */,
+				068214311B4B749F00DA69D6 /* npr_gray_discover.png */,
+				0626CF271B4AF2EC00EB4070 /* npr_blue_r.png */,
+				0626CF281B4AF2EC00EB4070 /* npr_black_p.png */,
+				0626CF291B4AF2EC00EB4070 /* npr_red_n.png */,
 				483C2D431A5C72FA007B9995 /* Supporting Files */,
 			);
 			path = NPRFinder;
@@ -607,15 +637,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				06CBF3291B2B7FDB005F6210 /* GothamRounded-Medium.otf in Resources */,
+				0626CF2B1B4AF2EC00EB4070 /* npr_black_p.png in Resources */,
+				068214321B4B749F00DA69D6 /* npr_gray_discover.png in Resources */,
 				06CBF3261B2B7FD1005F6210 /* GothamRounded-BoldItalic.otf in Resources */,
+				0626CF2C1B4AF2EC00EB4070 /* npr_red_n.png in Resources */,
 				06CBF3231B2B7F44005F6210 /* GothamRounded-Book.otf in Resources */,
 				483C2D541A5C72FA007B9995 /* LaunchScreen.xib in Resources */,
 				483C2D511A5C72FA007B9995 /* Images.xcassets in Resources */,
 				06CBF3271B2B7FD4005F6210 /* GothamRounded-Light.otf in Resources */,
 				06CBF3241B2B7FCB005F6210 /* GothamRounded-BookItalic.otf in Resources */,
+				068214341B4B77E200DA69D6 /* npr_launch_image.png in Resources */,
 				06CBF32A1B2B7FDF005F6210 /* GothamRounded-MediumItalic.otf in Resources */,
 				06CBF3281B2B7FD8005F6210 /* GothamRounded-LightItalic.otf in Resources */,
 				06CBF3251B2B7FCE005F6210 /* GothamRounded-Bold.otf in Resources */,
+				0626CF2A1B4AF2EC00EB4070 /* npr_blue_r.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -690,6 +725,7 @@
 				48E504A91A5CAD3F005856D8 /* NPRBaseViewController.m in Sources */,
 				06EAC5921B29EFBE000FC33A /* NPRStation+RZImport.m in Sources */,
 				480FA7FF1A678B5D00FC1C52 /* NPRBaseNavigationController.m in Sources */,
+				0626CF1D1B49A76000EB4070 /* NPRPermissionAnimationController.m in Sources */,
 				06EAC5B11B2A1BB2000FC33A /* NPRPrivateConstants.m in Sources */,
 				06EA1AD91B40AA89002346C8 /* UIView+NPRAutoLayout.m in Sources */,
 				06EAC5A51B2A1571000FC33A /* UITableViewCell+NPRUtil.m in Sources */,
@@ -697,6 +733,7 @@
 				0626CF101B46595B00EB4070 /* NPRAnimationConstants.m in Sources */,
 				482D704E1A5F4B580006315B /* NPRSplashViewController.m in Sources */,
 				483C2D491A5C72FA007B9995 /* NPRAppDelegate.m in Sources */,
+				0626CF201B49B5D400EB4070 /* NPRTransitionContext.m in Sources */,
 				48E504B11A5D1FE9005856D8 /* NPRLocationManager.m in Sources */,
 				06CBF3331B2C8905005F6210 /* NPRAudioStream.m in Sources */,
 				064401BD1B2FDFC1005D3E72 /* NPREmptyListView.m in Sources */,
@@ -715,6 +752,7 @@
 				06CBF3361B2C90E9005F6210 /* NPRAudioStream+RZImport.m in Sources */,
 				0626CF191B4777C800EB4070 /* NPRButton.m in Sources */,
 				06EAC59E1B2A0E39000FC33A /* UIColor+NPRStyle.m in Sources */,
+				0626CF231B4A1DB800EB4070 /* NPRSplashAnimationController.m in Sources */,
 				06EAC5A81B2A15D0000FC33A /* NSString+NPRUtil.m in Sources */,
 				480088491A6F2C44004AB56C /* NPRSlideAnimationController.m in Sources */,
 				482D70381A5E43E40006315B /* NPRSearchViewController.m in Sources */,

@@ -10,4 +10,7 @@
 
 @interface NPRSplashView : UIView
 
+- (void)expandLeftViewWithCompletion:(void (^)(BOOL finished))completion;
+- (void)expandRightViewWithCompletion:(void (^)(BOOL finished))completion;
+
 @end

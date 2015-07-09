@@ -26,6 +26,9 @@
 - (void)showActivityIndicator;
 - (void)hideActivityIndicator;
 
+- (void)clearBackgroundColor;
+- (void)resetBackgroundColor;
+
 @property (strong, nonatomic) UICollectionView *homeCollectionView;
 @property (strong, nonatomic) UILabel *brandLabel;
 @property (strong, nonatomic) NPRButton *searchButton;

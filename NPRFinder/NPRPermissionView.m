@@ -12,12 +12,19 @@
 #import "UIFont+NPRStyle.h"
 #import "NPRStyleConstants.h"
 #import "UIView+NPRAutoLayout.h"
+#import "UIScreen+NPRUtil.h"
+#import "NPRAnimationConstants.h"
+
+#import <POP+MCAnimate/POP+MCAnimate.h>
 
 static NSString * const kNPRPermissionRequestLabelText = @"Discover uses your location to find NPR stations near you";
 static NSString * const kNPRPermissionAcceptButtonTitle = @"Enable Location Services";
 static NSString * const kNPRPermissionDenyButtonTitle = @"Not now";
 
 @interface NPRPermissionView ()
+
+@property (strong, nonatomic) NSArray *animatingViews;
+@property (strong, nonatomic) NSLayoutConstraint *backgroundViewBottom;
 
 @end
 
@@ -35,15 +42,35 @@ static NSString * const kNPRPermissionDenyButtonTitle = @"Not now";
 
 - (void)commonInit {
     self.translatesAutoresizingMaskIntoConstraints = NO;
-    self.backgroundColor = [UIColor npr_blueColor];
+    self.backgroundColor = [UIColor clearColor];
 
+    [self setupBackgroundView];
     [self setupLocationServicesImageView];
     [self setupRequestLabel];
     [self setupAcceptButton];
     [self setupDenyButton];
+
+    self.animatingViews = @[self.locationServicesImageView, self.requestLabel, self.acceptButton, self.denyButton];
+
+    for (UIView *view in self.animatingViews) {
+        view.transform = CGAffineTransformMakeScale(kNPRAnimationScaleValue, kNPRAnimationScaleValue);
+        view.alpha = 0.0f;
+    }
 }
 
 #pragma mark - Setup
+
+- (void)setupBackgroundView {
+    self.backgroundView = [[UIView alloc] init];
+    self.backgroundView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview:self.backgroundView];
+
+    [self.backgroundView npr_fillSuperviewHorizontally];
+    [self.backgroundView npr_pinTopToSuperview];
+    self.backgroundViewBottom = [self.backgroundView npr_pinBottomToSuperview];
+
+    self.backgroundView.backgroundColor = [UIColor npr_blueColor];
+}
 
 - (void)setupLocationServicesImageView {
     UIImage *image = [[UIImage imageNamed:@"Location Services Icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
@@ -108,6 +135,32 @@ static NSString * const kNPRPermissionDenyButtonTitle = @"Not now";
     self.denyButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
     self.denyButton.titleLabel.textAlignment = NSTextAlignmentCenter;
     [self.denyButton setTitle:kNPRPermissionDenyButtonTitle forState:UIControlStateNormal];
+}
+
+#pragma mark - Animations
+
+- (void)showViews {
+    [self.animatingViews pop_sequenceWithInterval:kNPRAnimationInterval animations:^(UIView *view, NSInteger index) {
+        view.pop_spring.pop_scaleXY = CGPointMake(1.0f, 1.0f);
+        view.pop_spring.alpha = 1.0f;
+    } completion:nil];
+}
+
+- (void)hideViews {
+    [self.animatingViews pop_sequenceWithInterval:kNPRAnimationInterval animations:^(UIView *view, NSInteger index) {
+        view.pop_spring.pop_scaleXY = CGPointMake(kNPRAnimationScaleValue, kNPRAnimationScaleValue);
+        view.pop_spring.alpha = 0.0f;
+    } completion:nil];
+}
+
+- (void)showBackgroundView {
+    self.backgroundViewBottom.pop_springBounciness = 0.0f;
+    self.backgroundViewBottom.pop_spring.constant = 0.0f;
+}
+
+- (void)hideBackgroundView {
+    self.backgroundViewBottom.pop_springBounciness = 0.0f;
+    self.backgroundViewBottom.pop_spring.constant = [UIScreen npr_screenHeight];
 }
 
 @end
