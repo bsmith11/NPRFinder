@@ -28,6 +28,8 @@ typedef NS_ENUM(NSInteger, NPRPermissionType) {
 
 - (instancetype)initWithType:(NPRPermissionType)type;
 
+@property (strong, nonatomic) id <UIViewControllerTransitionCoordinator> transitionCoordinator;
+
 @property (weak, nonatomic) id <NPRPermissionDelegate> delegate;
 
 @end

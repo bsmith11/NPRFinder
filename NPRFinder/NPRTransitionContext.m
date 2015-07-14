@@ -17,11 +17,11 @@
 
 @implementation NPRTransitionContext
 
-- (instancetype)initWithFromViewController:(UIViewController *)fromViewController toViewController:(UIViewController *)toViewController {
+- (instancetype)initWithFromViewController:(UIViewController *)fromViewController toViewController:(UIViewController *)toViewController containerView:(UIView *)containerView {
     self = [super init];
 
     if (self) {
-        self.containerView = fromViewController.view.superview;
+        self.containerView = containerView;
         self.viewControllers = @{UITransitionContextFromViewControllerKey:fromViewController,
                                  UITransitionContextToViewControllerKey:toViewController};
     }

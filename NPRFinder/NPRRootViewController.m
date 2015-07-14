@@ -16,12 +16,16 @@
 #import "NPRPermissionAnimationController.h"
 #import "NPRSplashAnimationController.h"
 
+#import "UIColor+NPRStyle.h"
 #import "NPRUserDefaults.h"
 #import "UIView+NPRAutoLayout.h"
 
+#import <POP+MCAnimate/POP+MCAnimate.h>
+
 @interface NPRRootViewController () <NPRSplashDelegate, NPRPermissionDelegate>
 
-@property (strong, nonatomic) UIViewController *primaryViewController;
+@property (strong, nonatomic) UIView *backgroundView;
+@property (strong, nonatomic) NSLayoutConstraint *backgroundViewTop;
 @property (strong, nonatomic) NPRSplashViewController *splashViewController;
 @property (strong, nonatomic) NPRPermissionViewController *permissionViewController;
 @property (strong, nonatomic) NPRHomeViewController *homeViewController;
@@ -42,8 +46,26 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
+    self.view.backgroundColor = [UIColor npr_redColor];
+
+    [self setupBackgroundView];
     [self showSplashViewControllerAnimated:YES];
+}
+
+#pragma mark - Setup
+
+- (void)setupBackgroundView {
+    self.backgroundView = [[UIView alloc] init];
+    self.backgroundView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:self.backgroundView];
+
+    self.backgroundViewTop = [self.backgroundView npr_pinTopToSuperview];
+    [self.backgroundView npr_pinBottomToSuperview];
+    [self.backgroundView npr_fillSuperviewHorizontally];
+
+    self.backgroundView.backgroundColor = [UIColor npr_blueColor];
+    self.backgroundView.hidden = YES;
 }
 
 #pragma mark - Actions
@@ -52,64 +74,76 @@
     self.splashViewController = [[NPRSplashViewController alloc] init];
     self.splashViewController.delegate = self;
 
-    self.splashViewController.modalPresentationStyle = UIModalPresentationCustom;
-    [self addChildViewController:self.splashViewController];
-    [self.view addSubview:self.splashViewController.view];
-    self.splashViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.splashViewController didMoveToParentViewController:self];
-    [self.splashViewController.view npr_fillSuperview];
+    [self showViewController:self.splashViewController];
 }
 
 - (void)showPermissionViewControllerAnimated:(BOOL)animated {
     self.permissionViewController = [[NPRPermissionViewController alloc] initWithType:NPRPermissionTypeLocationWhenInUse];
     self.permissionViewController.delegate = self;
+    NPRSplashAnimationController *animationController = [[NPRSplashAnimationController alloc] init];
 
-    [self.splashViewController willMoveToParentViewController:nil];
-    [self addChildViewController:self.permissionViewController];
-
-    NPRSplashAnimationController *animator = [[NPRSplashAnimationController alloc] init];
-
-    NPRTransitionContext *transitionContext = [[NPRTransitionContext alloc] initWithFromViewController:self.splashViewController toViewController:self.permissionViewController];
-
-    transitionContext.completion = ^(BOOL finished) {
-        [self.splashViewController.view removeFromSuperview];
-        [self.splashViewController removeFromParentViewController];
-        [self.permissionViewController didMoveToParentViewController:self];
-    };
-
-    [animator animateTransition:transitionContext];
+    [self transitionFromViewController:self.splashViewController
+                      toViewController:self.permissionViewController
+                   animationController:animationController
+                            completion:^(BOOL finished) {
+                                self.backgroundView.hidden = NO;
+                            }];
 }
 
 - (void)showHomeViewControllerAnimated:(BOOL)animated fromViewController:(UIViewController *)fromViewController {
-    id <UIViewControllerAnimatedTransitioning> animator;
-    BOOL clearBackground;
+    id <UIViewControllerAnimatedTransitioning> animationController;
     if ([fromViewController isKindOfClass:[NPRSplashViewController class]]) {
-        clearBackground = YES;
-        animator = [[NPRSplashAnimationController alloc] init];
+        animationController = [[NPRSplashAnimationController alloc] init];
     }
     else {
-        clearBackground = NO;
-        animator = [[NPRPermissionAnimationController alloc] init];
+        animationController = [[NPRPermissionAnimationController alloc] init];
     }
 
     NPRHomeViewModel *homeViewModel = [[NPRHomeViewModel alloc] init];
-    self.homeViewController = [[NPRHomeViewController alloc] initWithHomeViewModel:homeViewModel clearBackground:clearBackground];
+    self.homeViewController = [[NPRHomeViewController alloc] initWithHomeViewModel:homeViewModel];
     NPRBaseNavigationController *navigationController = [[NPRBaseNavigationController alloc] initWithRootViewController:self.homeViewController];
     self.transitionController = [[NPRTransitionController alloc] init];
     navigationController.delegate = self.transitionController;
 
-    [fromViewController willMoveToParentViewController:nil];
-    [self addChildViewController:navigationController];
+    [self transitionFromViewController:fromViewController
+                      toViewController:navigationController
+                   animationController:animationController
+                            completion:nil];
 
-    NPRTransitionContext *transitionContext = [[NPRTransitionContext alloc] initWithFromViewController:fromViewController toViewController:navigationController];
+    if ([fromViewController isKindOfClass:[NPRPermissionViewController class]]) {
+        self.backgroundViewTop.pop_springBounciness = 0.0f;
+        self.backgroundViewTop.pop_spring.constant = CGRectGetHeight(self.backgroundView.frame);
+    }
+}
+
+- (void)transitionFromViewController:(UIViewController *)fromViewController
+                    toViewController:(UIViewController *)toViewController
+                 animationController:(id <UIViewControllerAnimatedTransitioning>)animationController
+                          completion:(void (^)(BOOL finished))completion {
+    [fromViewController willMoveToParentViewController:nil];
+    [self addChildViewController:toViewController];
+
+    NPRTransitionContext *transitionContext = [[NPRTransitionContext alloc] initWithFromViewController:fromViewController toViewController:toViewController containerView:self.view];
 
     transitionContext.completion = ^(BOOL finished) {
         [fromViewController.view removeFromSuperview];
         [fromViewController removeFromParentViewController];
-        [navigationController didMoveToParentViewController:self];
+        [toViewController didMoveToParentViewController:self];
+
+        if (completion) {
+            completion(finished);
+        }
     };
 
-    [animator animateTransition:transitionContext];
+    [animationController animateTransition:transitionContext];
+}
+
+- (void)showViewController:(UIViewController *)viewController {
+    [self addChildViewController:viewController];
+    [self.view addSubview:viewController.view];
+    [viewController didMoveToParentViewController:self];
+    viewController.view.translatesAutoresizingMaskIntoConstraints = NO;
+    [viewController.view npr_fillSuperview];
 }
 
 #pragma mark - Splash Delegate

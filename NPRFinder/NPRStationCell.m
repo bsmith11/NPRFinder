@@ -14,6 +14,8 @@
 #import "NPRStyleConstants.h"
 #import "UIView+NPRAutoLayout.h"
 
+//#import <POP+MCAnimate/POP+MCAnimate.h>
+
 static const CGFloat kNPRStationCellBottomPadding = 13.0f;
 
 @interface NPRStationCell ()
@@ -43,9 +45,8 @@ static const CGFloat kNPRStationCellBottomPadding = 13.0f;
 //- (void)setHighlighted:(BOOL)highlighted {
 //    [super setHighlighted:highlighted];
 //
-//    CGFloat alpha = highlighted ? 0.5f : 1.0f;
-//    self.alpha = alpha;
-//    NSLog(@"Highlighted: %@", @(highlighted));
+//    CGPoint scale = highlighted ? CGPointMake(0.9f, 0.9f) : CGPointMake(1.0f, 1.0f);
+//    self.pop_spring.pop_scaleXY = scale;
 //}
 
 #pragma mark - Setup

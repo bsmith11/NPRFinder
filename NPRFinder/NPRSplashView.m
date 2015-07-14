@@ -13,6 +13,7 @@
 #import "UIScreen+NPRUtil.h"
 #import "UIFont+NPRStyle.h"
 #import "NPRStyleConstants.h"
+#import "UIView+NPRAnimation.h"
 
 #import <POP+MCAnimate/POP+MCAnimate.h>
 
@@ -165,7 +166,6 @@
 
     self.discoverLabel.backgroundColor = [UIColor clearColor];
     self.discoverLabel.text = @"DISCOVER";
-//    discoverLabel.text = @"Discover";
     self.discoverLabel.font = [UIFont npr_splashDiscoverFont];
     self.discoverLabel.textColor = [UIColor whiteColor];
     self.discoverLabel.textAlignment = NSTextAlignmentCenter;
@@ -176,19 +176,13 @@
 - (void)expandLeftViewWithCompletion:(void (^)(BOOL))completion {
     [self bringSubviewToFront:self.leftView];
 
-    NSArray *labels = @[self.discoverLabel, self.leftLabel, self.middleLabel, self.rightLabel];
-
-    [labels pop_sequenceWithInterval:0.05f animations:^(UIView *view, NSInteger index) {
-        view.pop_spring.pop_scaleXY = CGPointMake(0.0f, 0.0f);
-    } completion:nil];
-
     [NSObject pop_animate:^{
+        [self.leftLabel npr_shrinkAnimated:YES];
+
         self.leftViewWidth.pop_springBounciness = 0.0f;
-        self.leftViewWidth.pop_beginTime = CACurrentMediaTime() + (0.05f * 3.0f);
         self.leftViewWidth.pop_spring.constant = [UIScreen npr_screenWidth];
 
         self.leftViewHeight.pop_springBounciness = 0.0f;
-        self.leftViewHeight.pop_beginTime = CACurrentMediaTime() + (0.05f * 3.0f);
         self.leftViewHeight.pop_spring.constant = [UIScreen npr_screenHeight] + (self.verticalCenterOffset * 2.0f);
     } completion:completion];
 }
@@ -196,19 +190,13 @@
 - (void)expandRightViewWithCompletion:(void (^)(BOOL))completion {
     [self bringSubviewToFront:self.rightView];
 
-    NSArray *labels = @[self.discoverLabel, self.rightLabel, self.middleLabel, self.leftLabel];
-
-    [labels pop_sequenceWithInterval:0.05f animations:^(UIView *view, NSInteger index) {
-        view.pop_spring.pop_scaleXY = CGPointMake(0.0f, 0.0f);
-    } completion:nil];
-
     [NSObject pop_animate:^{
+        [self.rightLabel npr_shrinkAnimated:YES];
+
         self.rightViewWidth.pop_springBounciness = 0.0f;
-        self.rightViewWidth.pop_beginTime = CACurrentMediaTime() + (0.05f * 3.0f);
         self.rightViewWidth.pop_spring.constant = [UIScreen npr_screenWidth];
 
         self.rightViewHeight.pop_springBounciness = 0.0f;
-        self.rightViewHeight.pop_beginTime = CACurrentMediaTime() + (0.05f * 3.0f);
         self.rightViewHeight.pop_spring.constant = [UIScreen npr_screenHeight] + (self.verticalCenterOffset * 2.0f);
     } completion:completion];
 }

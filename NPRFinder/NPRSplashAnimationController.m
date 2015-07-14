@@ -10,30 +10,13 @@
 
 #import "NPRSplashViewController.h"
 #import "NPRSplashView.h"
-
 #import "NPRPermissionViewController.h"
-#import "NPRPermissionView.h"
-
-#import "NPRHomeViewController.h"
-#import "NPRHomeView.h"
 
 static const CGFloat kNPRSplashAnimationDuration = 0.75f;
 
 @interface NPRSplashViewController (Transition)
 
 @property (strong, nonatomic) NPRSplashView *splashView;
-
-@end
-
-@interface NPRPermissionViewController (Transition)
-
-@property (strong, nonatomic) NPRPermissionView *permissionView;
-
-@end
-
-@interface NPRHomeViewController (Transition)
-
-@property (strong, nonatomic) NPRHomeView *homeView;
 
 @end
 
@@ -49,22 +32,12 @@ static const CGFloat kNPRSplashAnimationDuration = 0.75f;
     NPRSplashViewController *splashViewController = (NPRSplashViewController *)fromViewController;
 
     if ([toViewController isKindOfClass:[NPRPermissionViewController class]]) {
-        NPRPermissionViewController *permissionViewController = (NPRPermissionViewController *)toViewController;
-
-        [permissionViewController.permissionView showViews];
         [splashViewController.splashView expandRightViewWithCompletion:^(BOOL finished) {
-            permissionViewController.permissionView.backgroundView.hidden = NO;
             [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
         }];
     }
     else {
-        UINavigationController *navigationController = (UINavigationController *)toViewController;
-        NPRHomeViewController *homeViewController = (NPRHomeViewController *)navigationController.topViewController;
-
-        [homeViewController.homeView showSearchButtonWithDelay:0.0f];
-        [homeViewController.homeView showActivityIndicator];
         [splashViewController.splashView expandLeftViewWithCompletion:^(BOOL finished) {
-            [homeViewController.homeView resetBackgroundColor];
             [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
         }];
     }

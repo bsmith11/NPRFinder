@@ -14,23 +14,20 @@
 
 @interface NPRHomeView : UIView
 
-- (void)showBrandLabelWithDelay:(CGFloat)delay;
-- (void)hideBrandLabel;
+- (void)showSearchButtonAnimated:(BOOL)animated;
+- (void)showSearchButtonAnimated:(BOOL)animated delay:(CGFloat)delay;
+- (void)hideSearchButtonAnimated:(BOOL)animated;
+- (void)hideSearchButtonAnimated:(BOOL)animated delay:(CGFloat)delay;
 
-- (void)showSearchButtonWithDelay:(CGFloat)delay;
-- (void)hideSearchButton;
+- (void)showEmptyListViewAnimated:(BOOL)animated;
+- (void)showEmptyListViewAnimated:(BOOL)animated delay:(CGFloat)delay;
+- (void)hideEmptyListViewAnimated:(BOOL)animated;
+- (void)hideEmptyListViewAnimated:(BOOL)animated delay:(CGFloat)delay;
 
-- (void)showEmptyListViewWithDelay:(CGFloat)delay;
-- (void)hideEmptyListView;
-
-- (void)showActivityIndicator;
-- (void)hideActivityIndicator;
-
-- (void)clearBackgroundColor;
-- (void)resetBackgroundColor;
+- (void)showActivityIndicatorViewAnimated:(BOOL)animated;
+- (void)hideActivityIndicatorViewAnimated:(BOOL)animated;
 
 @property (strong, nonatomic) UICollectionView *homeCollectionView;
-@property (strong, nonatomic) UILabel *brandLabel;
 @property (strong, nonatomic) NPRButton *searchButton;
 @property (strong, nonatomic) NPREmptyListView *emptyListView;
 @property (strong, nonatomic) NPRActivityIndicatorView *activityIndicatorView;

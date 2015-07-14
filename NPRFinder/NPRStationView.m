@@ -39,7 +39,7 @@
 
 - (void)commonInit {
     self.translatesAutoresizingMaskIntoConstraints = NO;
-    self.backgroundColor = [UIColor npr_redColor];
+    self.backgroundColor = [UIColor clearColor];
 
     [self setupBackButton];
     [self setupFrequencyLabel];

@@ -24,7 +24,6 @@ static NSString * const kNPRSearchTextFieldPlaceholderText = @"Find stations";
 
 @interface NPRSearchView ()
 
-@property (strong, nonatomic) NSLayoutConstraint *backgroundViewBottom;
 @property (strong, nonatomic) NSLayoutConstraint *backButtonTop;
 @property (strong, nonatomic) NSLayoutConstraint *searchTextFieldTop;
 
@@ -45,10 +44,9 @@ static NSString * const kNPRSearchTextFieldPlaceholderText = @"Find stations";
 }
 
 - (void)commonInit {
-    self.backgroundColor = [UIColor npr_redColor];
+    self.backgroundColor = [UIColor clearColor];
     self.translatesAutoresizingMaskIntoConstraints = NO;
 
-    [self setupBackgroundView];
     [self setupSearchCollectionView];
     [self setupBackButton];
     [self setupSearchTextField];
@@ -63,29 +61,15 @@ static NSString * const kNPRSearchTextFieldPlaceholderText = @"Find stations";
     }
 
     [self hideEmptyListViewAnimated:NO];
-
-    self.backgroundViewBottom.constant = [UIScreen npr_screenHeight];
 }
 
 #pragma mark - Setup
-
-- (void)setupBackgroundView {
-    self.backgroundView = [[UIView alloc] init];
-    self.backgroundView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self addSubview:self.backgroundView];
-
-    [self.backgroundView npr_fillSuperviewHorizontally];
-    [self.backgroundView npr_pinTopToSuperview];
-    self.backgroundViewBottom = [self.backgroundView npr_pinBottomToSuperview];
-
-    self.backgroundView.backgroundColor = [UIColor npr_blueColor];
-}
 
 - (void)setupSearchCollectionView {
     NPRCollectionViewLayout *layout = [[NPRCollectionViewLayout alloc] init];
     self.searchCollectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
     self.searchCollectionView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.backgroundView addSubview:self.searchCollectionView];
+    [self addSubview:self.searchCollectionView];
 
     [self.searchCollectionView npr_fillSuperview];
 
@@ -201,15 +185,6 @@ static NSString * const kNPRSearchTextFieldPlaceholderText = @"Find stations";
         view.pop_spring.pop_scaleXY = CGPointMake(kNPRAnimationScaleValue, kNPRAnimationScaleValue);
         view.pop_spring.alpha = 0.0f;
     } completion:nil];
-}
-
-- (void)showBackgroundView {
-    self.backgroundViewBottom.pop_springBounciness = 0.0f;
-    self.backgroundViewBottom.pop_spring.constant = 0.0f;
-}
-
-- (void)hideBackgroundView {
-    self.backgroundViewBottom.pop_spring.constant = [UIScreen npr_screenHeight];
 }
 
 - (void)showEmptyListView {

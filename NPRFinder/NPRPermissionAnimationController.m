@@ -7,13 +7,9 @@
 //
 
 #import "NPRPermissionAnimationController.h"
+
 #import "NPRPermissionViewController.h"
 #import "NPRPermissionView.h"
-
-#import "NPRHomeViewController.h"
-#import "NPRHomeView.h"
-
-static const CGFloat kNPRPermissionAnimationDuration = 0.75f;
 
 @interface NPRPermissionViewController (Transition)
 
@@ -21,11 +17,7 @@ static const CGFloat kNPRPermissionAnimationDuration = 0.75f;
 
 @end
 
-@interface NPRHomeViewController (Transition)
-
-@property (strong, nonatomic) NPRHomeView *homeView;
-
-@end
+static const CGFloat kNPRPermissionAnimationDuration = 0.75f;
 
 @implementation NPRPermissionAnimationController
 
@@ -36,24 +28,14 @@ static const CGFloat kNPRPermissionAnimationDuration = 0.75f;
     UIViewController *fromViewController = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
     UIView *containerView = transitionContext.containerView;
 
-    [containerView insertSubview:toViewController.view belowSubview:fromViewController.view];
+    [containerView insertSubview:toViewController.view aboveSubview:fromViewController.view];
 
     NPRPermissionViewController *permissionViewController = (NPRPermissionViewController *)fromViewController;
     [permissionViewController.permissionView hideViews];
-    [permissionViewController.permissionView hideBackgroundView];
-
-    UINavigationController *navigationController = (UINavigationController *)toViewController;
-    NPRHomeViewController *homeViewController = (NPRHomeViewController *)navigationController.topViewController;
-    [homeViewController.homeView showSearchButtonWithDelay:0.0f];
-    [homeViewController.homeView showActivityIndicator];
-
-    void (^completion)(BOOL finished) = ^(BOOL finished) {
-        [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
-    };
 
     dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, [self transitionDuration:transitionContext] * NSEC_PER_SEC);
     dispatch_after(time, dispatch_get_main_queue(), ^{
-        completion(YES);
+        [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
     });
 }
 

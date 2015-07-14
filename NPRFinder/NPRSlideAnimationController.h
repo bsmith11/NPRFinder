@@ -11,7 +11,7 @@
 @interface NPRSlideAnimationController : NSObject <UIViewControllerAnimatedTransitioning>
 
 @property (weak, nonatomic) UICollectionView *collectionView;
-@property (weak, nonatomic) NSIndexPath *selectedIndexPath;
+@property (weak, nonatomic) UICollectionView *oldCollectionView;
 
 @property (assign, nonatomic, getter=isPositive) BOOL positive;
 
