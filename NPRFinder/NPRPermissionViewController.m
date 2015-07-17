@@ -39,8 +39,12 @@
     [super viewDidLoad];
 
     [self setupPermissionView];
+}
 
-    self.permissionView.backgroundView.hidden = YES;
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+
+    [self.permissionView showViews];
 }
 
 #pragma mark - Setup

@@ -13,7 +13,6 @@
 #import "NPRStationCell.h"
 #import "NPRSearchViewController.h"
 #import "NPRHomeView.h"
-#import "NPRUserDefaults.h"
 
 #import "UIView+NPRAutoLayout.h"
 
@@ -25,7 +24,6 @@
 @property (strong, nonatomic) NPRHomeView *homeView;
 
 @property (assign, nonatomic) BOOL emptyListViewShown;
-@property (assign, nonatomic) BOOL shouldInitiallyClearBackground;
 
 @end
 
@@ -33,12 +31,11 @@
 
 #pragma mark - Lifecycle
 
-- (instancetype)initWithHomeViewModel:(NPRHomeViewModel *)homeViewModel clearBackground:(BOOL)clearBackground {
+- (instancetype)initWithHomeViewModel:(NPRHomeViewModel *)homeViewModel {
     self = [super init];
 
     if (self) {
         _homeViewModel = homeViewModel;
-        _shouldInitiallyClearBackground = clearBackground;
     }
 
     return self;
@@ -47,19 +44,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    [self setupHomeView];
-    [self setupObservers];
-
     self.emptyListViewShown = NO;
 
-    if ([NPRUserDefaults locationServicesPermissionResponse]) {
-        [NPRLocationManager sharedManager].delegate = self.homeViewModel;
-//        [self.homeViewModel searchForStationsNearCurrentLocation];
-    }
-
-    if (self.shouldInitiallyClearBackground) {
-        [self.homeView clearBackgroundColor];
-    }
+    [self setupHomeView];
+    [self setupObservers];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -68,12 +56,11 @@
     if (self.transitionCoordinator) {
         [self.transitionCoordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
             CGFloat delay = [context transitionDuration] / 3.0f;
-            [self.homeView showBrandLabelWithDelay:delay];
-            [self.homeView showSearchButtonWithDelay:delay];
-            [self.homeView showActivityIndicator];
+            [self.homeView showSearchButtonAnimated:YES delay:delay];
+            [self.homeView showActivityIndicatorViewAnimated:YES];
 
             if (self.emptyListViewShown) {
-                [self.homeView showEmptyListViewWithDelay:delay];
+                [self.homeView showEmptyListViewAnimated:YES delay:delay];
             }
 
         } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
@@ -81,8 +68,12 @@
         }];
     }
     else {
-        [self.homeView showSearchButtonWithDelay:0.3f];
-        [self.homeView showActivityIndicator];
+        [self.homeView showSearchButtonAnimated:YES delay:0.3f];
+        [self.homeView showActivityIndicatorViewAnimated:YES];
+
+        if (self.emptyListViewShown) {
+            [self.homeView showEmptyListViewAnimated:YES];
+        }
     }
 }
 
@@ -90,12 +81,11 @@
     [super viewWillDisappear:animated];
     
     [self.transitionCoordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        [self.homeView hideBrandLabel];
-        [self.homeView hideSearchButton];
-        [self.homeView hideActivityIndicator];
+        [self.homeView hideSearchButtonAnimated:YES];
+        [self.homeView hideActivityIndicatorViewAnimated:YES];
 
         if (self.emptyListViewShown) {
-            [self.homeView hideEmptyListView];
+            [self.homeView hideEmptyListViewAnimated:YES];
         }
     } completion:nil];
 }
@@ -156,12 +146,12 @@
     if (error) {
         self.emptyListViewShown = YES;
         [self.homeView.emptyListView setupWithError:error];
-        [self.homeView showEmptyListViewWithDelay:0.0f];
+        [self.homeView showEmptyListViewAnimated:YES];
     }
     else {
         if (self.emptyListViewShown) {
             self.emptyListViewShown = NO;
-            [self.homeView hideEmptyListView];
+            [self.homeView hideEmptyListViewAnimated:YES];
         }
     }
 }
@@ -175,8 +165,7 @@
     NPRSearchViewController *searchViewController = [[NPRSearchViewController alloc] initWithSearchViewModel:searchViewModel];
     
     self.npr_transitionController.slideAnimationController.collectionView = self.homeView.homeCollectionView;
-    self.npr_transitionController.slideAnimationController.selectedIndexPath = nil;
-    
+
     [self.navigationController pushViewController:searchViewController animated:YES];
 }
 
@@ -206,18 +195,31 @@
                                                                                                  backgroundColor:self.homeView.backgroundColor];
 
     self.npr_transitionController.slideAnimationController.collectionView = self.homeView.homeCollectionView;
-    self.npr_transitionController.slideAnimationController.selectedIndexPath = indexPath;
     
     [self.navigationController pushViewController:stationViewController animated:YES];
 }
 
 #pragma mark - Empty List View Delegate
 
-- (void)didSelectActionInEmptyListView:(NPREmptyListView *)emptyListView {
-    NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+- (void)didSelectActionInEmptyListView:(NPREmptyListView *)emptyListView state:(NPREmptyListViewActionState)state {
+    switch (state) {
+        case NPREmptyListViewActionStateSettings: {
+            NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
 
-    if ([[UIApplication sharedApplication] canOpenURL:url]) {
-        [[UIApplication sharedApplication] openURL:url];
+            if ([[UIApplication sharedApplication] canOpenURL:url]) {
+                [[UIApplication sharedApplication] openURL:url];
+            }
+        }
+            break;
+
+        case NPREmptyListViewActionStatePermissionRequest: {
+            [self.homeViewModel requestPermissionsWithType:kNPRPermissionType];
+        }
+            break;
+
+        case NPREmptyListViewActionStateRetry:
+
+            break;
     }
 }
 

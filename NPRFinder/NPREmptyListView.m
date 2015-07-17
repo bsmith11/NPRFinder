@@ -22,6 +22,8 @@
 @property (strong, nonatomic) UILabel *emptyListLabel;
 @property (strong, nonatomic) UIButton *actionButton;
 
+@property (assign, nonatomic) NPREmptyListViewActionState state;
+
 @end
 
 @implementation NPREmptyListView
@@ -82,6 +84,7 @@
     if (error && error.userInfo) {
         NSString *text = error.userInfo[kNPRErrorTextKey];
         NSString *action = error.userInfo[kNPRErrorActionKey];
+        self.state = error.code;
 
         self.emptyListLabel.text = text;
         [self.actionButton setTitle:action forState:UIControlStateNormal];
@@ -95,8 +98,8 @@
 #pragma mark - Actions
 
 - (void)actionButtonTapped {
-    if ([self.delegate respondsToSelector:@selector(didSelectActionInEmptyListView:)]) {
-        [self.delegate didSelectActionInEmptyListView:self];
+    if ([self.delegate respondsToSelector:@selector(didSelectActionInEmptyListView: state:)]) {
+        [self.delegate didSelectActionInEmptyListView:self state:self.state];
     }
 }
 

@@ -19,16 +19,12 @@
 - (void)showViews;
 - (void)hideViews;
 
-- (void)showBackgroundView;
-- (void)hideBackgroundView;
-
 - (void)showEmptyListView;
 - (void)hideEmptyListView;
 
 - (void)showActivityIndicator;
 - (void)hideActivityIndicator;
 
-@property (strong, nonatomic) UIView *backgroundView;
 @property (strong, nonatomic) UICollectionView *searchCollectionView;
 @property (strong, nonatomic) NPRButton *backButton;
 @property (strong, nonatomic) UITextField *searchTextField;

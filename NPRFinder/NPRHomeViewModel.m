@@ -10,10 +10,12 @@
 
 #import "NPRStation+RZImport.h"
 #import "NSError+NPRUtil.h"
+#import "NPRUserDefaults.h"
+#import "NPRLocationManager.h"
 
 #import <CocoaLumberjack/CocoaLumberjack.h>
 
-@interface NPRHomeViewModel ()
+@interface NPRHomeViewModel () <NPRLocationManagerDelegate>
 
 @property (strong, nonatomic, readwrite) NSArray *stations;
 @property (strong, nonatomic, readwrite) NSError *error;
@@ -23,6 +25,22 @@
 @end
 
 @implementation NPRHomeViewModel
+
+- (instancetype)init {
+    self = [super init];
+
+    if (self) {
+        if ([NPRUserDefaults locationServicesPermissionResponse]) {
+            [NPRLocationManager sharedManager].delegate = self;
+            [self searchForStationsNearCurrentLocation];
+        }
+        else {
+            self.error = [NSError npr_permissionError];
+        }
+    }
+
+    return self;
+}
 
 - (void)searchForStationsNearCurrentLocation {
     self.searching = YES;
@@ -71,11 +89,31 @@
     }];
 }
 
+- (void)requestPermissionsWithType:(NPRPermissionType)type {
+    [NPRLocationManager sharedManager].delegate = self;
+
+    NPRLocationManagerAuthorizationCompletion completion = ^(CLAuthorizationStatus status) {
+        [NPRUserDefaults setLocationServicesPermissionResponse:YES];
+        self.error = nil;
+        [self searchForStationsNearCurrentLocation];
+    };
+
+    switch (type) {
+        case NPRPermissionTypeLocationAlways:
+            [[NPRLocationManager sharedManager] requestAlwaysAuthorizationWithCompletion:completion];
+            break;
+
+        case NPRPermissionTypeLocationWhenInUse:
+            [[NPRLocationManager sharedManager] requestWhenInUseAuthorizationWithCompletion:completion];
+            break;
+    }
+}
+
 #pragma mark - Location Manager Delegate
 
 - (void)locationManager:(NPRLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
     self.error = nil;
-    [self searchForStationsNearCurrentLocation];
+//    [self searchForStationsNearCurrentLocation];
 }
 
 @end

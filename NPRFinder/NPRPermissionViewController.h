@@ -9,11 +9,7 @@
 @import UIKit;
 
 #import "NPRBaseViewController.h"
-
-typedef NS_ENUM(NSInteger, NPRPermissionType) {
-    NPRPermissionTypeLocationAlways,
-    NPRPermissionTypeLocationWhenInUse
-};
+#import "NPRSwitchConstants.h"
 
 @class NPRPermissionViewController;
 
@@ -27,6 +23,8 @@ typedef NS_ENUM(NSInteger, NPRPermissionType) {
 @interface NPRPermissionViewController : NPRBaseViewController
 
 - (instancetype)initWithType:(NPRPermissionType)type;
+
+@property (strong, nonatomic) id <UIViewControllerTransitionCoordinator> transitionCoordinator;
 
 @property (weak, nonatomic) id <NPRPermissionDelegate> delegate;
 

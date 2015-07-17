@@ -189,7 +189,7 @@ typedef NS_ENUM(NSInteger, NPRStationURLType) {
         }
         
         NSMutableArray *stations = [[NPRStation rzi_objectsFromArray:responseArray] mutableCopy];
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"open == YES"];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"open == YES AND musicOnly == NO"];
         [stations filterUsingPredicate:predicate];
         
         NSSortDescriptor *sortDescripter = [NSSortDescriptor sortDescriptorWithKey:@"signalStrength" ascending:NO];

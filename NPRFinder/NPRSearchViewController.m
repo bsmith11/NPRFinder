@@ -12,6 +12,7 @@
 #import "NPRStation.h"
 #import "NPRStationCell.h"
 #import "NPRStationViewController.h"
+#import "NPRStationViewModel.h"
 
 #import "UIView+NPRAutoLayout.h"
 #import "UIColor+NPRStyle.h"
@@ -24,7 +25,6 @@
 @property (strong, nonatomic) NPRSearchView *searchView;
 @property (strong, nonatomic) NPRSearchViewModel *searchViewModel;
 
-@property (assign, nonatomic) BOOL shouldAnimateBackgroundView;
 @property (assign, nonatomic) BOOL emptyListViewShown;
 
 @end
@@ -49,7 +49,6 @@
     [self setupSearchView];
     [self setupObservers];
 
-    self.shouldAnimateBackgroundView = YES;
     [self.searchView.searchTextField becomeFirstResponder];
 }
 
@@ -59,28 +58,16 @@
     [self.transitionCoordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         [self.searchView showViews];
 
-        if (self.shouldAnimateBackgroundView) {
-            [self.searchView showBackgroundView];
-        }
-
         if (self.emptyListViewShown) {
             [self.searchView showEmptyListView];
         }
-    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        self.searchView.backgroundColor = [UIColor npr_blueColor];
-        self.searchView.backgroundView.hidden = NO;
-        self.searchView.searchCollectionView.hidden = NO;
-    }];
+    } completion:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
     [self.transitionCoordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        if (self.shouldAnimateBackgroundView) {
-            [self.searchView hideBackgroundView];
-        }
-
         if (self.emptyListViewShown) {
             [self.searchView hideEmptyListView];
         }
@@ -162,13 +149,11 @@
 - (void)backButtonTapped {
     [self.searchView.searchTextField resignFirstResponder];
 
-    self.shouldAnimateBackgroundView = YES;
-    self.searchView.backgroundView.hidden = NO;
-    self.searchView.backgroundColor = [UIColor npr_redColor];
-
     if (![self.searchView.animatingViews containsObject:self.searchView.backButton]) {
         [self.searchView.animatingViews insertObject:self.searchView.backButton atIndex:0];
     }
+
+    self.npr_transitionController.slideAnimationController.oldCollectionView = self.searchView.searchCollectionView;
 
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -207,11 +192,8 @@
                                                                                                  backgroundColor:self.searchView.backgroundColor];
 
     self.npr_transitionController.slideAnimationController.collectionView = collectionView;
-    self.npr_transitionController.slideAnimationController.selectedIndexPath = indexPath;
     
     [self.searchView.animatingViews removeObject:self.searchView.backButton];
-    self.shouldAnimateBackgroundView = NO;
-    self.searchView.backgroundView.hidden = YES;
 
     [self.navigationController pushViewController:stationViewController animated:YES];
 }

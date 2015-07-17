@@ -8,6 +8,13 @@
 
 @import Foundation;
 
+typedef NS_ENUM(NSInteger, NPRPermissionType) {
+    NPRPermissionTypeLocationAlways,
+    NPRPermissionTypeLocationWhenInUse
+};
+
+OBJC_EXTERN const NPRPermissionType kNPRPermissionType;
+
 OBJC_EXTERN const BOOL kNPRUseMockStationObjects;
 
 OBJC_EXTERN const BOOL kNPRSendLocationUpdatesStartLocalNotification;

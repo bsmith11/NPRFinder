@@ -16,18 +16,15 @@
 #import "NPRCollectionViewLayout.h"
 #import "NPRAnimationConstants.h"
 #import "NPRStationCell.h"
+#import "UIView+NPRAnimation.h"
 
 #import <POP+MCAnimate/POP+MCAnimate.h>
 
 static NSString * const kNPRHomeEmptyListText = @"No stations found";
 static NSString * const kNPRHomeEmptyListActionText = @"Try again?";
-static NSString * const kNPRBrandLabelText = @"npr";
-
-static const CGFloat kNPRBrandLabelTextKerning = 5.0f;
 
 @interface NPRHomeView ()
 
-@property (strong, nonatomic) NSLayoutConstraint *brandLabelTrailing;
 @property (strong, nonatomic) NSLayoutConstraint *searchButtonTrailing;
 
 @end
@@ -46,15 +43,14 @@ static const CGFloat kNPRBrandLabelTextKerning = 5.0f;
 
 - (void)commonInit {
     self.translatesAutoresizingMaskIntoConstraints = NO;
-    self.backgroundColor = [UIColor npr_redColor];
+    self.backgroundColor = [UIColor clearColor];
 
     [self setupHomeCollectionView];
-    [self setupBrandLabel];
     [self setupSearchButton];
     [self setupEmptyListView];
     [self setupActivityIndicatorView];
 
-    [self hideEmptyListViewAnimated:NO];
+    [self.emptyListView npr_shrinkAnimated:NO];
     self.searchButtonTrailing.constant = -[self.searchButton imageForState:UIControlStateNormal].size.width;
 }
 
@@ -74,29 +70,6 @@ static const CGFloat kNPRBrandLabelTextKerning = 5.0f;
     self.homeCollectionView.delaysContentTouches = NO;
     [self.homeCollectionView registerClass:[NPRStationCell class]
                 forCellWithReuseIdentifier:[NPRStationCell npr_reuseIdentifier]];
-}
-
-- (void)setupBrandLabel {
-    self.brandLabel = [[UILabel alloc] init];
-    self.brandLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    [self addSubview:self.brandLabel];
-
-    [self.brandLabel npr_pinTopToSuperviewWithPadding:kNPRPadding];
-    self.brandLabelTrailing = [self.brandLabel npr_pinTrailingToSuperviewWithPadding:kNPRPadding];
-
-    self.brandLabel.backgroundColor = [UIColor clearColor];
-    self.brandLabel.hidden = YES;
-
-    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-    paragraphStyle.lineBreakMode = NSLineBreakByClipping;
-    paragraphStyle.alignment = NSTextAlignmentRight;
-    NSDictionary *attributes = @{NSForegroundColorAttributeName:[UIColor npr_foregroundColor],
-                                 NSFontAttributeName:[UIFont npr_stationCallFont],
-                                 NSParagraphStyleAttributeName:paragraphStyle,
-                                 NSKernAttributeName:@(kNPRBrandLabelTextKerning)};
-    NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:kNPRBrandLabelText attributes:attributes];
-
-    self.brandLabel.attributedText = attributedString;
 }
 
 - (void)setupSearchButton {
@@ -135,61 +108,58 @@ static const CGFloat kNPRBrandLabelTextKerning = 5.0f;
 
 #pragma mark - Animations
 
-- (void)showBrandLabelWithDelay:(CGFloat)delay {
-    self.brandLabelTrailing.pop_beginTime = CACurrentMediaTime() + delay;
-    self.brandLabelTrailing.pop_spring.constant = kNPRPadding;
+- (void)showSearchButtonAnimated:(BOOL)animated {
+    [self showSearchButtonAnimated:animated delay:0.0f];
 }
 
-- (void)hideBrandLabel {
-    self.brandLabelTrailing.pop_spring.constant = -CGRectGetWidth(self.brandLabel.frame);
+- (void)showSearchButtonAnimated:(BOOL)animated delay:(CGFloat)delay {
+    if (animated) {
+        self.searchButtonTrailing.pop_beginTime = CACurrentMediaTime() + delay;
+        self.searchButtonTrailing.pop_spring.constant = kNPRPadding;
+    }
+    else {
+        self.searchButtonTrailing.constant = kNPRPadding;
+    }
 }
 
-- (void)showSearchButtonWithDelay:(CGFloat)delay {
-    self.searchButtonTrailing.pop_beginTime = CACurrentMediaTime() + delay;
-    self.searchButtonTrailing.pop_spring.constant = kNPRPadding;
+- (void)hideSearchButtonAnimated:(BOOL)animated {
+    [self hideSearchButtonAnimated:animated delay:0.0f];
 }
 
-- (void)hideSearchButton {
-    self.searchButtonTrailing.pop_spring.constant = -CGRectGetWidth(self.searchButton.frame);
+- (void)hideSearchButtonAnimated:(BOOL)animated delay:(CGFloat)delay {
+    CGFloat value = -[self.searchButton imageForState:UIControlStateNormal].size.width;
+
+    if (animated) {
+        self.searchButtonTrailing.pop_beginTime = CACurrentMediaTime() + delay;
+        self.searchButtonTrailing.pop_spring.constant = value;
+    }
+    else {
+        self.searchButtonTrailing.constant = value;
+    }
 }
 
-- (void)showEmptyListViewWithDelay:(CGFloat)delay {
-    self.emptyListView.pop_beginTime = CACurrentMediaTime() + delay;
-    self.emptyListView.pop_spring.pop_scaleXY = CGPointMake(1.0f, 1.0f);
-    self.emptyListView.pop_spring.alpha = 1.0f;
+- (void)showEmptyListViewAnimated:(BOOL)animated {
+    [self showEmptyListViewAnimated:animated delay:0.0f];
 }
 
-- (void)hideEmptyListView {
-    [self hideEmptyListViewAnimated:YES];
+- (void)showEmptyListViewAnimated:(BOOL)animated delay:(CGFloat)delay {
+    [self.emptyListView npr_growAnimated:animated delay:delay];
 }
 
 - (void)hideEmptyListViewAnimated:(BOOL)animated {
-    if (animated) {
-        self.emptyListView.pop_spring.pop_scaleXY = CGPointMake(kNPREmptyListAnimationScaleValue, kNPREmptyListAnimationScaleValue);
-        self.emptyListView.pop_spring.alpha = 0.0f;
-    }
-    else {
-        self.emptyListView.transform = CGAffineTransformMakeScale(kNPREmptyListAnimationScaleValue, kNPREmptyListAnimationScaleValue);
-        self.emptyListView.alpha = 0.0f;
-    }
+    [self hideEmptyListViewAnimated:animated delay:0.0f];
 }
 
-- (void)showActivityIndicator {
-    self.activityIndicatorView.pop_spring.pop_scaleXY = CGPointMake(1.0f, 1.0f);
-    self.activityIndicatorView.pop_spring.alpha = 1.0f;
+- (void)hideEmptyListViewAnimated:(BOOL)animated delay:(CGFloat)delay {
+    [self.emptyListView npr_shrinkAnimated:animated delay:delay];
 }
 
-- (void)hideActivityIndicator {
-    self.activityIndicatorView.pop_spring.pop_scaleXY = CGPointMake(kNPREmptyListAnimationScaleValue, kNPREmptyListAnimationScaleValue);
-    self.activityIndicatorView.pop_spring.alpha = 0.0f;
+- (void)showActivityIndicatorViewAnimated:(BOOL)animated {
+    [self.activityIndicatorView npr_growAnimated:animated];
 }
 
-- (void)clearBackgroundColor {
-    self.backgroundColor = [UIColor clearColor];
-}
-
-- (void)resetBackgroundColor {
-    self.backgroundColor = [UIColor npr_redColor];
+- (void)hideActivityIndicatorViewAnimated:(BOOL)animated {
+    [self.activityIndicatorView npr_shrinkAnimated:animated];
 }
 
 @end

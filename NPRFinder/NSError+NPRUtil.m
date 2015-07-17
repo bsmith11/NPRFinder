@@ -10,6 +10,8 @@
 
 #import "NSError+NPRUtil.h"
 
+#import "NPREmptyListView.h"
+
 NSString * const kNPRErrorTextKey = @"npr_error_text_key";
 NSString * const kNPRErrorActionKey = @"npr_error_action_key";
 
@@ -27,25 +29,33 @@ static NSString * const kNPRErrorNoResultsText = @"No stations found";
 
 @implementation NSError (NPRUtil)
 
++ (NSError *)npr_permissionError {
+    NSDictionary *userInfo = @{kNPRErrorTextKey:@"We can't find stations without your permission",
+                               kNPRErrorActionKey:@"Enable Location Services"};
+    NSError *permissionError = [NSError errorWithDomain:kNPRErrorDomain code:NPREmptyListViewActionStatePermissionRequest userInfo:userInfo];
+
+    return permissionError;
+}
+
 + (NSError *)npr_locationErrorFromCode:(NSInteger)code {
     NSString *errorLocationText = [NSError textForLocationErrorCode:code];
     NSDictionary *userInfo = @{kNPRErrorTextKey:errorLocationText,
                                kNPRErrorActionKey:kNPRErrorLocationAction};
-    NSError *locationError = [NSError errorWithDomain:kNPRErrorDomain code:code userInfo:userInfo];
+    NSError *locationError = [NSError errorWithDomain:kNPRErrorDomain code:NPREmptyListViewActionStateSettings userInfo:userInfo];
 
     return locationError;
 }
 
 + (NSError *)npr_networkErrorFromError:(NSError *)error {
     NSDictionary *userInfo = @{kNPRErrorTextKey:kNPRErrorNetworkText};
-    NSError *networkError = [NSError errorWithDomain:kNPRErrorDomain code:error.code userInfo:userInfo];
+    NSError *networkError = [NSError errorWithDomain:kNPRErrorDomain code:NPREmptyListViewActionStateRetry userInfo:userInfo];
 
     return networkError;
 }
 
 + (NSError *)npr_noResultsError {
     NSDictionary *userInfo = @{kNPRErrorTextKey:kNPRErrorNoResultsText};
-    NSError *error = [NSError errorWithDomain:kNPRErrorDomain code:0 userInfo:userInfo];
+    NSError *error = [NSError errorWithDomain:kNPRErrorDomain code:NPREmptyListViewActionStateRetry userInfo:userInfo];
 
     return error;
 }

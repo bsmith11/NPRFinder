@@ -10,7 +10,7 @@
 
 @interface NPRTransitionContext : NSObject <UIViewControllerContextTransitioning>
 
-- (instancetype)initWithFromViewController:(UIViewController *)fromViewController toViewController:(UIViewController *)toViewController;
+- (instancetype)initWithFromViewController:(UIViewController *)fromViewController toViewController:(UIViewController *)toViewController containerView:(UIView *)containerView;
 
 @property (copy, nonatomic) void (^completion)(BOOL finished);
 

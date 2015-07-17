@@ -8,6 +8,8 @@
 
 #import "NPRSwitchConstants.h"
 
+const NPRPermissionType kNPRPermissionType = NPRPermissionTypeLocationWhenInUse;
+
 const BOOL kNPRUseMockStationObjects = NO;
 
 const BOOL kNPRSendLocationUpdatesStartLocalNotification = YES;
