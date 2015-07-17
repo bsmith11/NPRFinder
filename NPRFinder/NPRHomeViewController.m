@@ -13,7 +13,6 @@
 #import "NPRStationCell.h"
 #import "NPRSearchViewController.h"
 #import "NPRHomeView.h"
-#import "NPRUserDefaults.h"
 
 #import "UIView+NPRAutoLayout.h"
 
@@ -45,15 +44,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    [self setupHomeView];
-    [self setupObservers];
-
     self.emptyListViewShown = NO;
 
-    if ([NPRUserDefaults locationServicesPermissionResponse]) {
-        [NPRLocationManager sharedManager].delegate = self.homeViewModel;
-//        [self.homeViewModel searchForStationsNearCurrentLocation];
-    }
+    [self setupHomeView];
+    [self setupObservers];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -207,11 +201,25 @@
 
 #pragma mark - Empty List View Delegate
 
-- (void)didSelectActionInEmptyListView:(NPREmptyListView *)emptyListView {
-    NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+- (void)didSelectActionInEmptyListView:(NPREmptyListView *)emptyListView state:(NPREmptyListViewActionState)state {
+    switch (state) {
+        case NPREmptyListViewActionStateSettings: {
+            NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
 
-    if ([[UIApplication sharedApplication] canOpenURL:url]) {
-        [[UIApplication sharedApplication] openURL:url];
+            if ([[UIApplication sharedApplication] canOpenURL:url]) {
+                [[UIApplication sharedApplication] openURL:url];
+            }
+        }
+            break;
+
+        case NPREmptyListViewActionStatePermissionRequest: {
+            [self.homeViewModel requestPermissionsWithType:kNPRPermissionType];
+        }
+            break;
+
+        case NPREmptyListViewActionStateRetry:
+
+            break;
     }
 }
 

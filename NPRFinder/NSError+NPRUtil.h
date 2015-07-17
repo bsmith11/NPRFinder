@@ -13,6 +13,7 @@ OBJC_EXTERN NSString * const kNPRErrorActionKey;
 
 @interface NSError (NPRUtil)
 
++ (NSError *)npr_permissionError;
 + (NSError *)npr_locationErrorFromCode:(NSInteger)code;
 + (NSError *)npr_networkErrorFromError:(NSError *)error;
 + (NSError *)npr_noResultsError;

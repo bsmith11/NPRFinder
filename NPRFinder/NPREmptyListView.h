@@ -8,11 +8,17 @@
 
 @import UIKit;
 
+typedef NS_ENUM(NSInteger, NPREmptyListViewActionState) {
+    NPREmptyListViewActionStateSettings,
+    NPREmptyListViewActionStatePermissionRequest,
+    NPREmptyListViewActionStateRetry
+};
+
 @class NPREmptyListView;
 
 @protocol NPREmptyListViewDelegate <NSObject>
 
-- (void)didSelectActionInEmptyListView:(NPREmptyListView *)emptyListView;
+- (void)didSelectActionInEmptyListView:(NPREmptyListView *)emptyListView state:(NPREmptyListViewActionState)state;
 
 @end
 

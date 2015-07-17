@@ -18,6 +18,7 @@
 
 #import "UIColor+NPRStyle.h"
 #import "NPRUserDefaults.h"
+#import "NPRSwitchConstants.h"
 #import "UIView+NPRAutoLayout.h"
 
 #import <POP+MCAnimate/POP+MCAnimate.h>
@@ -78,7 +79,7 @@
 }
 
 - (void)showPermissionViewControllerAnimated:(BOOL)animated {
-    self.permissionViewController = [[NPRPermissionViewController alloc] initWithType:NPRPermissionTypeLocationWhenInUse];
+    self.permissionViewController = [[NPRPermissionViewController alloc] initWithType:kNPRPermissionType];
     self.permissionViewController.delegate = self;
     NPRSplashAnimationController *animationController = [[NPRSplashAnimationController alloc] init];
 

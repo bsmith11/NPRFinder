@@ -69,7 +69,7 @@ static const CGFloat kNPRStationCellBottomPadding = 13.0f;
 }
 
 - (void)setupWithStation:(NPRStation *)station {
-    self.frequencyLabel.text = station.frequency;
+    self.frequencyLabel.text = station.call;
 }
 
 #pragma mark - Size

@@ -9,11 +9,7 @@
 @import UIKit;
 
 #import "NPRBaseViewController.h"
-
-typedef NS_ENUM(NSInteger, NPRPermissionType) {
-    NPRPermissionTypeLocationAlways,
-    NPRPermissionTypeLocationWhenInUse
-};
+#import "NPRSwitchConstants.h"
 
 @class NPRPermissionViewController;
 
