@@ -27,7 +27,13 @@
 - (void)showActivityIndicatorViewAnimated:(BOOL)animated;
 - (void)hideActivityIndicatorViewAnimated:(BOOL)animated;
 
+- (void)showViews;
+- (void)showViewsWithDelay:(CGFloat)delay;
+- (void)hideViews;
+- (void)hideViewsWithDelay:(CGFloat)delay;
+
 @property (strong, nonatomic) UICollectionView *homeCollectionView;
+@property (strong, nonatomic) NPRButton *locationButton;
 @property (strong, nonatomic) NPRButton *searchButton;
 @property (strong, nonatomic) NPREmptyListView *emptyListView;
 @property (strong, nonatomic) NPRActivityIndicatorView *activityIndicatorView;

@@ -12,6 +12,7 @@
 #import "NSError+NPRUtil.h"
 #import "NPRUserDefaults.h"
 #import "NPRLocationManager.h"
+#import "NPRNetworkManager.h"
 
 #import <CocoaLumberjack/CocoaLumberjack.h>
 

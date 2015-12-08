@@ -56,7 +56,7 @@
     if (self.transitionCoordinator) {
         [self.transitionCoordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
             CGFloat delay = [context transitionDuration] / 3.0f;
-            [self.homeView showSearchButtonAnimated:YES delay:delay];
+            [self.homeView showViewsWithDelay:delay];
             [self.homeView showActivityIndicatorViewAnimated:YES];
 
             if (self.emptyListViewShown) {
@@ -68,7 +68,7 @@
         }];
     }
     else {
-        [self.homeView showSearchButtonAnimated:YES delay:0.3f];
+        [self.homeView showViewsWithDelay:0.3f];
         [self.homeView showActivityIndicatorViewAnimated:YES];
 
         if (self.emptyListViewShown) {
@@ -81,7 +81,7 @@
     [super viewWillDisappear:animated];
     
     [self.transitionCoordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        [self.homeView hideSearchButtonAnimated:YES];
+        [self.homeView hideViews];
         [self.homeView hideActivityIndicatorViewAnimated:YES];
 
         if (self.emptyListViewShown) {

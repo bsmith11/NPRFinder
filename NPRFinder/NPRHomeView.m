@@ -25,7 +25,9 @@ static NSString * const kNPRHomeEmptyListActionText = @"Try again?";
 
 @interface NPRHomeView ()
 
+@property (strong, nonatomic) NSLayoutConstraint *locationButtonTrailing;
 @property (strong, nonatomic) NSLayoutConstraint *searchButtonTrailing;
+@property (strong, nonatomic) NSArray *animatingConstraints;
 
 @end
 
@@ -46,12 +48,16 @@ static NSString * const kNPRHomeEmptyListActionText = @"Try again?";
     self.backgroundColor = [UIColor clearColor];
 
     [self setupHomeCollectionView];
+    [self setupLocationButton];
     [self setupSearchButton];
     [self setupEmptyListView];
     [self setupActivityIndicatorView];
 
     [self.emptyListView npr_shrinkAnimated:NO];
+    self.locationButtonTrailing.constant = -[self.locationButton imageForState:UIControlStateNormal].size.width;
     self.searchButtonTrailing.constant = -[self.searchButton imageForState:UIControlStateNormal].size.width;
+
+    self.animatingConstraints = @[self.locationButtonTrailing, self.searchButtonTrailing];
 }
 
 #pragma mark - Setup
@@ -72,12 +78,27 @@ static NSString * const kNPRHomeEmptyListActionText = @"Try again?";
                 forCellWithReuseIdentifier:[NPRStationCell npr_reuseIdentifier]];
 }
 
+- (void)setupLocationButton {
+    self.locationButton = [[NPRButton alloc] init];
+    self.locationButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview:self.locationButton];
+
+    self.locationButtonTrailing = [self.locationButton npr_pinTrailingToSuperviewWithPadding:kNPRPadding];
+
+    self.locationButton.backgroundColor = [UIColor clearColor];
+    UIImage *image = [[UIImage imageNamed:@"Location Services Icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [self.locationButton setImage:image forState:UIControlStateNormal];
+    self.locationButton.tintColor = [UIColor npr_foregroundColor];
+    self.locationButton.slopInset = UIEdgeInsetsMake(kNPRPadding, kNPRPadding, kNPRPadding, kNPRPadding);
+}
+
 - (void)setupSearchButton {
     self.searchButton = [[NPRButton alloc] init];
     self.searchButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview:self.searchButton];
 
     self.searchButtonTrailing = [self.searchButton npr_pinTrailingToSuperviewWithPadding:kNPRPadding];
+    [self.searchButton npr_pinTopToView:self.locationButton padding:kNPRPadding];
     [self.searchButton npr_pinBottomToSuperviewWithPadding:kNPRPadding];
 
     self.searchButton.backgroundColor = [UIColor clearColor];
@@ -160,6 +181,30 @@ static NSString * const kNPRHomeEmptyListActionText = @"Try again?";
 
 - (void)hideActivityIndicatorViewAnimated:(BOOL)animated {
     [self.activityIndicatorView npr_shrinkAnimated:animated];
+}
+
+- (void)showViews {
+    [self showViewsWithDelay:0.0f];
+}
+
+- (void)showViewsWithDelay:(CGFloat)delay {
+    [self.animatingConstraints enumerateObjectsUsingBlock:^(NSLayoutConstraint *constraint, NSUInteger idx, BOOL *stop) {
+        constraint.pop_beginTime = CACurrentMediaTime() + (idx * kNPRAnimationInterval) + delay;
+        constraint.pop_spring.constant = kNPRPadding;
+    }];
+}
+
+- (void)hideViews {
+    [self hideViewsWithDelay:0.0f];
+}
+
+- (void)hideViewsWithDelay:(CGFloat)delay {
+    CGFloat value = -[self.locationButton imageForState:UIControlStateNormal].size.width;
+
+    [self.animatingConstraints enumerateObjectsUsingBlock:^(NSLayoutConstraint *constraint, NSUInteger idx, BOOL *stop) {
+        constraint.pop_beginTime = CACurrentMediaTime() + (idx * kNPRAnimationInterval) + delay;
+        constraint.pop_spring.constant = value;
+    }];
 }
 
 @end
